@@ -1,2 +1,2 @@
 # Travelers Fate
-A Doungeons and Dragons Companion Web App
+A Dungeons and Dragons Companion Web App
