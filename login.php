@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,8 +60,6 @@
   <main>
     <center>
       <div class="section"></div>
-
-      <h5 class="indigo-text">Please, login into your account</h5>
       <div class="section"></div>
 
       <div class="container">
@@ -72,6 +68,7 @@
           <form class="col s12" name="login" action="checkLogin.php" method="post">
             <div class='row'>
               <div class='col s12'>
+                 <h5 class="primary-text-color">Please, login into your account</h5>
               </div>
             </div>
 
@@ -88,7 +85,7 @@
                 <label for='password'>Enter your password</label>
               </div>
               <label style='float: right;'>
-                <a class='secondary-text-color' href='resetPassword.php'><b>Forgot Password?</b></a>
+                <a class='accent-text-color' href='resetPassword.php'><b>Forgot Password</b></a>
               </label>
             </div>
 
@@ -102,41 +99,15 @@
           </form>
         </div>
       </div>
-      <a class="waves-effect waves-cyan btn-flat" href="signup.php">CREATE ACCOUNT</a>
+      <a class="waves-effect btn-flat" href="signup.php">CREATE ACCOUNT</a>
 
     </center>
   </main>
 
   <footer class="page-footer orange">
-    <div class="container">
-      <div class="row">
-        <div class="col l6 s12">
-          <h5 class="white-text">Company Bio</h5>
-          
-        </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Settings</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Connect</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
     <div class="footer-copyright">
       <div class="container">
-      Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      Copyright <a href="www.criticalfuturistics.com">Critical Futuristics</a> 2016
       </div>
     </div>
   </footer>

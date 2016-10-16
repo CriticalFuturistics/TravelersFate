@@ -1,107 +1,89 @@
 
 
-<html lang="en" ng-app="app" ng-controller="mainController">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta name="Game" content="content" charset="UTF-8">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  <!-- Importing Google Icons -->
-  <!-- Angular Material style sheet -->
-  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.4/angular-material.min.css">
-  <link rel="stylesheet" href="css/style.css">
-  <!-- load MUI just for Tables, not yet implemented in md-ajs -->
-  <link href="//cdn.muicss.com/mui-0.4.6/css/mui.min.css" rel="stylesheet" type="text/css" />
-  <script src="//cdn.muicss.com/mui-0.4.6/js/mui.min.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Traverlers' Fate</title>
 
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
-<body layout="row" ng-controller="navController" ng-cloak>
- 
-<!-- ------------------------------------------ Main ---------------------------------------------- -->  
+<body>
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="logout.php">Logout</a></li>
+      </ul>
 
-<div layout="column" class="relative" layout-fill role="main">
-  <md-toolbar>  
-    <div layout="column" layout-align="start end" class="md-toolbar-tools">
-      <h2> Material Money </h2>
-      <span flex></span>      
-      <md-button class="md-icon-button" aria-label="More">
-        <md-icon> <i class="material-icons">settings</i></md-icon>
-      </md-button>
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="logout.php">Logout</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
-  </md-toolbar>
+  </nav>
 
-  <md-content flex md-scroll-y>
+  <main>
+    <center>
+      <div class="section"></div>
+      <div class="section"></div>
 
-    <md-content layout="row" layout-align="center center">
-          <md-card flex="30">
-            <md-toolbar>
-                <h2 style="padding-left:10px">Sign Up</h2>
-                <span flex></span>
-              </md-toolbar>
-            <md-card-content>
-              <form name="signup">
+      <div class="container">
+        <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 
-                <md-input-container class="md-form-input">
-                  <label>Email</label>
-                  <input type="email" required>
-                </md-input-container>
+          <form class="col s12" name="login" action="createAccount.php" method="post">
+            <div class='row'>
+              <div class='col s12'>
+                 <h5 class="primary-text-color">Create your account</h5>
+              </div>
+            </div>
 
-                <md-input-container class="md-form-input">
-                  <label>Username</label>
-                  <input type="text" required>
-                </md-input-container>
-              
-                <md-input-container class="md-form-input">
-                  <label>Password</label>
-                  <input type="password" required>
-                </md-input-container>
+            <div class='row'>
+              <div class='input-field col s12 special-left'>
+                <input type='text' name='User' id='user' required/>
+                <label for='user'>Enter your username</label>
+              </div>
+            </div>
 
-                <md-input-container>
-                  <md-button class="md-raised md-primary" type="submit" name="submit" value="">Sign Up</md-button>
-                </md-input-container>
+            <div class='row'>
+              <div class='input-field col s12 special-left'>
+                <input type='password' name='Password' id='password' required/>
+                <label for='password'>Enter your password</label>
+              </div>
+              <label style='float: right;'>
+                <b>Max 16 characters</b>
+              </label>
+            </div>
 
-              </form>
-              
-            </md-card-content>
-           
-            <div class="md-actions" layout="row|column" layout-align="start|end|center start|end|center">
-               <md-button href="login.php">Login</md-button>
-                              
-             </div>
-          </md-card>
-          
-    </md-content>
+            <br />
+            <center>
+              <div class='row'>
+                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect default-primary-color'>Create</button>
+              </div>
+            </center>
+          </form>
+        </div>
+      </div>
 
+    </center>
+  </main>
 
-
-  </md-content>
-</div>
-
-
-
-
-<!-- ------------------------------------------ Imports ------------------------------------------------>
-
-  
-  <!-- Angular Material requires Angular.js Libraries -->
- 
+  <footer class="page-footer orange">
+    <div class="footer-copyright">
+      <div class="container">
+      Copyright Critical Futuristics 2016
+      </div>
+    </div>
+  </footer>
 
 
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-aria.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-messages.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/angular-material-icons/0.6.0/angular-material-icons.min.js"></script>
-
-  <!-- Angular Material Library -->
-  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.4/angular-material.min.js"></script>
-
-  <!-- Loads the Module and the Controllers -->
-  <script src="data/gameInfo.js"></script>
-  <script src="modules/app.js"></script> 
-
-  
-</body>
+  </body>
 </html>

@@ -30,6 +30,7 @@ body {
 .input-field input[type=date]:focus + label,
 .input-field input[type=text]:focus + label,
 .input-field input[type=email]:focus + label,
+.input-field input[type=number]:focus + label,
 .input-field input[type=password]:focus + label {
 	color: #03A9F4;
 	text-align: left;
@@ -39,6 +40,7 @@ body {
 .input-field input[type=date]:focus,
 .input-field input[type=text]:focus,
 .input-field input[type=email]:focus,
+.input-field input[type=number]:focus,
 .input-field input[type=password]:focus {
 	border-bottom: 2px solid #03A9F4;
 	box-shadow: none;
@@ -48,13 +50,16 @@ body {
 	text-align: left;
 }
 
+.divider-color         { border-color: #BDBDBD; }
 .dark-primary-color    { background: #0288D1; }
 .default-primary-color { background: #03A9F4; }
 .light-primary-color   { background: #B3E5FC; }
-.text-primary-color    { color: #FFFFFF; }
+.text-primary-color    { color: #FFFFFF; }	/* White text */
 .accent-color          { background: #FF9800; }
-.primary-text-color    { color: #212121; }
-.secondary-text-color  { color: #757575; }
-.divider-color         { border-color: #BDBDBD; }
+.primary-text-color    { color: #212121; }	/* Dark text */
+.secondary-text-color  { color: #757575; }	/* Dark text */
+.accent-text-color     { color: #03A9F4; }
+.accent-text-color:hover { color: #0288D1; }
+
 
 .btn:hover, .btn-large:hover, .btn:focus, .btn-large:focus { background: #0288D1; }
