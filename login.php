@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,20 +25,6 @@
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
   </nav>
-  <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
-      <br><br>
-      <h1 class="header center orange-text">Starter Template</h1>
-      <div class="row center">
-        <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
-      </div>
-      <div class="row center">
-        <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
-      </div>
-      <br><br>
-
-    </div>
-  </div>
 
   <div class="col s12 m7"> 
     <h2 class="header">Horizontal Card</h2>
@@ -53,12 +41,12 @@
               <checkbox aria-label="Remember Me" >
                 Remember Me
               </checkbox>                 
-              <md-button class="md-raised md-primary" type="submit" name="submit" value="">Login</md-button>
+              <button class="" type="submit" name="submit" value="">Login</button>
               <?php echo "<p>".$_REQUEST['err']."</p>" ?>
             </form>
             </md-card-content>
-              <md-button href="signup.php">Sign Up</md-button>
-              <md-button>Forgot Password</md-button>
+              <button href="signup.php">Sign Up</button>
+              <button>Forgot Password</button>
             </div>
           </p>
         </div>
@@ -75,8 +63,7 @@
       <div class="row">
         <div class="col l6 s12">
           <h5 class="white-text">Company Bio</h5>
-          <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
-
+          
         </div>
         <div class="col l3 s12">
           <h5 class="white-text">Settings</h5>

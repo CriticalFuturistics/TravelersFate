@@ -1,14 +1,12 @@
 <?php
-
-
 session_start();
 
 $host="localhost"; 	// Host name 
-$dbusername="root"; // Mysql username 
-$dbpassword="root"; // Mysql password 
+$dbusername="root"; // Database username 
+$dbpassword="root"; // Database password 
 
-$dbname="materialdb"; 	// Database name 
-$tbl_name="users"; 		// Table name 
+$dbname="tfdb"; 	// Database name 
+$tbl_name="users"; 	// Table name
 
 $userForm = htmlSpecialChars($_POST['User']);		// Login Username
 $passForm = htmlSpecialChars($_POST['Password']);	// Login Password
@@ -22,8 +20,7 @@ if (!$con) {
 }
 //echo "Connected successfully <br>";
 
-
-$query = "SELECT * FROM users WHERE user = '". $userForm ."' AND pass = '". $passForm ."'" ;	// Should be mysqli_real_escape_string() for $userForm and $passForm, but it would also have to be for the DB values saved. TODO
+$query = "SELECT * FROM users WHERE username = '". $userForm ."' AND password = '". $passForm ."'" ;	// Should be mysqli_real_escape_string() for $userForm and $passForm, but it would also have to be for the DB values saved. TODO
 
 $result = mysqli_query($con, $query);
 
@@ -31,16 +28,14 @@ $result = mysqli_query($con, $query);
 if (!$result) echo mysql_error(); 		
 
 if (mysqli_num_rows($result) == 1) {
-	$_SESSION['user'] = $userForm;
-	$row = mysqli_fetch_assoc($result);
-    $_SESSION['save'] = $row['save'];
-
+	//$_SESSION['user'] = $userForm;
+	//$row = mysqli_fetch_assoc($result);
 	$_SESSION['authorized'] = 1;
 	
 	header("location:index.php");
 } else {
 	// mysqli_close($con); 	Is this needed?
-	header("location:login.php?err=Wrong Username and/or Password ");
+	header("location:login.php?err=Wrong Username and/or Password: ");
 }
 
 

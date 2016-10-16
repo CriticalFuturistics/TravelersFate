@@ -1,15 +1,9 @@
-<?php
-/* Serve per aprire la sessione. Prima di questa istruzione, non va stampato niente, neanche i commenti html */
-session_start();
-/*Qui controlliamo se siamo gia loggati oppure no, con la stessa modalita usata nella pagina controllo.php
-Nel caso si è loggati, compare un link per la pagina di logout, in caso contrario appare il form per l'inserimento dei dati */
-if($_SESSION['authorized'] == 0){
+<?php 
+  session_start();
+  if($_SESSION['authorized'] == 0){
     header("location: login.php");
-} else { ?>
-
-<!-- Passing the username expressed in the login -->
-<script> var user = '<?php echo $_SESSION["user"]; ?>'</script>
-<script> var save = '<?php echo $_SESSION["save"]; ?>'</script>
+  } else {
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -137,3 +131,6 @@ if($_SESSION['authorized'] == 0){
 
   </body>
 </html>
+
+<!-- Closing PHP -->
+<?php } ?>  
