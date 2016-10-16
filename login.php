@@ -11,7 +11,7 @@
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-  <nav class="light-blue lighten-1" role="navigation">
+  <nav class="light-blue lighten-1--" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
       <ul class="right hide-on-med-and-down">
         <li><a href="logout.php">Logout</a></li>
@@ -24,39 +24,6 @@
     </div>
   </nav>
 
-  <!-- <div class="col s12 m7"> 
-    <h2 class="header">Horizontal Card</h2>
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="http://lorempixel.com/100/190/nature/6">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <p>
-            <form name="login" action="checkLogin.php" method="post">
-              <input type="text" name="User" placeholder="User" required>
-              <input type="password" name="Password" placeholder="Password" required>
-              <checkbox aria-label="Remember Me" >
-                Remember Me
-              </checkbox>                 
-              <button class="btn waves-effect waves-light" type="submit" name="action">Login
-                <i class="material-icons right">send</i>
-              </button>
-             
-            </form>
-            </md-card-content>
-              <a class="waves-effect waves-teal btn-flat">Sign Up</a>
-              <a class="waves-effect waves-teal btn-flat">Forgot Password</a>
-            </div>
-          </p>
-        </div>
-        <div class="card-action">
-          <a href="#"></a>
-         
-        </div>
-      </div>
-    </div>
-  </div> -->
   <main>
     <center>
       <div class="section"></div>
