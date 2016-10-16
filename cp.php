@@ -37,54 +37,50 @@
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>  
   </nav>
-  <!-- Mobile Nav -->
-  <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
-      <br><br>
-      <h1 class="header center orange-text">Starter Template</h1>
-      <div class="row center">
-        <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
-      </div>
-      <div class="row center">
-        <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
-      </div>
-      <br><br>
-
-    </div>
-  </div>
-
 
   <div class="container">
     <div class="section">
 
       <!--   Icon Section   -->
       <div class="row">
-        <div class="col s12 m4">
+      <div class="col s12 m1">
+      </div>
+
+        <div class="col s12 m2">
           <div class="icon-block">
             <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
-            <h5 class="center">Speeds up development</h5>
-
-            
+            <h5 class="center">Player 1</h5> 
           </div>
         </div>
 
-        <div class="col s12 m4">
+        <div class="col s12 m2">
           <div class="icon-block">
             <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
-            <h5 class="center">User Experience Focused</h5>
-
-            
+            <h5 class="center">Player 2</h5>
           </div>
         </div>
 
-        <div class="col s12 m4">
+        <div class="col s12 m2">
           <div class="icon-block">
             <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
-            <h5 class="center">Easy to work with</h5>
-
-            
+            <h5 class="center">Player 3</h5>
           </div>
         </div>
+
+        <div class="col s12 m2">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+            <h5 class="center">Player 4</h5>
+          </div>
+        </div>
+
+        <div class="col s12 m2">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+            <h5 class="center">Player 5</h5>
+          </div>
+        </div>
+
       </div>
 
     </div>

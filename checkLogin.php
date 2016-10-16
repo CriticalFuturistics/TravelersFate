@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-$host="sql.marcovince.eu"; 	// Host name 
-$dbusername="marcovin26908"; // Database username 
+$host="sql.criticalfuturistics.com"; // Host name 
+$dbusername="critical58585"; // Database username 
 $dbpassword="travelers"; // Database password 
 
-$dbname="marcovin26908"; 	// Database name 
+$dbname="critical58585"; 	// Database name 
 $tbl_name="users"; 	// Table name
 
 $userForm = htmlSpecialChars($_POST['User']);		// Login Username
