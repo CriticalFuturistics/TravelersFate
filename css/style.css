@@ -63,3 +63,5 @@ body {
 
 
 .btn:hover, .btn-large:hover, .btn:focus, .btn-large:focus { background: #0288D1; }
+
+.boldcol tr > td:first-child + td + td + td { font-weight: bold; }

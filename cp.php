@@ -23,24 +23,23 @@
   // Test failure in the result
   if (!$result) echo mysql_error();
 
-  /**
-  * Player class
-  */
-  class Player {
-    function newPlayer(DBplayer) {
-      
-    }
-  }
   // Get the data
   if (mysqli_num_rows($result) > 0) {
-    // create empty object
+    // Create empty array
     $players = [];
-    while($row = mysqli_fetch_assoc($result)) {                                                         $row["name"]
-      // add an array with name, class and race to the object
-      
+    while($row = mysqli_fetch_assoc($result)) {                                                         
+      // Add a new array with name, class and race to the players array
+      $newPlayer = [
+        "name" => $row["name"],
+        "class"=> $row["class"],
+        "race" => $row["race"]        
+      ];
+      array_push($players, $newPlayer);      
     }
 
-    $_SESSION['players'] = "'" . json_encode($players) . "'";
+    $_SESSION['players'] = json_encode($players);
+    //$_SESSION['players'] = "'" . json_encode($players) . "'";
+    //$_SESSION['players'] = $players;
     $_SESSION['error'] = "";
   } else {
     $_SESSION['error'] = "Error: Failed to get the players from the server";
@@ -82,16 +81,49 @@
 
       <!--   Icon Section   -->
       <div class="row">
-      <div class="col s12 m1">
       <?php echo $_SESSION['error']; ?>
-      
-      </div>
-
         <div class="col s12 m2">
           <div class="icon-block">
             <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
-            <h5 class="center player1">Player 1</h5><br>
-            <p> <?php echo $_SESSION['test']; ?> </p>
+            <h5 class="center player1">Player 1</h5>
+            <p class="center class1"> </p>
+            <p class="center race1"> </p>
+            <div class="card small">
+              <span class="card-title activator grey-text text-darken-4 ">Stats</span>
+              <p>
+                <table class="highlight">
+                  <thead>
+                    <tr>
+                        <th data-field="stat">Stat</th>
+                        <th data-field="statbase">Base</th>
+                        <th data-field="statbuff">Base</th>
+                        <th data-field="stattotal">Total</th>
+                    </tr>
+                  </thead>
+
+                  <tbody class="boldcol">
+                    <tr>
+                      <td>1</td>
+                      <td>1</td>
+                      <td>1</td>
+                      <td>1</td>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>1</td>
+                      <td>1</td>
+                      <td>1</td>
+                    </tr>
+                    <tr>
+                      <td>1</td>
+                      <td>1</td>
+                      <td>1</td>
+                      <td>1</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </p>
+            </div>
           </div>
         </div>
 
@@ -99,6 +131,8 @@
           <div class="icon-block">
             <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
             <h5 class="center player2">Player 2</h5>
+            <p class="center class2"> </p>
+            <p class="center race2"> </p>
           </div>
         </div>
 
@@ -106,6 +140,8 @@
           <div class="icon-block">
             <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
             <h5 class="center player3">Player 3</h5>
+            <p class="center class3"> </p>
+            <p class="center race3"> </p>
           </div>
         </div>
 
@@ -113,6 +149,8 @@
           <div class="icon-block">
             <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
             <h5 class="center player4">Player 4</h5>
+            <p class="center class4"> </p>
+            <p class="center race4"> </p>
           </div>
         </div>
 
@@ -120,6 +158,8 @@
           <div class="icon-block">
             <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
             <h5 class="center player5">Player 5</h5>
+            <p class="center class5"> </p>
+            <p class="center race5"> </p>
           </div>
         </div>
 
@@ -148,13 +188,18 @@
   <script src="js/init.js"></script>
 
   <script>
-    var JSONplayers = <?php echo $_SESSION['players']; ?>;
-    var players = JSON.parse(JSONplayers);
-    for (var i = 1; i < 6; i++) {
-      var tempP = ".player" + i;
-       $(tempP).html(players.name);
+    var players = <?php echo $_SESSION['players']; ?>;
+    //var players = JSON.parse(JSONplayers);
+
+    for (var i = 0; i < players.length; i++) {
+      var tempI = i + 1;
+      var tempP = ".player" + tempI;
+      var tempC = ".class" + tempI;
+      var tempR = ".race" + tempI;
+      $(tempP).html(players[i].name);
+      $(tempC).html(players[i].class);
+      $(tempR).html(players[i].race);
     }
-    alert(players.name);
    
   </script>
 

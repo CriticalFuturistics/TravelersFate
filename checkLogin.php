@@ -36,7 +36,6 @@ if (mysqli_num_rows($result) == 1) {
 		header("location:cp.php");
 	} else header("location:index.php");
 	
-	
 } else {
 	// mysqli_close($con); 	Is this needed?
 	header("location:login.php?err=Wrong Username and/or Password");
