@@ -81,6 +81,7 @@
 
       <!--   Icon Section   -->
       <div class="row">
+      <div class="col s12 m1"></div>
       <?php echo $_SESSION['error']; ?>
         <div class="col s12 m2">
           <div class="icon-block">
@@ -88,41 +89,67 @@
             <h5 class="center player1">Player 1</h5>
             <p class="center class1"> </p>
             <p class="center race1"> </p>
-            <div class="card small">
-              <span class="card-title activator grey-text text-darken-4 ">Stats</span>
-              <p>
-                <table class="highlight">
-                  <thead>
-                    <tr>
-                        <th data-field="stat">Stat</th>
-                        <th data-field="statbase">Base</th>
-                        <th data-field="statbuff">Base</th>
-                        <th data-field="stattotal">Total</th>
-                    </tr>
-                  </thead>
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4 center">Stats</span>
+                <p>
+                  <table class="highlight">
+                    <thead>
+                      <tr>
+                          <th data-field="stat">Stat</th>
+                          <th data-field="statbase">Base</th>
+                          <th data-field="statbuff">Buff</th>
+                          <th data-field="stattotal">Total</th>
+                      </tr>
+                    </thead>
 
-                  <tbody class="boldcol">
-                    <tr>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>1</td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>1</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </p>
+                    <tbody class="boldcol">
+                      <tr>
+                        <td>VIT</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>FOR</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>AGI</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>INT</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>VOL</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>TEM</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                      <tr>
+                        <td>SAG</td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </p>
+              </div>
             </div>
           </div>
         </div>

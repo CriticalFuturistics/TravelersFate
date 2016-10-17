@@ -27,6 +27,10 @@ body {
 	background: #fff;
 }
 
+.container {
+	width: 90%;
+}
+
 .input-field input[type=date]:focus + label,
 .input-field input[type=text]:focus + label,
 .input-field input[type=email]:focus + label,
