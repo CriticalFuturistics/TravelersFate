@@ -7,6 +7,45 @@
     if ($_SESSION['user'] != 'admin') {
       header("location: login.php");
     }
+  } 
+  $host="sql.criticalfuturistics.com"; // Host name 
+  $dbusername="critical58585"; // Database username 
+  $dbpassword="travelers"; // Database password 
+  $dbname="critical58585";  // Database name 
+
+  // Create connection
+  $con = mysqli_connect($host, $dbusername, $dbpassword, $dbname);
+
+  if (!$con) { die("Connection failed: " . mysqli_connect_error()); }
+  $query = "SELECT * FROM players";
+  $result = mysqli_query($con, $query);
+
+  // Test failure in the result
+  if (!$result) echo mysql_error();
+
+  /**
+  * Player class
+  */
+  class Player {
+    function newPlayer(DBplayer) {
+      
+    }
+  }
+  // Get the data
+  if (mysqli_num_rows($result) > 0) {
+    // create empty object
+    $players = [];
+    while($row = mysqli_fetch_assoc($result)) {                                                         $row["name"]
+      // add an array with name, class and race to the object
+      
+    }
+
+    $_SESSION['players'] = "'" . json_encode($players) . "'";
+    $_SESSION['error'] = "";
+  } else {
+    $_SESSION['error'] = "Error: Failed to get the players from the server";
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -44,40 +83,43 @@
       <!--   Icon Section   -->
       <div class="row">
       <div class="col s12 m1">
+      <?php echo $_SESSION['error']; ?>
+      
       </div>
 
         <div class="col s12 m2">
           <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
-            <h5 class="center">Player 1</h5> 
+            <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+            <h5 class="center player1">Player 1</h5><br>
+            <p> <?php echo $_SESSION['test']; ?> </p>
           </div>
         </div>
 
         <div class="col s12 m2">
           <div class="icon-block">
             <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
-            <h5 class="center">Player 2</h5>
-          </div>
-        </div>
-
-        <div class="col s12 m2">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
-            <h5 class="center">Player 3</h5>
+            <h5 class="center player2">Player 2</h5>
           </div>
         </div>
 
         <div class="col s12 m2">
           <div class="icon-block">
             <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
-            <h5 class="center">Player 4</h5>
+            <h5 class="center player3">Player 3</h5>
           </div>
         </div>
 
         <div class="col s12 m2">
           <div class="icon-block">
             <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
-            <h5 class="center">Player 5</h5>
+            <h5 class="center player4">Player 4</h5>
+          </div>
+        </div>
+
+        <div class="col s12 m2">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+            <h5 class="center player5">Player 5</h5>
           </div>
         </div>
 
@@ -105,8 +147,19 @@
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
 
+  <script>
+    var JSONplayers = <?php echo $_SESSION['players']; ?>;
+    var players = JSON.parse(JSONplayers);
+    for (var i = 1; i < 6; i++) {
+      var tempP = ".player" + i;
+       $(tempP).html(players.name);
+    }
+    alert(players.name);
+   
+  </script>
+
   </body>
 </html>
 
 <!-- Closing PHP -->
-<?php } ?>  
+<?php  ?>  

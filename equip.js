@@ -1,0 +1,11 @@
+{"equip":[
+{"slot":"head","item":""},{"slot":"neck","item":""},
+{"slot":"ringLeft","item":""},
+{"slot":"ringRight","item":""},
+{"slot":"chest","item":""},
+{"slot":"gloves","item":""},
+{"slot":"weaponLeft","item":""},
+{"slot":"weaponRight","item":""},
+{"slot":"legs","item":""},
+{"slot":"boots","item":""}
+]}
