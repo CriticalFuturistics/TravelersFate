@@ -21,12 +21,11 @@ function getBaseStats(players, playerNumber, stat) {
 }
 // Return the total number of a Stat at the time
 function getTotalStats(players, playerNumber, stat){
-    var baseStats = getValueFromStat(players, playerNumber, stat);
-    var bonusStats = getStatFromBuffs(players, playerNumber, stat);
-    var itemStats = getStatFromItems(players, playerNumber, stat);
-    var total = baseStats + bonusStats + itemStats;
+	return getValueFromStat(players, playerNumber, stat) + getBonusStats(players, playerNumber, stat);
+}
 
-	return total;
+function getBonusStats(players, playerNumber, stat){
+	return getStatFromBuffs(players, playerNumber, stat) + getStatFromItems(players, playerNumber, stat);
 }
 
 // Rrturns the value of a chosen Stat
@@ -45,7 +44,7 @@ function getValueFromStat(players, playerNumber, stat) {
 // Scans the active Buffs and Debuffs and returns the total Stat Modifier for the chosen Stat
 function getStatFromBuffs(players, playerNumber, stat) {
 	var activeBuffs = players[playerNumber].buffs;
-	var total = 0;
+	var total = 5;
 	// TODO
 
 	return parseInt(total);
@@ -54,7 +53,7 @@ function getStatFromBuffs(players, playerNumber, stat) {
 // Scans the equipped Items and returns the total Stat Modifier for the chosen Stat
 function getStatFromItems(players, playerNumber, stat) {
 	var items = players[playerNumber].equip;
-	var total = 0;
+	var total = 9;
 	// TODO
 
 	return parseInt(total);

@@ -521,12 +521,28 @@
       $(".race" + tempI).html(players[i].race);
       $(".lvl" + tempI).html("LVL " + players[i].level);
       $(".p" + tempI + " > tr > .vitBase").html(parseInt(players[i].stats.VIT) + parseInt(getBaseStats(players, i, 'VIT')));
-      $(".p" + tempI + " > tr > .forBase").html(players[i].stats.FOR);
-      $(".p" + tempI + " > tr > .agiBase").html(players[i].stats.AGI);
-      $(".p" + tempI + " > tr > .intBase").html(players[i].stats.INT);
-      $(".p" + tempI + " > tr > .volBase").html(players[i].stats.VOL);
-      $(".p" + tempI + " > tr > .temBase").html(players[i].stats.TEM);
-      $(".p" + tempI + " > tr > .sagBase").html(players[i].stats.SAG);
+      $(".p" + tempI + " > tr > .forBase").html(parseInt(players[i].stats.FOR) + parseInt(getBaseStats(players, i, 'FOR')));
+      $(".p" + tempI + " > tr > .agiBase").html(parseInt(players[i].stats.AGI) + parseInt(getBaseStats(players, i, 'AGI')));
+      $(".p" + tempI + " > tr > .intBase").html(parseInt(players[i].stats.INT) + parseInt(getBaseStats(players, i, 'INT')));
+      $(".p" + tempI + " > tr > .volBase").html(parseInt(players[i].stats.VOL) + parseInt(getBaseStats(players, i, 'VOL')));
+      $(".p" + tempI + " > tr > .temBase").html(parseInt(players[i].stats.TEM) + parseInt(getBaseStats(players, i, 'TEM')));
+      $(".p" + tempI + " > tr > .sagBase").html(parseInt(players[i].stats.SAG) + parseInt(getBaseStats(players, i, 'SAG')));
+
+      $(".p" + tempI + " > tr > .vitBonus").html(parseInt(getBonusStats(players, i, 'VIT')));
+      $(".p" + tempI + " > tr > .forBonus").html(parseInt(getBonusStats(players, i, 'FOR')));
+      $(".p" + tempI + " > tr > .agiBonus").html(parseInt(getBonusStats(players, i, 'AGI')));
+      $(".p" + tempI + " > tr > .intBonus").html(parseInt(getBonusStats(players, i, 'INT')));
+      $(".p" + tempI + " > tr > .volBonus").html(parseInt(getBonusStats(players, i, 'VOL')));
+      $(".p" + tempI + " > tr > .temBonus").html(parseInt(getBonusStats(players, i, 'TEM')));
+      $(".p" + tempI + " > tr > .sagBonus").html(parseInt(getBonusStats(players, i, 'SAG')));
+
+      $(".p" + tempI + " > tr > .vitTotal").html(parseInt(getTotalStats(players, i, 'VIT')));
+      $(".p" + tempI + " > tr > .forTotal").html(parseInt(getTotalStats(players, i, 'FOR')));
+      $(".p" + tempI + " > tr > .agiTotal").html(parseInt(getTotalStats(players, i, 'AGI')));
+      $(".p" + tempI + " > tr > .intTotal").html(parseInt(getTotalStats(players, i, 'INT')));
+      $(".p" + tempI + " > tr > .volTotal").html(parseInt(getTotalStats(players, i, 'VOL')));
+      $(".p" + tempI + " > tr > .temTotal").html(parseInt(getTotalStats(players, i, 'TEM')));
+      $(".p" + tempI + " > tr > .sagTotal").html(parseInt(getTotalStats(players, i, 'SAG')));
 
     }
    
