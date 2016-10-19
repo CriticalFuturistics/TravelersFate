@@ -520,7 +520,7 @@
       $(".class" + tempI).html(players[i].class);
       $(".race" + tempI).html(players[i].race);
       $(".lvl" + tempI).html("LVL " + players[i].level);
-      $(".p" + tempI + " > tr > .vitBase").html(players[i].stats.VIT);
+      $(".p" + tempI + " > tr > .vitBase").html(parseInt(players[i].stats.VIT) + parseInt(getBaseStats(players, i, 'VIT')));
       $(".p" + tempI + " > tr > .forBase").html(players[i].stats.FOR);
       $(".p" + tempI + " > tr > .agiBase").html(players[i].stats.AGI);
       $(".p" + tempI + " > tr > .intBase").html(players[i].stats.INT);
@@ -529,10 +529,6 @@
       $(".p" + tempI + " > tr > .sagBase").html(players[i].stats.SAG);
 
     }
-
-    //console.log(getTotalStats(players, 0, "AGI"));
-    //console.log(races[0].stats['VIT']);
-    getBaseStats(players, 0, "VIT");
    
   </script>
 

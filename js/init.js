@@ -10,10 +10,9 @@ function getBaseStats(players, playerNumber, stat) {
 	if (playerNumber <= players.length) {
 		for (var key in players[playerNumber].stats){
 			if (key == stat) {
-	    		var stat = players[playerNumber].stats[key];
+	    		var statValue = players[playerNumber].stats[key];
 	    		var raceStats = getStatFromRace(players, playerNumber, getRaceFromPlayer(players, playerNumber), stat);
-	    		console.log(raceStats);
-	    		return stat;
+	    		return statValue;
 	    	}
 	    } return undefined;
 	} else {
@@ -75,7 +74,7 @@ function getRaceFromPlayer(player, playerNumber) {
 function getStatFromRace(player, playerNumber, race, stat){
 	for (var i = 0; i < races.length; i++) {
 		if (races[i].racename == race){
-			return parseInt(races[i].stats[stat]);	
+			return races[i].stats[stat];	
 		}
 	}
 	return undefined;	
