@@ -70,7 +70,7 @@ function getRaceFromPlayer(player, playerNumber) {
 	return undefined;
 }
 
-// Returns the race stats
+// Returns the race stats Sto come i party
 function getStatFromRace(player, playerNumber, race, stat){
 	for (var i = 0; i < races.length; i++) {
 		if (races[i].racename == race){
