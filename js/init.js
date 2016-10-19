@@ -11,8 +11,9 @@ function getBaseStats(players, playerNumber, stat) {
 		for (var key in players[playerNumber].stats){
 			if (key == stat) {
 	    		var statValue = players[playerNumber].stats[key];
-	    		var raceStats = getStatFromRace(players, playerNumber, getRaceFromPlayer(players, playerNumber), stat);
-	    		return statValue;
+	    		var raceStats = getStatFromRace(getRaceFromPlayer(players, playerNumber), stat);
+	    		var classStats = getStatFromClass(getClassFromPlayer(players, playerNumber), stat);
+	    		return parseInt(statValue) + parseInt(raceStats) + parseInt(classStats);
 	    	}
 	    } return undefined;
 	} else {
@@ -21,7 +22,7 @@ function getBaseStats(players, playerNumber, stat) {
 }
 // Return the total number of a Stat at the time
 function getTotalStats(players, playerNumber, stat){
-	return getValueFromStat(players, playerNumber, stat) + getBonusStats(players, playerNumber, stat);
+	return getBaseStats(players, playerNumber, stat) + getBonusStats(players, playerNumber, stat);
 }
 
 function getBonusStats(players, playerNumber, stat){
@@ -59,8 +60,8 @@ function getStatFromItems(players, playerNumber, stat) {
 	return parseInt(total);
 }
 
-// Returns the Race the player is as a String
-function getRaceFromPlayer(player, playerNumber) {
+// Returns the Race the player as a String
+function getRaceFromPlayer(players, playerNumber) {
 	for (var i = 0; i < races.length; i++) {
 		if (races[i].racename == players[playerNumber].race) {
 			return races[i].racename;
@@ -69,11 +70,31 @@ function getRaceFromPlayer(player, playerNumber) {
 	return undefined;
 }
 
+// Returns the Class the player as a String
+function getClassFromPlayer(players, playerNumber) {
+	for (var i = 0; i < classes.length; i++) {
+		if (classes[i].classname == players[playerNumber].class) {
+			return classes[i].classname;
+		}
+	}
+	return undefined;
+}
+
 // Returns the race stats Sto come i party
-function getStatFromRace(player, playerNumber, race, stat){
+function getStatFromRace(race, stat){
 	for (var i = 0; i < races.length; i++) {
 		if (races[i].racename == race){
 			return races[i].stats[stat];	
+		}
+	}
+	return undefined;	
+}
+ 
+// Returns the race stats Sto come i party
+function getStatFromClass(classX, stat){
+	for (var i = 0; i < classes.length; i++) {
+		if (classes[i].classname == classX){
+			return classes[i].stats[stat];	
 		}
 	}
 	return undefined;	

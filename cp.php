@@ -52,6 +52,7 @@
     $_SESSION['error'] = "Error: Failed to get the players from the server";
   }
 
+  // -------------------------------------------------- //
   // Another query for another table
   $query = "SELECT * FROM races";
   $result = mysqli_query($con, $query);
@@ -90,6 +91,44 @@
     $_SESSION['error'] = "Error: Failed to get the races from the server";
   }
 
+  // -------------------------------------------------- //
+  // Another query for another table
+  $query = "SELECT * FROM classes";
+  $result = mysqli_query($con, $query);
+
+  // Test failure in the result
+  if (!$result) echo mysql_error();
+
+  // Get the data
+  if (mysqli_num_rows($result) > 0) {
+    // Create empty array
+    $classes = [];
+    while($row = mysqli_fetch_assoc($result)) {                                                         
+      // Add a new array with name, class and race to the players array
+      $newClass = [
+        "classname" => $row["Classname"],
+        "stats" => ["VIT" => $row["VIT"], "FOR" => $row["FOR"], 
+                    "AGI" => $row["AGI"], "INT" => $row["INT"],
+                    "VOL" => $row["VOL"], "TEM" => $row["TEM"],
+                    "SAG" => $row["SAG"]
+                  ],
+        "abilities" => ["AB1" => $row["AB1"], 
+                        "AB2" => $row["AB2"], 
+                        "AB3" => $row["AB3"], 
+                        "AB4" => $row["AB4"],
+                        "AB5" => $row["AB5"], 
+                        "AB6" => $row["AB6"]
+                      ],
+        "extra" => $row["Extra"]   
+      ];
+      array_push($classes, $newClass);      
+    }
+
+    $_SESSION['classes'] = json_encode($classes);
+    $_SESSION['error'] = "";
+  } else {
+    $_SESSION['error'] = "Error: Failed to get the classes from the server";
+  }
 ?>
 
 <!DOCTYPE html>
@@ -511,7 +550,7 @@
   <script>
     var players = <?php echo $_SESSION['players']; ?>;
     var races = <?php echo $_SESSION['races']; ?>;
-    //var players = JSON.parse(JSONplayers);
+    var classes = <?php echo $_SESSION['classes']; ?>;
 
     // For every player, set its data
     for (var i = 0; i < players.length; i++) {
