@@ -69,3 +69,20 @@ body {
 .btn:hover, .btn-large:hover, .btn:focus, .btn-large:focus { background: #0288D1; }
 
 .boldcol tr > td:first-child + td + td + td { font-weight: bold; }
+
+.center tr > td { text-align: center; }
+
+.card .card-content { padding-left: 10px; }
+
+.lvl1, .lvl2, .lvl3, .lvl4, .lvl5 {
+	text-align:center;
+}
+
+
+
+.row .col.m2 {
+	width: 18%;
+}
+.row .col {
+    padding: 0 0.25rem;
+}

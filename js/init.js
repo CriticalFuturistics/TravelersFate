@@ -5,3 +5,78 @@
 
   }); // end of document ready
 })(jQuery); // end of jQuery name space
+
+function getBaseStats(players, playerNumber, stat) {
+	if (playerNumber <= players.length) {
+		for (var key in players[playerNumber].stats){
+			if (key == stat) {
+	    		var stat = players[playerNumber].stats[key];
+	    		var raceStats = getStatFromRace(players, playerNumber, getRaceFromPlayer(players, playerNumber), stat);
+	    		console.log(raceStats);
+	    		return stat;
+	    	}
+	    } return undefined;
+	} else {
+		return undefined;
+	}
+}
+// Return the total number of a Stat at the time
+function getTotalStats(players, playerNumber, stat){
+    var baseStats = getValueFromStat(players, playerNumber, stat);
+    var bonusStats = getStatFromBuffs(players, playerNumber, stat);
+    var itemStats = getStatFromItems(players, playerNumber, stat);
+    var total = baseStats + bonusStats + itemStats;
+
+	return total;
+}
+
+// Rrturns the value of a chosen Stat
+function getValueFromStat(players, playerNumber, stat) {
+	if (playerNumber <= players.length) {
+		for (var key in players[playerNumber].stats){
+			if (key == stat) {
+	    		return parseInt(players[playerNumber].stats[key]);
+	    	}
+	    } return undefined;
+	} else {
+		return undefined;
+	}
+}
+
+// Scans the active Buffs and Debuffs and returns the total Stat Modifier for the chosen Stat
+function getStatFromBuffs(players, playerNumber, stat) {
+	var activeBuffs = players[playerNumber].buffs;
+	var total = 0;
+	// TODO
+
+	return parseInt(total);
+}
+
+// Scans the equipped Items and returns the total Stat Modifier for the chosen Stat
+function getStatFromItems(players, playerNumber, stat) {
+	var items = players[playerNumber].equip;
+	var total = 0;
+	// TODO
+
+	return parseInt(total);
+}
+
+// Returns the Race the player is as a String
+function getRaceFromPlayer(player, playerNumber) {
+	for (var i = 0; i < races.length; i++) {
+		if (races[i].racename == players[playerNumber].race) {
+			return races[i].racename;
+		}
+	}
+	return undefined;
+}
+
+// Returns the race stats
+function getStatFromRace(player, playerNumber, race, stat){
+	for (var i = 0; i < races.length; i++) {
+		if (races[i].racename == race){
+			return parseInt(races[i].stats[stat]);	
+		}
+	}
+	return undefined;	
+}
