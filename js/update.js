@@ -1,9 +1,11 @@
 
 
+
+
 // Updates the data on the screen depending on how it chances locally
 function updateLocal(){
 	updateStats();
-
+	updateBuffs();
     
 }
 
@@ -47,3 +49,21 @@ function updateStats(){
 	}
 }
 
+function updateBuffs(){
+	// Empty the buffs class div
+	// Insert divs with the new buffs/debuffs
+		
+	$(".buffs").html("");
+	for (var i = 0; i < players.length; i++) {
+		players[i].buffs = $.parseJSON(players[i].buffs);
+		for (var j = 0; j < players[i].buffs.length; j++) {
+			var name = getBuffName(players[i].buffs[j]);
+			if (name != null) {
+				var divString = '<div class="buff tooltipped" data-position="top" data-delay="50" data-tooltip="'+ name +'" href="#">'; 
+				nexti = i + 1;
+				$(".p" + nexti + " .buffs").append(divString + '<img src="img/buffs/' + players[i].buffs[j] + '.png">' + '</div>');
+			}
+		}
+
+	}
+}

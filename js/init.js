@@ -6,6 +6,12 @@
   }); // end of document ready
 })(jQuery); // end of jQuery name space
 
+function initialiseTooltips(){
+	$(document).ready(function(){
+	    $('.tooltipped').tooltip({delay: 50});
+	  });
+}
+
 function getBaseStats(players, playerNumber, stat) {
 	if (playerNumber <= players.length) {
 		for (var key in players[playerNumber].stats){
@@ -102,6 +108,21 @@ function getStatFromClass(classX, stat){
 	return undefined;	
 }
 
+function getBuff(id){
+	for (var i = 0; i < buffs.length; i++) {
+		if (buffs[i].ID == id) {
+			return buffs[i];
+		} else return null;
+	}
+}
+
+function getBuffName(id){
+	var buff = getBuff(id);
+	if (buff == null) {
+		return null;
+	}
+	return buff.name;
+}
 
 
 
