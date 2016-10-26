@@ -101,3 +101,14 @@ function getStatFromClass(classX, stat){
 	}
 	return undefined;	
 }
+
+
+
+
+function getKeysArray(fields){
+	var array = [];
+	for (var key in fields) {
+    	array.push(fields[key]);
+	}
+	return array;
+}

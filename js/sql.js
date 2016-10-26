@@ -6,12 +6,10 @@ function queryCreate(fields, table){
 	return q;
 }
 
-function addKeys(fields){
-	var nq;
+function getKeysArray(fields){
+	var array = [];
 	for (var key in fields) {
-    	nq += fields[key] + ", ";
+    	array.push(fields[key]);
 	}
-	nq.slice(0, -1);
-	console.log(nq);
-	return nq;
+	return array;
 }

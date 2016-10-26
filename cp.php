@@ -663,7 +663,7 @@
 
 
   <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
   <script src="js/update.js"></script>
@@ -671,12 +671,11 @@
 
   <script>
     var players = <?php echo $_SESSION['players']; ?>;
-    var races = <?php echo $_SESSION['races']; ?>;
+    var races   = <?php echo $_SESSION['races']; ?>;
     var classes = <?php echo $_SESSION['classes']; ?>;
-
-
+    
     var playersColumns = <?php print_r(json_encode($_SESSION['playersColumns'])); ?>;
-    handleLocalDB();
+    
 
     updateLocal();
   </script>

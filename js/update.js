@@ -1,18 +1,3 @@
-function handleLocalDB(){
-	setupDB();
-}
-
-function setupDB(){
-	db = openDatabase("DB", "1.0", "DB", 10 * 1024 * 1024);
-	db.transaction(function(txt) {
-    	txt.executeSql(queryCreate(playersColumns, "players"));
-    	//txt.executeSql("INSERT INTO Contatti (" + addKeys(playersColumns) + ") VALUES ('1', 'zyke', 'Womu', 'Guerriero', '1', '2', '2', '2', '2', '2', '2', '2', 'anerghndjsf', 'nsdg', 'jnsdf')");
-    	txt.executeSql("INSERT INTO Contatti (" + addKeys(playersColumns) + ") VALUES (" + addKeys(playersColumns) + ")");
-    });
-
-}
-
-
 
 
 // Updates the data on the screen depending on how it chances locally
