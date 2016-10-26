@@ -51,6 +51,15 @@
   } else {
     $_SESSION['error'] = "Error: Failed to get the players from the server";
   }
+  
+  $sql = "SHOW COLUMNS FROM players";
+  $result = mysqli_query($con,$sql);
+  $_SESSION['playersColumns'] = [];
+  $i = 1;
+  while($row = mysqli_fetch_array($result)){
+    $_SESSION['playersColumns'][$i] = $row['Field'];
+    $i = $i + 1;
+  }
 
   // -------------------------------------------------- //
   // Another query for another table
@@ -92,7 +101,7 @@
   }
 
   // -------------------------------------------------- //
-  // Another query for another table
+  // Classes
   $query = "SELECT * FROM classes";
   $result = mysqli_query($con, $query);
 
@@ -129,6 +138,116 @@
   } else {
     $_SESSION['error'] = "Error: Failed to get the classes from the server";
   }
+
+  /**
+  ** Deprecated
+  **
+  function getItemType($ID, $cnx) {
+    $q = "SELECT items.ID, items.type FROM items WHERE items.ID = '". $ID . "'";
+    $r = mysqli_query($cnx, $q);
+    if (!$r) echo mysql_error();
+    if (mysqli_num_rows($r) > 0) {
+      while($row = mysqli_fetch_assoc($r)) {
+        //$typeResult = $row["type"];
+        $_SESSION['type'] = $row["type"];
+      }
+    }
+    //return $typeResult;
+    return $_SESSION['type'];
+  }
+
+  function getItem($ID, $con){
+    $type = getItemType($ID, $con);
+    if ($type != 0) {
+      $query = "SELECT * FROM items INNER JOIN ". $type ." ON items.ID = '". $type . "'";
+      $result = mysqli_query($con, $query);
+      if (!$result) echo mysql_error();
+
+      if (mysqli_num_rows($result) > 0) { 
+        while($row = mysqli_fetch_assoc($result)) {
+          if ($type == "consumable") {
+            $item = [
+              "name" => $row["name"],
+              "price" => $row["weight"], 
+              "weight" => $row["weight"], 
+              "type" => $row["type"],
+              "effect" => $row["effect"],
+              "PA" => $row["PA"],
+              "duration" => $row["duration"]
+            ];
+          } else if ($type == "equip") {
+            $item = [
+              "name" => $row["name"],
+              "price" => $row["weight"], 
+              "weight" => $row["weight"], 
+              "type" => $row["type"],
+              "effect" => $row["effect"],
+              "slot" => $row["slot"],
+              "armor" => $row["armor"],
+              "DF" => $row["DF"],
+              "DE" => $row["DE"],
+              "RB" => $row["RB"],
+              "RS" => $row["RS"],
+              "RC" => $row["RC"],
+              "RI" => $row["RI"],
+              "TOX" => $row["TOX"]
+            ];
+          } else if ($type == "weapon") {
+            $item = [
+              "name" => $row["name"],
+              "price" => $row["weight"], 
+              "weight" => $row["weight"], 
+              "type" => $row["type"],
+              "effect" => $row["effect"],
+              "PA" => $row["PA"],
+              "weaponType" => $row["weaponType"]
+            ];
+          } else if ($type == "item") {
+            $item = [
+              "name" => $row["name"],
+              "price" => $row["weight"], 
+              "weight" => $row["weight"], 
+              "type" => $row["type"],
+              "effect" => $row["effect"],
+              "PA" => $row["PA"],
+              "dex" => $row["dex"]
+            ];
+          }
+        }
+      }
+        return json_encode($item);
+    } else { 
+      return -1;
+    }
+  }
+  **/
+
+  // -------------------------------------------------- //
+  // Classes
+  $query = "SELECT * FROM items";
+  $result = mysqli_query($con, $query);
+  if (!$result) echo mysql_error();
+  if (mysqli_num_rows($result) > 0) {
+    $items = [];
+    while($row = mysqli_fetch_assoc($result)) {                                                         
+      $newItem = [
+        "ID" => $row["ID"],
+        "name" => $row["name"],
+        "price" => $row["price"], 
+        "weight" => $row["weight"], 
+        "type" => $row["type"]
+      ];
+      array_push($items, $newItem);      
+    }
+
+    $_SESSION['items'] = json_encode($items);
+    $_SESSION['error'] = "";
+  } else {
+    $_SESSION['error'] = "Error: Failed to get the items from the server";
+  }
+
+// -------------------------------------------------- //
+
 ?>
 
 <!DOCTYPE html>
@@ -540,51 +659,26 @@
       </div>
     </div>
   </footer>
+  <div id="ourList"></div>
 
 
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
+  <script src="js/update.js"></script>
+  <script src="js/sql.js"></script>
 
   <script>
     var players = <?php echo $_SESSION['players']; ?>;
     var races = <?php echo $_SESSION['races']; ?>;
     var classes = <?php echo $_SESSION['classes']; ?>;
 
-    // For every player, set its data
-    for (var i = 0; i < players.length; i++) {
-      var tempI = i + 1;
-      $(".player" + tempI).html(players[i].name);
-      $(".class" + tempI).html(players[i].class);
-      $(".race" + tempI).html(players[i].race);
-      $(".lvl" + tempI).html("LVL " + players[i].level);
-      $(".p" + tempI + " > tr > .vitBase").html(parseInt(players[i].stats.VIT) + parseInt(getBaseStats(players, i, 'VIT')));
-      $(".p" + tempI + " > tr > .forBase").html(parseInt(players[i].stats.FOR) + parseInt(getBaseStats(players, i, 'FOR')));
-      $(".p" + tempI + " > tr > .agiBase").html(parseInt(players[i].stats.AGI) + parseInt(getBaseStats(players, i, 'AGI')));
-      $(".p" + tempI + " > tr > .intBase").html(parseInt(players[i].stats.INT) + parseInt(getBaseStats(players, i, 'INT')));
-      $(".p" + tempI + " > tr > .volBase").html(parseInt(players[i].stats.VOL) + parseInt(getBaseStats(players, i, 'VOL')));
-      $(".p" + tempI + " > tr > .temBase").html(parseInt(players[i].stats.TEM) + parseInt(getBaseStats(players, i, 'TEM')));
-      $(".p" + tempI + " > tr > .sagBase").html(parseInt(players[i].stats.SAG) + parseInt(getBaseStats(players, i, 'SAG')));
 
-      $(".p" + tempI + " > tr > .vitBonus").html(parseInt(getBonusStats(players, i, 'VIT')));
-      $(".p" + tempI + " > tr > .forBonus").html(parseInt(getBonusStats(players, i, 'FOR')));
-      $(".p" + tempI + " > tr > .agiBonus").html(parseInt(getBonusStats(players, i, 'AGI')));
-      $(".p" + tempI + " > tr > .intBonus").html(parseInt(getBonusStats(players, i, 'INT')));
-      $(".p" + tempI + " > tr > .volBonus").html(parseInt(getBonusStats(players, i, 'VOL')));
-      $(".p" + tempI + " > tr > .temBonus").html(parseInt(getBonusStats(players, i, 'TEM')));
-      $(".p" + tempI + " > tr > .sagBonus").html(parseInt(getBonusStats(players, i, 'SAG')));
+    var playersColumns = <?php print_r(json_encode($_SESSION['playersColumns'])); ?>;
+    handleLocalDB();
 
-      $(".p" + tempI + " > tr > .vitTotal").html(parseInt(getTotalStats(players, i, 'VIT')));
-      $(".p" + tempI + " > tr > .forTotal").html(parseInt(getTotalStats(players, i, 'FOR')));
-      $(".p" + tempI + " > tr > .agiTotal").html(parseInt(getTotalStats(players, i, 'AGI')));
-      $(".p" + tempI + " > tr > .intTotal").html(parseInt(getTotalStats(players, i, 'INT')));
-      $(".p" + tempI + " > tr > .volTotal").html(parseInt(getTotalStats(players, i, 'VOL')));
-      $(".p" + tempI + " > tr > .temTotal").html(parseInt(getTotalStats(players, i, 'TEM')));
-      $(".p" + tempI + " > tr > .sagTotal").html(parseInt(getTotalStats(players, i, 'SAG')));
-
-    }
-   
+    updateLocal();
   </script>
 
   </body>

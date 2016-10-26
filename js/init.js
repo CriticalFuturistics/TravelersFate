@@ -20,8 +20,10 @@ function getBaseStats(players, playerNumber, stat) {
 		return undefined;
 	}
 }
+
 // Return the total number of a Stat at the time
 function getTotalStats(players, playerNumber, stat){
+	
 	return getBaseStats(players, playerNumber, stat) + getBonusStats(players, playerNumber, stat);
 }
 
