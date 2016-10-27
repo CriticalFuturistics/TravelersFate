@@ -5,7 +5,7 @@
 // Updates the data on the screen depending on how it chances locally
 function updateLocal(){
 	updateStats();
-	updateBuffs();
+	//updateBuffs();
     
 }
 
@@ -23,13 +23,13 @@ function updateStats(){
 	  $(".class" + j).html(players[i].class);
 	  $(".race" + j).html(players[i].race);
 	  $(".lvl" + j).html("LVL " + players[i].level);
-	  $(".p" + j + " > tr > .vitBase").html(parseInt(players[i].stats.VIT) + parseInt(getBaseStats(players, i, 'VIT')));
-	  $(".p" + j + " > tr > .forBase").html(parseInt(players[i].stats.FOR) + parseInt(getBaseStats(players, i, 'FOR')));
-	  $(".p" + j + " > tr > .agiBase").html(parseInt(players[i].stats.AGI) + parseInt(getBaseStats(players, i, 'AGI')));
-	  $(".p" + j + " > tr > .intBase").html(parseInt(players[i].stats.INT) + parseInt(getBaseStats(players, i, 'INT')));
-	  $(".p" + j + " > tr > .volBase").html(parseInt(players[i].stats.VOL) + parseInt(getBaseStats(players, i, 'VOL')));
-	  $(".p" + j + " > tr > .temBase").html(parseInt(players[i].stats.TEM) + parseInt(getBaseStats(players, i, 'TEM')));
-	  $(".p" + j + " > tr > .sagBase").html(parseInt(players[i].stats.SAG) + parseInt(getBaseStats(players, i, 'SAG')));
+	  $(".p" + j + " > tr > .vitBase").html(parseInt(players[i].stats.VIT)); //+ parseInt(getBaseStats(players, i, 'VIT')));
+	  $(".p" + j + " > tr > .forBase").html(parseInt(players[i].stats.FOR)); //+ parseInt(getBaseStats(players, i, 'FOR')));
+	  $(".p" + j + " > tr > .agiBase").html(parseInt(players[i].stats.AGI)); //+ parseInt(getBaseStats(players, i, 'AGI')));
+	  $(".p" + j + " > tr > .intBase").html(parseInt(players[i].stats.INT)); //+ parseInt(getBaseStats(players, i, 'INT')));
+	  $(".p" + j + " > tr > .volBase").html(parseInt(players[i].stats.VOL)); //+ parseInt(getBaseStats(players, i, 'VOL')));
+	  $(".p" + j + " > tr > .temBase").html(parseInt(players[i].stats.TEM)); //+ parseInt(getBaseStats(players, i, 'TEM')));
+	  $(".p" + j + " > tr > .sagBase").html(parseInt(players[i].stats.SAG)); //+ parseInt(getBaseStats(players, i, 'SAG')));
 
 	  $(".p" + j + " > tr > .vitBonus").html(parseInt(getBonusStats(players, i, 'VIT')));
 	  $(".p" + j + " > tr > .forBonus").html(parseInt(getBonusStats(players, i, 'FOR')));
@@ -59,7 +59,7 @@ function updateBuffs(){
 		for (var j = 0; j < players[i].buffs.length; j++) {
 			var name = getBuffName(players[i].buffs[j]);
 			if (name != null) {
-				var divString = '<div class="buff tooltipped" data-position="top" data-delay="50" data-tooltip="'+ name +'" href="#">'; 
+				var divString = '<div class="buff tooltipped" data-position="top" data-delay="40" data-tooltip="'+ name +'" href="#">'; 
 				nexti = i + 1;
 				$(".p" + nexti + " .buffs").append(divString + '<img src="img/buffs/' + players[i].buffs[j] + '.png">' + '</div>');
 			}
@@ -67,3 +67,33 @@ function updateBuffs(){
 
 	}
 }
+
+//		 addStat(string, int, int)
+function addStat(stat, value, playerID){
+	addStatLocal(stat, value, playerID);
+	var player = getPlayerFromID(playerID);
+    $.post({
+        url: "update.php",
+        data: {	stat: stat,
+        		value: value + parseInt(player.stats[stat]),
+        		playerID: playerID
+        	}
+    }).done(function(response){
+    	//console.log(response);
+    });
+    updateLocal();
+}
+
+//		 removeStat(string, int, int)
+function removeStat(stat, value, playerID){
+
+	addStat(stat, -value, playerID);
+}
+
+function addStatLocal(stat, value, playerID){
+	var player = getPlayerFromID(playerID);
+	var old = player.stats[stat];
+	player.stats[stat] = value + parseInt(player.stats[stat]);
+	console.log(getPlayerFromID(playerID).name + "'s base " + stat + " " + old + " -> " + player.stats[stat]);
+}
+

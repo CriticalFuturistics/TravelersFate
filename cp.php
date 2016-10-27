@@ -30,6 +30,7 @@
     while($row = mysqli_fetch_assoc($result)) {                                                         
       // Add a new array with name, class and race to the players array
       $newPlayer = [
+        "ID" => $row['ID'],
         "name" => $row["name"],
         "class"=> $row["class"],
         "race" => $row["race"],
@@ -701,14 +702,13 @@
       var races   = <?php echo $_SESSION['races']; ?>;
       var classes = <?php echo $_SESSION['classes']; ?>;
       var buffs   = <?php echo $_SESSION['buffs']; ?>;
-
       var playersColumns = <?php print_r(json_encode($_SESSION['playersColumns'])); ?>;
-
       var items = <?php echo $_SESSION['items']; ?>;
-      
 
       updateLocal();
 
+      addStat(statName.vit, 0, players[0].ID);
+      //removeStat(statName.vit, 1, players[0].ID);
 
       initialiseTooltips();
     </script>

@@ -12,6 +12,15 @@ function initialiseTooltips(){
 	  });
 }
 
+function getPlayerFromID(id){
+	for (var i = 0; i < players.length; i++) {
+		if (players[i].ID == id){
+			return players[i];
+		}
+	}
+	return null;
+}
+
 function getBaseStats(players, playerNumber, stat) {
 	if (playerNumber <= players.length) {
 		for (var key in players[playerNumber].stats){
@@ -34,7 +43,7 @@ function getTotalStats(players, playerNumber, stat){
 }
 
 function getBonusStats(players, playerNumber, stat){
-	return getStatFromBuffs(players, playerNumber, stat) + getStatFromItems(players, playerNumber, stat);
+	return getBaseStats(players, playerNumber, stat) + getStatFromBuffs(players, playerNumber, stat) + getStatFromItems(players, playerNumber, stat);
 }
 
 // Rrturns the value of a chosen Stat
@@ -132,4 +141,19 @@ function getKeysArray(fields){
     	array.push(fields[key]);
 	}
 	return array;
+}
+
+
+
+
+// Usefull constants
+
+const statName = {
+	vit: "VIT",
+	for: "FOR",
+	agi: "AGI",
+	int: "INT",
+	vol: "VOL",
+	tem: "TEM",
+	sag: "SAG"
 }
