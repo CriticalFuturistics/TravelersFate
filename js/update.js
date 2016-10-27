@@ -5,7 +5,7 @@
 // Updates the data on the screen depending on how it chances locally
 function updateLocal(){
 	updateStats();
-	//updateBuffs();
+	updateBuffs();
     
 }
 
@@ -55,16 +55,15 @@ function updateBuffs(){
 		
 	$(".buffs").html("");
 	for (var i = 0; i < players.length; i++) {
-		players[i].buffs = $.parseJSON(players[i].buffs);
-		for (var j = 0; j < players[i].buffs.length; j++) {
-			var name = getBuffName(players[i].buffs[j]);
-			if (name != null) {
+		var buffs = $.parseJSON(players[i].buffs);
+		for (var j = 0; j < buffs.length; j++) {
+			var name = getBuffName(buffs[j]);
+			if (name != null) {			
 				var divString = '<div class="buff tooltipped" data-position="top" data-delay="40" data-tooltip="'+ name +'" href="#">'; 
-				nexti = i + 1;
-				$(".p" + nexti + " .buffs").append(divString + '<img src="img/buffs/' + players[i].buffs[j] + '.png">' + '</div>');
+				nexti = 1; //nexti = i + 1;	 TODO 
+				$(".x" + nexti + " .buffs").append(divString + '<img src="img/buffs/' + buffs[j] + '.png">' + '</div>');
 			}
 		}
-
 	}
 }
 
@@ -73,7 +72,7 @@ function addStat(stat, value, playerID){
 	addStatLocal(stat, value, playerID);
 	var player = getPlayerFromID(playerID);
     $.post({
-        url: "update.php",
+        url: "updateStat.php",
         data: {	stat: stat,
         		value: value + parseInt(player.stats[stat]),
         		playerID: playerID

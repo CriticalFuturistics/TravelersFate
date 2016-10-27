@@ -35,6 +35,7 @@
         "class"=> $row["class"],
         "race" => $row["race"],
         "level" => $row["level"],
+        "armor" => $row["armor"],
         "stats" => ["VIT" => $row["VIT"], "FOR" => $row["FOR"], 
                     "AGI" => $row["AGI"], "INT" => $row["INT"],
                     "VOL" => $row["VOL"], "TEM" => $row["TEM"],
@@ -287,7 +288,7 @@
         <!-- <div class="col s12 m1"></div> -->
         <?php echo $_SESSION['error']; ?>
 
-          <div class="col s12 m2 p1">
+          <div class="col s12 m2 x1">
             <div class="icon-block">
               <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
               <h5 class="center player1">Player 1</h5>
@@ -364,7 +365,7 @@
             </div>
           </div>
 
-          <div class="col s12 m2">
+          <div class="col s12 m2 x2">
             <div class="icon-block">
               <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
               <h5 class="center player2">Player 2</h5>
@@ -441,7 +442,7 @@
             </div>
           </div>
 
-          <div class="col s12 m2">
+          <div class="col s12 m2 x3">
             <div class="icon-block">
               <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
               <h5 class="center player3">Player 3</h5>
@@ -518,7 +519,7 @@
             </div>
           </div>
 
-          <div class="col s12 m2">
+          <div class="col s12 m2 x4">
             <div class="icon-block">
               <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
               <h5 class="center player4">Player 4</h5>
@@ -595,7 +596,7 @@
             </div>
           </div>
 
-          <div class="col s12 m2">
+          <div class="col s12 m2 x5">
             <div class="icon-block">
               <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
               <h5 class="center player5">Player 5</h5>
@@ -704,13 +705,11 @@
       var buffs   = <?php echo $_SESSION['buffs']; ?>;
       var playersColumns = <?php print_r(json_encode($_SESSION['playersColumns'])); ?>;
       var items = <?php echo $_SESSION['items']; ?>;
+      initialiseTooltips();
 
       updateLocal();
 
-      addStat(statName.vit, 0, players[0].ID);
-      //removeStat(statName.vit, 1, players[0].ID);
-
-      initialiseTooltips();
+      
     </script>
 
   </body>

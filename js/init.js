@@ -8,7 +8,7 @@
 
 function initialiseTooltips(){
 	$(document).ready(function(){
-	    $('.tooltipped').tooltip({delay: 50});
+	    $('.tooltipped').tooltip({delay: 40});
 	  });
 }
 
@@ -61,11 +61,62 @@ function getValueFromStat(players, playerNumber, stat) {
 
 // Scans the active Buffs and Debuffs and returns the total Stat Modifier for the chosen Stat
 function getStatFromBuffs(players, playerNumber, stat) {
-	var activeBuffs = players[playerNumber].buffs;
-	var total = 5;
-	// TODO
+	var activeBuffs = players[playerNumber].buffs;	// TODO 0 -> playerNumber
+	var total = 0;
+	var toParse = true;
 
+	for (var i = 0; i < activeBuffs.length; i++) {
+		var b = getBuff(activeBuffs[i+1]);
+		
+		if (b != null && toParse) {
+			b.effect = $.parseJSON(b.effect);
+			toParse = !toParse;
+			console.log("Running parse");
+
+		}
+		console.log("parse check done");
+		if (b != null && b != "" && !toParse){
+			console.log(b.effect);
+						
+			if (b.effect.isAura == true){
+				// Apply this buff to every other player
+			}
+			if (b.effect.stat != 0) {
+				// Apply the stat change 
+			}
+			if (b.effect.hasOwnProperty("armor")) {
+				var bonusArmor = b.effect.armor;
+				 
+				if (b.effect.hasOwnProperty("armorMod")) {
+
+					if (b.effect.armorMod.indexOf("Furia") !== -1) {
+						var modIndex = getIndex("Furia*32");
+						var ability = b.effect.armorMod.substring(0, modIndex-1);
+						var mod = b.effect.armorMod.substring(modIndex+1, b.effect.armorMod.length-1);
+
+						if (modIndex == "*") {
+							bonusArmor += mod; // * getAbilityLevel("Furia")
+						} else if (modIndex == "/"){
+							bonusArmor += mod; // / getAbliltyLevel("Furia")
+						}
+					}
+				}
+				players[playerNumber].armor = bonusArmor;
+			}
+		
+		}
+
+	}
 	return parseInt(total);
+}
+
+function getIndex(s){
+	for (var i = 0; i < s.length; i++) {
+		if (s[i] == "*" || s[i] == "/") { 
+			return i;
+		}
+	}
+	return s.length;
 }
 
 // Scans the equipped Items and returns the total Stat Modifier for the chosen Stat
@@ -106,7 +157,7 @@ function getStatFromRace(race, stat){
 	}
 	return undefined;	
 }
- 
+
 // Returns the race stats Sto come i party
 function getStatFromClass(classX, stat){
 	for (var i = 0; i < classes.length; i++) {
@@ -121,8 +172,9 @@ function getBuff(id){
 	for (var i = 0; i < buffs.length; i++) {
 		if (buffs[i].ID == id) {
 			return buffs[i];
-		} else return null;
+		} 
 	}
+	return null;
 }
 
 function getBuffName(id){
@@ -146,7 +198,8 @@ function getKeysArray(fields){
 
 
 
-// Usefull constants
+
+// Useful constants
 
 const statName = {
 	vit: "VIT",
