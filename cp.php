@@ -288,7 +288,65 @@
         <!-- <div class="col s12 m1"></div> -->
         <?php echo $_SESSION['error']; ?>
 
-          
+          <div class="col s12 m2 x1">
+            <div class="icon-block">
+              <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+              <span class="playerData1">    </span>
+              <div class="card" style='overflow-x:scroll;overflow-y:hidden;width:100%;height:100px;padding-left:8px;margin-top:25px'>
+                <div class="card-content buffs" style='width:300%;height:60px;'>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col s12 m2 x2">
+            <div class="icon-block">
+              <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+              <span class="playerData2">    </span>
+              <div class="card" style='overflow-x:scroll;overflow-y:hidden;width:100%;height:100px;padding-left:8px;margin-top:25px'>
+                <div class="card-content buffs" style='width:300%;height:60px;'>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col s12 m2 x3">
+            <div class="icon-block">
+              <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+              <span class="playerData3">    </span>
+              <div class="card" style='overflow-x:scroll;overflow-y:hidden;width:100%;height:100px;padding-left:8px;margin-top:25px'>
+                <div class="card-content buffs" style='width:300%;height:60px;'>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col s12 m2 x4">
+            <div class="icon-block">
+              <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+              <span class="playerData4">    </span>
+              <div class="card" style='overflow-x:scroll;overflow-y:hidden;width:100%;height:100px;padding-left:8px;margin-top:25px'>
+                <div class="card-content buffs" style='width:300%;height:60px;'>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col s12 m2 x5">
+            <div class="icon-block">
+              <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+              <span class="playerData5">    </span>
+              <div class="card" style='overflow-x:scroll;overflow-y:hidden;width:100%;height:100px;padding-left:8px;margin-top:25px'>
+                <div class="card-content buffs" style='width:300%;height:60px;'>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
 
         </div>
 
