@@ -61,51 +61,65 @@ function getValueFromStat(players, playerNumber, stat) {
 
 // Scans the active Buffs and Debuffs and returns the total Stat Modifier for the chosen Stat
 function getStatFromBuffs(players, playerNumber, stat) {
-	var activeBuffs = players[playerNumber].buffs;	// TODO 0 -> playerNumber
+	var activeBuffs = players[playerNumber].buffs;
 	var total = 0;
-	var toParse = true;
 
 	for (var i = 0; i < activeBuffs.length; i++) {
 		var b = getBuff(activeBuffs[i+1]);
-		
-		if (b != null && toParse) {
-			b.effect = $.parseJSON(b.effect);
-			toParse = !toParse;
-			console.log("Running parse");
-
-		}
-		console.log("parse check done");
-		if (b != null && b != "" && !toParse){
-			console.log(b.effect);
-						
-			if (b.effect.isAura == true){
-				// Apply this buff to every other player
+		if (b != null) {
+			// Test if the string is JSON validated. If not, make it so
+			if (!isJson(b.effect)) {
+				log("JSON number " + i + " is not a JSON. Parsing...");
+				b.effect = JSON.parse(b.effect);
 			}
-			if (b.effect.stat != 0) {
-				// Apply the stat change 
-			}
-			if (b.effect.hasOwnProperty("armor")) {
-				var bonusArmor = b.effect.armor;
-				 
-				if (b.effect.hasOwnProperty("armorMod")) {
 
-					if (b.effect.armorMod.indexOf("Furia") !== -1) {
-						var modIndex = getIndex("Furia*32");
-						var ability = b.effect.armorMod.substring(0, modIndex-1);
-						var mod = b.effect.armorMod.substring(modIndex+1, b.effect.armorMod.length-1);
+			if (isJson(b.effect)) {
 
-						if (modIndex == "*") {
-							bonusArmor += mod; // * getAbilityLevel("Furia")
-						} else if (modIndex == "/"){
-							bonusArmor += mod; // / getAbliltyLevel("Furia")
+				var fx = JSON.parse(b.effect);
+				if (fx.isAura == true){
+					// Apply this buff to every other player
+				}
+				if (fx.hasOwnProperty("stat")) {
+					if (fx.stat == true) {
+						if (fx.hasOwnProperty("statMod")) {
+							return fx.statMod[stat];
 						}
 					}
 				}
-				players[playerNumber].armor = bonusArmor;
 			}
-		
-		}
 
+			if (isJson(fx)){
+				var fx = b.effect;
+
+				if (fx.isAura == true){
+					// Apply this buff to every other player
+				}
+				if (fx.stat != 0) {
+					// Apply the stat change 
+				}
+				if (fx.hasOwnProperty("armor")) {
+					var bonusArmor = fx.armor;
+					 
+					if (fx.hasOwnProperty("armorMod")) {
+
+						if (fx.armorMod.indexOf("Furia") !== -1) {
+							var modIndex = getIndex("Furia*32");
+							var ability = fx.armorMod.substring(0, modIndex-1);
+							var mod = fx.armorMod.substring(modIndex+1, fx.armorMod.length-1);
+
+							if (modIndex == "*") {
+								bonusArmor += mod; // * getAbilityLevel("Furia")
+							} else if (modIndex == "/"){
+								bonusArmor += mod; // / getAbliltyLevel("Furia")
+							}
+						}
+
+					}
+					players[playerNumber].armor = bonusArmor;
+				}	//TODO Move to another function
+			
+			}
+		}
 	}
 	return parseInt(total);
 }
@@ -195,6 +209,15 @@ function getKeysArray(fields){
 	return array;
 }
 
+function isJson(item) {
+    try {
+    	var test = JSON.parse(item);
+    } catch(e) {
+    	return false;
+    }
+    return true;
+}
+
 
 
 
@@ -209,4 +232,8 @@ const statName = {
 	vol: "VOL",
 	tem: "TEM",
 	sag: "SAG"
+}
+
+function log(str){
+	console.log(str);
 }

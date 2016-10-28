@@ -55,13 +55,19 @@ function updateBuffs(){
 		
 	$(".buffs").html("");
 	for (var i = 0; i < players.length; i++) {
-		var buffs = $.parseJSON(players[i].buffs);
-		for (var j = 0; j < buffs.length; j++) {
-			var name = getBuffName(buffs[j]);
-			if (name != null) {			
-				var divString = '<div class="buff tooltipped" data-position="top" data-delay="40" data-tooltip="'+ name +'" href="#">'; 
-				nexti = 1; //nexti = i + 1;	 TODO 
-				$(".x" + nexti + " .buffs").append(divString + '<img src="img/buffs/' + buffs[j] + '.png">' + '</div>');
+		if (players[i].buffs != null && players[i].buffs != "") {
+			var buffs = players[i].buffs;
+			if (!isJson(players[i].buffs)) {
+				buffs = JSON.parse(players[i].buffs);
+			}
+			
+			for (var j = 0; j < buffs.length; j++) {
+				var name = getBuffName(buffs[j]);
+				if (name != null) {			
+					var divString = '<div class="buff tooltipped" data-position="top" data-delay="40" data-tooltip="'+ name +'" href="#">'; 
+					nexti = 1; //nexti = i + 1;	 TODO 
+					$(".x" + nexti + " .buffs").append(divString + '<img src="img/buffs/' + buffs[j] + '.png">' + '</div>');
+				}
 			}
 		}
 	}
@@ -96,3 +102,20 @@ function addStatLocal(stat, value, playerID){
 	console.log(getPlayerFromID(playerID).name + "'s base " + stat + " " + old + " -> " + player.stats[stat]);
 }
 
+
+
+
+
+function placePlayers(){
+	$('.players').html("");
+
+	for (var i = 0; i < players.length; i++) {
+		var j = i + 1;
+		log("adding player " + j);
+		var div = '<div class="col s12 m2 x' + j + '> <div class="icon-block"> <h2 class="center light-blue-text"><i class="material-icons">group</i></h2> <h5 class="center player' + j + '">Player Name</h5> <p class="center class' + j + '"> </p><p class="center race' + j + '"> </p><div class="card"> <div class="card-content"> <span class="card-title grey-text text-darken-4 center valign center-block lvl' + j + '">LVL</span> <p> <table class="highlight"> <thead> <tr> <th data-field="stat">Stat</th> <th data-field="statbase">Base</th> <th data-field="statbuff">Buff</th> <th data-field="stattotal">Total</th> </tr></thead> <tbody class="boldcol p' + j + ' center"> <tr> <td>VIT</td><td class="vitBase">1</td><td class="vitBonus">1</td><td class="vitTotal">1</td></tr><tr> <td>FOR</td><td class="forBase">1</td><td class="forBonus">1</td><td class="forTotal">1</td></tr><tr> <td>AGI</td><td class="agiBase">1</td><td class="agiBonus">1</td><td class="agiTotal">1</td></tr><tr> <td>INT</td><td class="intBase">1</td><td class="intBonus">1</td><td class="intTotal">1</td></tr><tr> <td>VOL</td><td class="volBase">1</td><td class="volBonus">1</td><td class="volTotal">1</td></tr><tr> <td>TEM</td><td class="temBase">1</td><td class="temBonus">1</td><td class="temTotal">1</td></tr><tr> <td>SAG</td><td class="sagBase">1</td><td class="sagBonus">1</td><td class="sagTotal">1</td></tr></tbody> </table> </p></div></div><div class="card" style=';
+		div += "overflow-x:scroll;overflow-y:hidden;width:100%;height:100px;padding-left:8px;margin-top:25px'>";
+		div += '<div class="card-content buffs" style=';
+		div += "'width:300%;height:60px;'> </div></div></div></div>";
+		$('.players').append(div);
+	}
+}
