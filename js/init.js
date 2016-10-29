@@ -106,7 +106,7 @@ function getArmorFromBuffs(b.effect) {
 							if (modIndex == "*") {
 								bonusArmor += mod; // * getAbilityLevel("Furia")
 							} else if (modIndex == "/"){
-								bonusArmor += mod; // / getAbliltyLevel("Furia")
+								bonusArmor += mod; ///  getAbliltyLevel("Furia")
 							}
 						}
 
@@ -209,9 +209,10 @@ function isJson(item) {
     return true;
 }
 
-
-
-
+function getDamageReduction(players[playerNumber].armor){
+	damageReduction = (players[playerNumber].armor * 0.06)/(sqrt(players[playerNumber].armor) * 0.02);
+	return damageReduction;
+}
 
 // Useful constants
 
