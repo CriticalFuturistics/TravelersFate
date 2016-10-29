@@ -387,7 +387,7 @@
       initialiseTooltips();
 
       updateLocal();
-
+      log(getArmor(1));
       
     </script>
 

@@ -46,6 +46,8 @@ function updateStats(){
 	  $(".p" + j + " > tr > .volTotal").html(parseInt(getTotalStats(players, i, 'VOL')));
 	  $(".p" + j + " > tr > .temTotal").html(parseInt(getTotalStats(players, i, 'TEM')));
 	  $(".p" + j + " > tr > .sagTotal").html(parseInt(getTotalStats(players, i, 'SAG')));
+
+	  //$(".p" + j + " .armor").html(parseInt(getArmor(i)));
 	}
 }
 
@@ -99,7 +101,7 @@ function addStatLocal(stat, value, playerID){
 	var player = getPlayerFromID(playerID);
 	var old = player.stats[stat];
 	player.stats[stat] = value + parseInt(player.stats[stat]);
-	console.log(getPlayerFromID(playerID).name + "'s base " + stat + " " + old + " -> " + player.stats[stat]);
+	//console.log(getPlayerFromID(playerID).name + "'s base " + stat + " " + old + " -> " + player.stats[stat]);
 }
 
 
@@ -112,7 +114,7 @@ function placePlayers(){
 	for (var i = 0; i < players.length; i++) {
 		var j = i + 1;
 		var div = '<h5 class="center player' + j + '">Player Name</h5> <p class="center class' + j + '"> </p><p class="center race' + j + '"> </p><div class="card"> <div class="card-content"> <span class="card-title grey-text text-darken-4 center valign center-block lvl' + j + '">LVL</span> <p> <table class="highlight"> <thead> <tr> <th data-field="stat">Stat</th> <th data-field="statbase">Base</th> <th data-field="statbuff">Buff</th> <th data-field="stattotal">Total</th> </tr></thead> <tbody class="boldcol p' + j + ' center"> <tr> <td>VIT</td><td class="vitBase">1</td><td class="vitBonus">1</td><td class="vitTotal">1</td></tr><tr> <td>FOR</td><td class="forBase">1</td><td class="forBonus">1</td><td class="forTotal">1</td></tr><tr> <td>AGI</td><td class="agiBase">1</td><td class="agiBonus">1</td><td class="agiTotal">1</td></tr><tr> <td>INT</td><td class="intBase">1</td><td class="intBonus">1</td><td class="intTotal">1</td></tr><tr> <td>VOL</td><td class="volBase">1</td><td class="volBonus">1</td><td class="volTotal">1</td></tr><tr> <td>TEM</td><td class="temBase">1</td><td class="temBonus">1</td><td class="temTotal">1</td></tr><tr> <td>SAG</td><td class="sagBase">1</td><td class="sagBonus">1</td><td class="sagTotal">1</td></tr></tbody> </table> </p></div></div>';
-		log(div);
+		//log(div);
 		$('.players .playerData' + j).append(div);
 	}
 }

@@ -62,7 +62,6 @@ function getValueFromStat(players, playerNumber, stat) {
 // Scans the active Buffs and Debuffs and returns the total Stat Modifier for the chosen Stat
 function getStatFromBuffs(players, playerNumber, stat) {
 	var activeBuffs = players[playerNumber].buffs;
-	var total = 0;
 
 	for (var i = 0; i < activeBuffs.length; i++) {
 		var b = getBuff(activeBuffs[i+1]);
@@ -89,15 +88,34 @@ function getStatFromBuffs(players, playerNumber, stat) {
 			}
 		}
 	}
-	return parseInt(total);
+	return 0;
+}
+function getArmor(playerID){
+	var p = getPlayerFromID(playerID);
+	return parseInt(p.armor) + getArmorFromBuffs(playerID);
 }
 
-function getArmorFromBuffs(b.effect) {
-	if (fx.hasOwnProperty("armor")) {
-					var bonusArmor = fx.armor;
-					 
-					if (fx.hasOwnProperty("armorMod")) {
+function getArmorFromBuffs(playerID) {
+	var p = getPlayerFromID(playerID);
 
+	for (var i = 0; i < p.buffs.length; i++) {
+		var b = getBuff(p.buffs[i+1]);
+		if (b != null) {
+			// Test if the string is JSON validated. If not, make it so
+			if (!isJson(b.effect)) {
+				log("JSON number " + i + " is not a JSON. Parsing...");
+				b.effect = JSON.parse(b.effect);
+			}
+
+			if (isJson(b.effect)) {
+				var fx = JSON.parse(b.effect);
+				if (fx.isAura == true){
+					// Apply this buff to every other player
+				}
+				if (fx.hasOwnProperty("armor")) {
+					var bonusArmor = 0;
+					
+					if (fx.hasOwnProperty("armorMod")) {
 						if (fx.armorMod.indexOf("Furia") !== -1) {
 							var modIndex = getIndex("Furia*32");
 							var ability = fx.armorMod.substring(0, modIndex-1);
@@ -111,8 +129,12 @@ function getArmorFromBuffs(b.effect) {
 						}
 
 					}
-					players[playerNumber].armor = bonusArmor;
-				}	//TODO Move to another function
+					return parseInt(bonusArmor);
+				}
+			}
+		}
+	}
+	return 0;
 }
 
 function getIndex(s){
@@ -209,7 +231,21 @@ function isJson(item) {
     return true;
 }
 
+function getAbilityLevel(playerID, ab){
+	/*for (var i = 0; i < classes.length; i++) {
+		if (classes[i].classname == getClassFromPlayer(playerID)){
+			for (var i = 0; i < classes.abilities.length; i++) {
+					if (classes.abilities['AB' + i] == ab){
+						return classes.abilities['AB' + i];
+					}
+				}
+		}
+	}
+	return 0;*/
 
+	log(classes[getClassFromPlayer(playerID)]);
+}
+//getAbilityLevel('Furia');
 
 
 
