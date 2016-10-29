@@ -97,7 +97,16 @@ function getStatFromBuffs(players, playerNumber, stat) {
 				if (fx.stat != 0) {
 					// Apply the stat change 
 				}
-				if (fx.hasOwnProperty("armor")) {
+				
+			
+			}
+		}
+	}
+	return parseInt(total);
+}
+
+function getArmorFromBuffs(b.effect) {
+	if (fx.hasOwnProperty("armor")) {
 					var bonusArmor = fx.armor;
 					 
 					if (fx.hasOwnProperty("armorMod")) {
@@ -117,11 +126,6 @@ function getStatFromBuffs(players, playerNumber, stat) {
 					}
 					players[playerNumber].armor = bonusArmor;
 				}	//TODO Move to another function
-			
-			}
-		}
-	}
-	return parseInt(total);
 }
 
 function getIndex(s){
