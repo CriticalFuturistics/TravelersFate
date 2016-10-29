@@ -87,19 +87,6 @@ function getStatFromBuffs(players, playerNumber, stat) {
 					}
 				}
 			}
-
-			if (isJson(fx)){
-				var fx = b.effect;
-
-				if (fx.isAura == true){
-					// Apply this buff to every other player
-				}
-				if (fx.stat != 0) {
-					// Apply the stat change 
-				}
-				
-			
-			}
 		}
 	}
 	return parseInt(total);
