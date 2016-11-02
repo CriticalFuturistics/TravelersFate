@@ -214,6 +214,16 @@ function getDamageReduction(armor){
 	return damageReduction;
 }
 
+function getArmor(playerID){
+	return getArmorFromBuffs(playerID) + 0; // + getArmorFromItems() + getArmorFromEquip()
+}
+
+function setMaxHP(playerID){
+	players[playerID].maxHP = players[playerID].stats[statName.vit] * 20 + players[playerID].stats[statName.for] * 4 + players[playerID].stats[statName.agi] * 2;
+}
+
+
+
 
 // Useful constants
 
