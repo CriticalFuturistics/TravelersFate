@@ -96,3 +96,13 @@ body {
     height: 50px;
     border: 1px solid #EEE;
 }
+
+.bonus {
+	color:#4caf50;
+}
+
+.armorCard {
+	height:90px;
+	padding-left:8px;
+	margin-top:25px;
+}

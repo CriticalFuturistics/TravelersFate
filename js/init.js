@@ -39,11 +39,11 @@ function getBaseStats(playerID, stat) {
 // Return the total number of a Stat at the time
 function getTotalStats(playerID, stat){
 	
-	return getBaseStats(playerID, stat) + getBonusStats(playerID, stat);
+	return players[playerID].stats[stat] + getBonusStats(playerID, stat);
 }
 
 function getBonusStats(playerID, stat){
-	return getBaseStats(players, playerID, stat) + getStatFromBuffs(playerID, stat) + getStatFromItems(playerID, stat);
+	return getBaseStats(playerID, stat) + getStatFromBuffs(playerID, stat) + getStatFromItems(playerID, stat);
 }
 
 // Rrturns the value of a chosen Stat
@@ -210,21 +210,26 @@ function getBuffName(id){
 }
 
 function getDamageReduction(armor){
-	damageReduction = (armor * 0.06)/(sqrt(armor) * 0.02);
-	return damageReduction;
+	if (armor == 0 || armor == 1) {
+		return 0;
+	}
+	damageReduction = Math.floor((armor * 0.06)/(Math.sqrt(armor) * 0.02));
+	return parseInt(damageReduction);
 }
 
-function getArmor(playerID){
-	return getArmorFromBuffs(playerID) + getArmorFromItems(playerID) + getArmorFromEquip(playerID);
+function getTotalArmor(playerID){
+	return getBaseArmor(playerID) + getBonusArmor(playerID);
 }
 
-function getArmorFromItems(playerID){
+function getBaseArmor(playerID){
+	return players[playerID].armor;
+}
+
+function getBonusArmor(playerID){
 	return 0;
 }
 
-function getArmorFromEquip(playerID){
-	return 0;
-}
+
 
 // --- Player chars from Stats --- //
 

@@ -293,6 +293,7 @@
             <div class="icon-block">
               <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
               <span class="playerData1">    </span>
+              <span class="playerArmor1">   </span>
               <div class="card" style='overflow-x:scroll;overflow-y:hidden;width:100%;height:100px;padding-left:8px;margin-top:25px'>
                 <div class="card-content buffs" style='width:300%;height:60px;'>
                   
@@ -305,6 +306,7 @@
             <div class="icon-block">
               <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
               <span class="playerData2">    </span>
+              <span class="playerArmor2">   </span>
               <div class="card" style='overflow-x:scroll;overflow-y:hidden;width:100%;height:100px;padding-left:8px;margin-top:25px'>
                 <div class="card-content buffs" style='width:300%;height:60px;'>
                   
@@ -317,6 +319,7 @@
             <div class="icon-block">
               <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
               <span class="playerData3">    </span>
+              <span class="playerArmor3">   </span>
               <div class="card" style='overflow-x:scroll;overflow-y:hidden;width:100%;height:100px;padding-left:8px;margin-top:25px'>
                 <div class="card-content buffs" style='width:300%;height:60px;'>
                   
@@ -329,6 +332,7 @@
             <div class="icon-block">
               <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
               <span class="playerData4">    </span>
+              <span class="playerArmor4">   </span>
               <div class="card" style='overflow-x:scroll;overflow-y:hidden;width:100%;height:100px;padding-left:8px;margin-top:25px'>
                 <div class="card-content buffs" style='width:300%;height:60px;'>
                   
@@ -341,6 +345,7 @@
             <div class="icon-block">
               <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
               <span class="playerData5">    </span>
+              <span class="playerArmor5">   </span>
               <div class="card" style='overflow-x:scroll;overflow-y:hidden;width:100%;height:100px;padding-left:8px;margin-top:25px'>
                 <div class="card-content buffs" style='width:300%;height:60px;'>
                   

@@ -53,13 +53,13 @@ function updateStats(){
 	  $(".class" + j).html(players[i].class);
 	  $(".race" + j).html(players[i].race);
 	  $(".lvl" + j).html("LVL " + players[i].level);
-	  $(".p" + j + " > tr > .vitBase").html(parseInt(players[i].stats.VIT)); //+ parseInt(getBaseStats(players, i, 'VIT')));
-	  $(".p" + j + " > tr > .forBase").html(parseInt(players[i].stats.FOR)); //+ parseInt(getBaseStats(players, i, 'FOR')));
-	  $(".p" + j + " > tr > .agiBase").html(parseInt(players[i].stats.AGI)); //+ parseInt(getBaseStats(players, i, 'AGI')));
-	  $(".p" + j + " > tr > .intBase").html(parseInt(players[i].stats.INT)); //+ parseInt(getBaseStats(players, i, 'INT')));
-	  $(".p" + j + " > tr > .volBase").html(parseInt(players[i].stats.VOL)); //+ parseInt(getBaseStats(players, i, 'VOL')));
+	  $(".p" + j + " > tr > .vitBase").html(parseInt(players[i].stats.VIT));
+	  $(".p" + j + " > tr > .forBase").html(parseInt(players[i].stats.FOR));
+	  $(".p" + j + " > tr > .agiBase").html(parseInt(players[i].stats.AGI));
+	  $(".p" + j + " > tr > .intBase").html(parseInt(players[i].stats.INT));
+	  $(".p" + j + " > tr > .volBase").html(parseInt(players[i].stats.VOL));
 	  $(".p" + j + " > tr > .temBase").html(parseInt(players[i].stats.TEM)); //+ parseInt(getBaseStats(players, i, 'TEM')));
-	  $(".p" + j + " > tr > .sagBase").html(parseInt(players[i].stats.SAG)); //+ parseInt(getBaseStats(players, i, 'SAG')));
+	  $(".p" + j + " > tr > .sagBase").html(parseInt(players[i].stats.SAG));
 
 	  $(".p" + j + " > tr > .vitBonus").html(parseInt(getBonusStats(i, statName.vit)));
 	  $(".p" + j + " > tr > .forBonus").html(parseInt(getBonusStats(i, statName.for)));
@@ -144,7 +144,14 @@ function placePlayers(){
 
 	for (var i = 0; i < players.length; i++) {
 		var j = i + 1;
-		var div = '<h5 class="center player' + j + '">Player Name</h5> <p class="center class' + j + '"> </p><p class="center race' + j + '"> </p><div class="card"> <div class="card-content"> <span class="card-title grey-text text-darken-4 center valign center-block lvl' + j + '">LVL</span> <p> <table class="highlight"> <thead> <tr> <th data-field="stat">Stat</th> <th data-field="statbase">Base</th> <th data-field="statbuff">Buff</th> <th data-field="stattotal">Total</th> </tr></thead> <tbody class="boldcol p' + j + ' center"> <tr> <td>VIT</td><td class="vitBase">1</td><td class="vitBonus">1</td><td class="vitTotal">1</td></tr><tr> <td>FOR</td><td class="forBase">1</td><td class="forBonus">1</td><td class="forTotal">1</td></tr><tr> <td>AGI</td><td class="agiBase">1</td><td class="agiBonus">1</td><td class="agiTotal">1</td></tr><tr> <td>INT</td><td class="intBase">1</td><td class="intBonus">1</td><td class="intTotal">1</td></tr><tr> <td>VOL</td><td class="volBase">1</td><td class="volBonus">1</td><td class="volTotal">1</td></tr><tr> <td>TEM</td><td class="temBase">1</td><td class="temBonus">1</td><td class="temTotal">1</td></tr><tr> <td>SAG</td><td class="sagBase">1</td><td class="sagBonus">1</td><td class="sagTotal">1</td></tr></tbody> </table> </p></div></div>';
+		var div = '<h5 class="center player' + j + '">Player Name</h5> <p class="center class' + j + '"> </p><p class="center race' + j + '"> </p><div class="card"> <div class="card-content">';
+		div += '<span class="card-title grey-text text-darken-4 center valign center-block lvl' + j + '">LVL</span> <p> <table class="highlight">';
+		div += '<thead> <tr> <th data-field="stat">Stat</th> <th data-field="statbase">Base</th> <th data-field="statbuff">Buff</th> <th data-field="stattotal">Total</th> </tr></thead> <tbody class="boldcol p' + j + ' center"> <tr> <td>VIT</td><td class="vitBase">1</td><td class="vitBonus">1</td><td class="vitTotal">1</td></tr><tr> <td>FOR</td><td class="forBase">1</td><td class="forBonus">1</td><td class="forTotal">1</td></tr><tr> <td>AGI</td><td class="agiBase">1</td><td class="agiBonus">1</td><td class="agiTotal">1</td></tr><tr> <td>INT</td><td class="intBase">1</td><td class="intBonus">1</td><td class="intTotal">1</td></tr><tr> <td>VOL</td><td class="volBase">1</td><td class="volBonus">1</td><td class="volTotal">1</td></tr><tr> <td>TEM</td><td class="temBase">1</td><td class="temBonus">1</td><td class="temTotal">1</td></tr><tr> <td>SAG</td><td class="sagBase">1</td><td class="sagBonus">1</td><td class="sagTotal">1</td></tr></tbody> </table> </p></div></div>';
+		
 		$('.players .playerData' + j).append(div);
+
+		var adiv = '<div class="card armorCard" style><div class="card-content armor"> <span class=" grey-text text-darken-4 center-block center"> Armor </span> <p class="text-darken-4 center-block center">' + getBaseArmor(i) + ' + <span class="bonus">' + getBonusArmor(i) + '</span> (' + getDamageReduction(getTotalArmor(i)) + '%)</p> </div></div>';
+
+		$('.players .playerArmor' + j).append(adiv);
 	}
 }
