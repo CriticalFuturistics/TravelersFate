@@ -215,11 +215,27 @@ function getDamageReduction(armor){
 }
 
 function getArmor(playerID){
-	return getArmorFromBuffs(playerID) + 0; // + getArmorFromItems() + getArmorFromEquip()
+	return getArmorFromBuffs(playerID) + getArmorFromItems(playerID) + getArmorFromEquip(playerID);
 }
 
+function getArmorFromItems(playerID){
+	return 0;
+}
+
+function getArmorFromEquip(playerID){
+	return 0;
+}
+
+// --- Player chars from Stats --- //
+
 function setMaxHP(playerID){
-	players[playerID].maxHP = players[playerID].stats[statName.vit] * 20 + players[playerID].stats[statName.for] * 4 + players[playerID].stats[statName.agi] * 2;
+	var p = players[playerID];
+	p.maxHP = p.stats[statName.vit] * 20 + p.stats[statName.for] * 4 + p.stats[statName.agi] * 2;
+}
+
+function setMaxMana(playerID){
+	var p = players[playerID];
+	p.maxMana = p.stats[statName.int] * 20 + p.stats[statName.sag] * 5;
 }
 
 
