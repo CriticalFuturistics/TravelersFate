@@ -21,13 +21,13 @@ function getPlayerFromID(id){
 	return null;
 }
 
-function getBaseStats(players, playerNumber, stat) {
-	if (playerNumber <= players.length) {
-		for (var key in players[playerNumber].stats){
+function getBaseStats(playerID, stat) {
+	if (playerID <= players.length) {
+		for (var key in players[playerID].stats){
 			if (key == stat) {
-	    		var statValue = players[playerNumber].stats[key];
-	    		var raceStats = getStatFromRace(getRaceFromPlayer(players, playerNumber), stat);
-	    		var classStats = getStatFromClass(getClassFromPlayer(players, playerNumber), stat);
+	    		var statValue = players[playerID].stats[key];
+	    		var raceStats = getStatFromRace(getRaceFromPlayer(playerID), stat);
+	    		var classStats = getStatFromClass(getClassFromPlayer(playerID).classname, stat);
 	    		return parseInt(statValue) + parseInt(raceStats) + parseInt(classStats);
 	    	}
 	    } return undefined;
@@ -37,21 +37,21 @@ function getBaseStats(players, playerNumber, stat) {
 }
 
 // Return the total number of a Stat at the time
-function getTotalStats(players, playerNumber, stat){
+function getTotalStats(playerID, stat){
 	
-	return getBaseStats(players, playerNumber, stat) + getBonusStats(players, playerNumber, stat);
+	return getBaseStats(playerID, stat) + getBonusStats(playerID, stat);
 }
 
-function getBonusStats(players, playerNumber, stat){
-	return getBaseStats(players, playerNumber, stat) + getStatFromBuffs(players, playerNumber, stat) + getStatFromItems(players, playerNumber, stat);
+function getBonusStats(playerID, stat){
+	return getBaseStats(players, playerID, stat) + getStatFromBuffs(playerID, stat) + getStatFromItems(playerID, stat);
 }
 
 // Rrturns the value of a chosen Stat
-function getValueFromStat(players, playerNumber, stat) {
-	if (playerNumber <= players.length) {
-		for (var key in players[playerNumber].stats){
+function getValueFromStat(playerID, stat) {
+	if (playerID <= players.length) {
+		for (var key in players[playerID].stats){
 			if (key == stat) {
-	    		return parseInt(players[playerNumber].stats[key]);
+	    		return parseInt(players[playerID].stats[key]);
 	    	}
 	    } return undefined;
 	} else {
@@ -60,8 +60,8 @@ function getValueFromStat(players, playerNumber, stat) {
 }
 
 // Scans the active Buffs and Debuffs and returns the total Stat Modifier for the chosen Stat
-function getStatFromBuffs(players, playerNumber, stat) {
-	var activeBuffs = players[playerNumber].buffs;
+function getStatFromBuffs(playerID, stat) {
+	var activeBuffs = players[playerID].buffs;
 
 	for (var i = 0; i < activeBuffs.length; i++) {
 		var b = getBuff(activeBuffs[i+1]);
@@ -78,8 +78,9 @@ function getStatFromBuffs(players, playerNumber, stat) {
 				if (fx.isAura == true){
 					// Apply this buff to every other player
 				}
+
 				if (fx.hasOwnProperty("stat")) {
-					if (fx.stat == true) {
+					if (fx.stat) {
 						if (fx.hasOwnProperty("statMod")) {
 							return fx.statMod[stat];
 						}
@@ -90,16 +91,12 @@ function getStatFromBuffs(players, playerNumber, stat) {
 	}
 	return 0;
 }
-function getArmor(playerID){
-	var p = getPlayerFromID(playerID);
-	return parseInt(p.armor) + getArmorFromBuffs(playerID);
-}
 
 function getArmorFromBuffs(playerID) {
-	var p = getPlayerFromID(playerID);
+	var activeBuffs = players[playerID].buffs;
 
-	for (var i = 0; i < p.buffs.length; i++) {
-		var b = getBuff(p.buffs[i+1]);
+	for (var i = 0; i < activeBuffs.length; i++) {
+		var b = getBuff(activeBuffs[i+1]);
 		if (b != null) {
 			// Test if the string is JSON validated. If not, make it so
 			if (!isJson(b.effect)) {
@@ -109,27 +106,25 @@ function getArmorFromBuffs(playerID) {
 
 			if (isJson(b.effect)) {
 				var fx = JSON.parse(b.effect);
-				if (fx.isAura == true){
-					// Apply this buff to every other player
-				}
 				if (fx.hasOwnProperty("armor")) {
-					var bonusArmor = 0;
-					
+					var bonusArmor = fx.armor;
+					 
 					if (fx.hasOwnProperty("armorMod")) {
-						if (fx.armorMod.indexOf("Furia") !== -1) {
-							var modIndex = getIndex("Furia*32");
-							var ability = fx.armorMod.substring(0, modIndex-1);
-							var mod = fx.armorMod.substring(modIndex+1, fx.armorMod.length-1);
 
-							if (modIndex == "*") {
+						// If the armor modifier contains "Furia"
+						if (fx.armorMod.indexOf("Furia") !== -1) {
+							var divisionIndex = getDivisionIndex("Furia*2");
+							var ability = fx.armorMod.substring(0, divisionIndex-1);
+							var mod = fx.armorMod.substring(divisionIndex+1, fx.armorMod.length-1);
+
+							if (divisionIndex == "*") {
 								bonusArmor += mod; // * getAbilityLevel("Furia")
-							} else if (modIndex == "/"){
+							} else if (divisionIndex == "/"){
 								bonusArmor += mod; // / getAbliltyLevel("Furia")
 							}
 						}
-
 					}
-					return parseInt(bonusArmor);
+					return bonusArmor;
 				}
 			}
 		}
@@ -137,7 +132,7 @@ function getArmorFromBuffs(playerID) {
 	return 0;
 }
 
-function getIndex(s){
+function getDivisionIndex(s){
 	for (var i = 0; i < s.length; i++) {
 		if (s[i] == "*" || s[i] == "/") { 
 			return i;
@@ -147,18 +142,18 @@ function getIndex(s){
 }
 
 // Scans the equipped Items and returns the total Stat Modifier for the chosen Stat
-function getStatFromItems(players, playerNumber, stat) {
-	var items = players[playerNumber].equip;
-	var total = 9;
+function getStatFromItems(playerID, stat) {
+	var items = players[playerID].equip;
+	var total = 0;
 	// TODO
 
 	return parseInt(total);
 }
 
 // Returns the Race the player as a String
-function getRaceFromPlayer(players, playerNumber) {
+function getRaceFromPlayer(playerID) {
 	for (var i = 0; i < races.length; i++) {
-		if (races[i].racename == players[playerNumber].race) {
+		if (races[i].racename == players[playerID].race) {
 			return races[i].racename;
 		}
 	}
@@ -166,10 +161,10 @@ function getRaceFromPlayer(players, playerNumber) {
 }
 
 // Returns the Class the player as a String
-function getClassFromPlayer(players, playerNumber) {
+function getClassFromPlayer(playerID) {
 	for (var i = 0; i < classes.length; i++) {
-		if (classes[i].classname == players[playerNumber].class) {
-			return classes[i].classname;
+		if (classes[i].classname == players[playerID].class) {
+			return classes[i];
 		}
 	}
 	return undefined;
@@ -186,15 +181,16 @@ function getStatFromRace(race, stat){
 }
 
 // Returns the race stats Sto come i party
-function getStatFromClass(classX, stat){
+function getStatFromClass(thisClass, stat){
 	for (var i = 0; i < classes.length; i++) {
-		if (classes[i].classname == classX){
+		if (classes[i].classname == thisClass){
 			return classes[i].stats[stat];	
 		}
 	}
 	return undefined;	
 }
 
+// Returns the Buff object
 function getBuff(id){
 	for (var i = 0; i < buffs.length; i++) {
 		if (buffs[i].ID == id) {
@@ -204,6 +200,7 @@ function getBuff(id){
 	return null;
 }
 
+// Returns the Buff Name as a string
 function getBuffName(id){
 	var buff = getBuff(id);
 	if (buff == null) {
@@ -212,40 +209,35 @@ function getBuffName(id){
 	return buff.name;
 }
 
-
-
-function getKeysArray(fields){
-	var array = [];
-	for (var key in fields) {
-    	array.push(fields[key]);
-	}
-	return array;
+function getDamageReduction(armor){
+	damageReduction = (armor * 0.06)/(sqrt(armor) * 0.02);
+	return damageReduction;
 }
 
-function isJson(item) {
-    try {
-    	var test = JSON.parse(item);
-    } catch(e) {
-    	return false;
-    }
-    return true;
+function getArmor(playerID){
+	return getArmorFromBuffs(playerID) + getArmorFromItems(playerID) + getArmorFromEquip(playerID);
 }
 
-function getAbilityLevel(playerID, ab){
-	/*for (var i = 0; i < classes.length; i++) {
-		if (classes[i].classname == getClassFromPlayer(playerID)){
-			for (var i = 0; i < classes.abilities.length; i++) {
-					if (classes.abilities['AB' + i] == ab){
-						return classes.abilities['AB' + i];
-					}
-				}
-		}
-	}
-	return 0;*/
-
-	log(classes[getClassFromPlayer(playerID)]);
+function getArmorFromItems(playerID){
+	return 0;
 }
-//getAbilityLevel('Furia');
+
+function getArmorFromEquip(playerID){
+	return 0;
+}
+
+// --- Player chars from Stats --- //
+
+function setMaxHP(playerID){
+	var p = players[playerID];
+	p.maxHP = p.stats[statName.vit] * 20 + p.stats[statName.for] * 4 + p.stats[statName.agi] * 2;
+}
+
+function setMaxMana(playerID){
+	var p = players[playerID];
+	p.maxMana = p.stats[statName.int] * 20 + p.stats[statName.sag] * 5;
+}
+
 
 
 
@@ -263,4 +255,21 @@ const statName = {
 
 function log(str){
 	console.log(str);
+}
+
+function getKeysArray(fields){
+	var array = [];
+	for (var key in fields) {
+    	array.push(fields[key]);
+	}
+	return array;
+}
+
+function isJson(item) {
+    try {
+    	var test = JSON.parse(item);
+    } catch(e) {
+    	return false;
+    }
+    return true;
 }
