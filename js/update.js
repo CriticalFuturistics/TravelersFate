@@ -150,7 +150,7 @@ function placePlayers(){
 		
 		$('.players .playerData' + j).append(div);
 
-		var adiv = '<div class="card armorCard" style><div class="card-content armor"> <span class=" grey-text text-darken-4 center-block center"> Armor </span> <p class="text-darken-4 center-block center">' + getBaseArmor(i) + ' + <span class="bonus">' + getBonusArmor(i) + '</span> (' + getDamageReduction(getTotalArmor(i)) + '%)</p> </div></div>';
+		var adiv = '<div class="card armorCard" style><div class="card-content armor"> <span class=" grey-text text-darken-4 center-block center"> Armor </span> <p class="text-darken-4 center-block center">' + getBaseArmor(i) + '<span class="bonus"> + ' + getBonusArmor(i) + '</span> (' + getDamageReduction(getTotalArmor(i)) + '%)</p> </div></div>';
 
 		$('.players .playerArmor' + j).append(adiv);
 	}
