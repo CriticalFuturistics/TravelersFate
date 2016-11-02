@@ -43,7 +43,8 @@
                   ],
         "equip" => $row["equip"],
         "buffs" => $row["buffs"],
-        "PT" => $row['PT']
+        "PT" => $row['PT'],
+        "abilities" => $row['abilities']
       ];
       array_push($players, $newPlayer);      
     }
@@ -382,13 +383,15 @@
       var playersColumns = <?php print_r(json_encode($_SESSION['playersColumns'])); ?>;
       var items = <?php echo $_SESSION['items']; ?>;
       placePlayers();
-      
+
+      setup();
 
       initialiseTooltips();
 
       updateLocal();
 
-      
+      var x = getArmorFromBuffs(0);
+
     </script>
 
   </body>

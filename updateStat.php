@@ -2,10 +2,10 @@
 //ob_start();
 //session_start();
 
-$host="sql.criticalfuturistics.com"; // Host name 
-$dbusername="critical58585"; 	// Database username 
-$dbpassword="travelers"; 		// Database password 
-$dbname="critical58585"; 		// Database name 
+$host="sql.criticalfuturistics.com";// Host name 
+$dbusername="critical58585"; 		// Database username 
+$dbpassword="travelers"; 			// Database password 
+$dbname="critical58585"; 			// Database name 
 
 $stat = $_POST['stat'];		
 $value = $_POST['value'];

@@ -1,4 +1,34 @@
 
+function setup(){
+	for (var i = 0; i < players.length; i++) {
+
+		var player = getPlayerFromID(i + 1);
+		
+		if (player.abilities == "") {
+			var thisClass = getClassFromPlayer(i);
+			
+			
+			player.abilities = {
+				ab1 : [thisClass.abilities.AB1, 0],
+				ab2 : [thisClass.abilities.AB2, 0],
+				ab3 : [thisClass.abilities.AB3, 0],
+				ab4 : (thisClass.classname == "Mago") ? [thisClass.abilities.AB4, 0] : null,
+				ab5 : (thisClass.classname == "Mago") ? [thisClass.abilities.AB5, 0] : null,
+				ab6 : (thisClass.classname == "Mago") ? [thisClass.abilities.AB6, 0] : null
+			}
+		}
+		
+		/*$.post({				TODO update the abilities on the DB
+        url: "update.php",
+        data: {	updateType: stat,
+        		value: value + parseInt(player.stats[stat]),
+        		playerID: playerID
+        	}
+	    }).done(function(response){
+	    	//console.log(response);
+	    });*/
+	}
+}
 
 
 
@@ -31,21 +61,21 @@ function updateStats(){
 	  $(".p" + j + " > tr > .temBase").html(parseInt(players[i].stats.TEM)); //+ parseInt(getBaseStats(players, i, 'TEM')));
 	  $(".p" + j + " > tr > .sagBase").html(parseInt(players[i].stats.SAG)); //+ parseInt(getBaseStats(players, i, 'SAG')));
 
-	  $(".p" + j + " > tr > .vitBonus").html(parseInt(getBonusStats(players, i, 'VIT')));
-	  $(".p" + j + " > tr > .forBonus").html(parseInt(getBonusStats(players, i, 'FOR')));
-	  $(".p" + j + " > tr > .agiBonus").html(parseInt(getBonusStats(players, i, 'AGI')));
-	  $(".p" + j + " > tr > .intBonus").html(parseInt(getBonusStats(players, i, 'INT')));
-	  $(".p" + j + " > tr > .volBonus").html(parseInt(getBonusStats(players, i, 'VOL')));
-	  $(".p" + j + " > tr > .temBonus").html(parseInt(getBonusStats(players, i, 'TEM')));
-	  $(".p" + j + " > tr > .sagBonus").html(parseInt(getBonusStats(players, i, 'SAG')));
+	  $(".p" + j + " > tr > .vitBonus").html(parseInt(getBonusStats(i, statName.vit)));
+	  $(".p" + j + " > tr > .forBonus").html(parseInt(getBonusStats(i, statName.for)));
+	  $(".p" + j + " > tr > .agiBonus").html(parseInt(getBonusStats(i, statName.agi)));
+	  $(".p" + j + " > tr > .intBonus").html(parseInt(getBonusStats(i, statName.int)));
+	  $(".p" + j + " > tr > .volBonus").html(parseInt(getBonusStats(i, statName.vol)));
+	  $(".p" + j + " > tr > .temBonus").html(parseInt(getBonusStats(i, statName.tem)));
+	  $(".p" + j + " > tr > .sagBonus").html(parseInt(getBonusStats(i, statName.sag)));
 
-	  $(".p" + j + " > tr > .vitTotal").html(parseInt(getTotalStats(players, i, 'VIT')));
-	  $(".p" + j + " > tr > .forTotal").html(parseInt(getTotalStats(players, i, 'FOR')));
-	  $(".p" + j + " > tr > .agiTotal").html(parseInt(getTotalStats(players, i, 'AGI')));
-	  $(".p" + j + " > tr > .intTotal").html(parseInt(getTotalStats(players, i, 'INT')));
-	  $(".p" + j + " > tr > .volTotal").html(parseInt(getTotalStats(players, i, 'VOL')));
-	  $(".p" + j + " > tr > .temTotal").html(parseInt(getTotalStats(players, i, 'TEM')));
-	  $(".p" + j + " > tr > .sagTotal").html(parseInt(getTotalStats(players, i, 'SAG')));
+	  $(".p" + j + " > tr > .vitTotal").html(parseInt(getTotalStats(i, statName.vit)));
+	  $(".p" + j + " > tr > .forTotal").html(parseInt(getTotalStats(i, statName.for)));
+	  $(".p" + j + " > tr > .agiTotal").html(parseInt(getTotalStats(i, statName.agi)));
+	  $(".p" + j + " > tr > .intTotal").html(parseInt(getTotalStats(i, statName.int)));
+	  $(".p" + j + " > tr > .volTotal").html(parseInt(getTotalStats(i, statName.vol)));
+	  $(".p" + j + " > tr > .temTotal").html(parseInt(getTotalStats(i, statName.tem)));
+	  $(".p" + j + " > tr > .sagTotal").html(parseInt(getTotalStats(i, statName.sag)));
 	}
 }
 
@@ -65,7 +95,7 @@ function updateBuffs(){
 				var name = getBuffName(buffs[j]);
 				if (name != null) {			
 					var divString = '<div class="buff tooltipped" data-position="top" data-delay="40" data-tooltip="'+ name +'" href="#">'; 
-					nexti = 1; //nexti = i + 1;	 TODO 
+					nexti = i + 1;
 					$(".x" + nexti + " .buffs").append(divString + '<img src="img/buffs/' + buffs[j] + '.png">' + '</div>');
 				}
 			}
@@ -75,7 +105,10 @@ function updateBuffs(){
 
 //		 addStat(string, int, int)
 function addStat(stat, value, playerID){
+	// Add the stat locally
 	addStatLocal(stat, value, playerID);
+
+	// Add the stat on the Database
 	var player = getPlayerFromID(playerID);
     $.post({
         url: "updateStat.php",
@@ -112,7 +145,6 @@ function placePlayers(){
 	for (var i = 0; i < players.length; i++) {
 		var j = i + 1;
 		var div = '<h5 class="center player' + j + '">Player Name</h5> <p class="center class' + j + '"> </p><p class="center race' + j + '"> </p><div class="card"> <div class="card-content"> <span class="card-title grey-text text-darken-4 center valign center-block lvl' + j + '">LVL</span> <p> <table class="highlight"> <thead> <tr> <th data-field="stat">Stat</th> <th data-field="statbase">Base</th> <th data-field="statbuff">Buff</th> <th data-field="stattotal">Total</th> </tr></thead> <tbody class="boldcol p' + j + ' center"> <tr> <td>VIT</td><td class="vitBase">1</td><td class="vitBonus">1</td><td class="vitTotal">1</td></tr><tr> <td>FOR</td><td class="forBase">1</td><td class="forBonus">1</td><td class="forTotal">1</td></tr><tr> <td>AGI</td><td class="agiBase">1</td><td class="agiBonus">1</td><td class="agiTotal">1</td></tr><tr> <td>INT</td><td class="intBase">1</td><td class="intBonus">1</td><td class="intTotal">1</td></tr><tr> <td>VOL</td><td class="volBase">1</td><td class="volBonus">1</td><td class="volTotal">1</td></tr><tr> <td>TEM</td><td class="temBase">1</td><td class="temBonus">1</td><td class="temTotal">1</td></tr><tr> <td>SAG</td><td class="sagBase">1</td><td class="sagBonus">1</td><td class="sagTotal">1</td></tr></tbody> </table> </p></div></div>';
-		log(div);
 		$('.players .playerData' + j).append(div);
 	}
 }
