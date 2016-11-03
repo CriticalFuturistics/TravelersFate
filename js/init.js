@@ -118,7 +118,7 @@ function getArmorFromBuffs(playerID) {
 							var mod = fx.armorMod.substring(divisionIndex+1, fx.armorMod.length-1);
 
 							if (divisionIndex == "*") {
-								bonusArmor += mod; // * getAbilityLevel("Furia")
+								bonusArmor += mod * getAbilityLevel(playerID, "Furia");
 							} else if (divisionIndex == "/"){
 								bonusArmor += mod; // / getAbliltyLevel("Furia")
 							}
@@ -139,6 +139,15 @@ function getDivisionIndex(s){
 		}
 	}
 	return s.length;
+}
+
+
+function getAbilityLevel(playerID, ability){
+	
+	var p = players[playerID];
+	return p.abilities;
+	
+	//return 0;
 }
 
 // Scans the equipped Items and returns the total Stat Modifier for the chosen Stat
@@ -170,7 +179,7 @@ function getClassFromPlayer(playerID) {
 	return undefined;
 }
 
-// Returns the race stats Sto come i party
+// Returns the race stats
 function getStatFromRace(race, stat){
 	for (var i = 0; i < races.length; i++) {
 		if (races[i].racename == race){
@@ -180,7 +189,7 @@ function getStatFromRace(race, stat){
 	return undefined;	
 }
 
-// Returns the race stats Sto come i party
+// Returns the race stats
 function getStatFromClass(thisClass, stat){
 	for (var i = 0; i < classes.length; i++) {
 		if (classes[i].classname == thisClass){
@@ -256,6 +265,36 @@ const statName = {
 	vol: "VOL",
 	tem: "TEM",
 	sag: "SAG"
+}
+
+const abilityName = {
+	scudi : "Scudi",
+	spade : "Spade",
+	lance : "Lance",
+	martelli : "Martelli",
+	asce : "Asce",
+	furia : "Furia",
+	archi : "Archi",
+	balestre : "Balestre",
+	armiDaFuoco : "Armi da Fuoco",
+	evocazione : "Evocazione",
+	manipolazione : "Manipolazione",
+	incantamento : "Incantamento",
+	fuoco : "Fuoco",
+	elettricita : "Elettricità",
+	ghiaccio : "Ghiaccio",
+	mutaforma : "Mutaforma",
+	controlloNaturale : "Controllo Naturale",
+	artigli : "Artigli",
+	artiMarziali : "Arti Marziali",
+	bastoni : "Bastoni",
+	spirito : "Spirito",
+	furtivita : "Furtività",
+	scassinatore : "Scassinatore",
+	pugnali : "Pugnali",
+	risanazione : "Risanazione",
+	rituali : "Rituali",
+	maledizioni : "Maledizioni"
 }
 
 function log(str){

@@ -395,7 +395,7 @@
 
       updateLocal();
 
-      var x = getArmorFromBuffs(0);
+      console.log(getAbilityLevel(1, "Furia"));
 
     </script>
 
