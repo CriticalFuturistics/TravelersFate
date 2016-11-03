@@ -394,9 +394,7 @@
       initialiseTooltips();
 
       updateLocal();
-
-      console.log(getAbilityLevel(1, "Furia"));
-
+      
     </script>
 
   </body>

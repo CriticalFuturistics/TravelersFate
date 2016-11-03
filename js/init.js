@@ -111,18 +111,21 @@ function getArmorFromBuffs(playerID) {
 					 
 					if (fx.hasOwnProperty("armorMod")) {
 
-						// If the armor modifier contains "Furia"
-						if (fx.armorMod.indexOf("Furia") !== -1) {
-							var divisionIndex = getDivisionIndex("Furia*2");
-							var ability = fx.armorMod.substring(0, divisionIndex-1);
-							var mod = fx.armorMod.substring(divisionIndex+1, fx.armorMod.length-1);
+						$.each(abilityName, function(index, value){
+							if (fx.armorMod.indexOf(value) !== -1) {
+								var divisionIndex = getDivisionIndex(fx.armorMod);
+								var ability = fx.armorMod.substring(0, divisionIndex-1);
+								var mod = fx.armorMod.substring(divisionIndex + 1, fx.armorMod.length - 1);
 
-							if (divisionIndex == "*") {
-								bonusArmor += mod * getAbilityLevel(playerID, "Furia");
-							} else if (divisionIndex == "/"){
-								bonusArmor += mod; // / getAbliltyLevel("Furia")
+								if (divisionIndex == "*") {
+									bonusArmor += mod * getAbilityLevel(playerID, ability);
+								} else if (divisionIndex == "/"){
+									bonusArmor += mod / getAbilityLevel(playerID, ability);
+								}
 							}
-						}
+
+						});
+						
 					}
 					return bonusArmor;
 				}
@@ -143,11 +146,21 @@ function getDivisionIndex(s){
 
 
 function getAbilityLevel(playerID, ability){
-	
 	var p = players[playerID];
-	return p.abilities;
-	
-	//return 0;
+
+	if 		(p.abilities.ab1[0] == ability) { return p.abilities.ab1[1]; }
+	else if (p.abilities.ab2[0] == ability) { return p.abilities.ab2[1]; }
+	else if (p.abilities.ab3[0] == ability) { return p.abilities.ab3[1]; }
+	else if (getClassFromPlayer(playerID).classname == "Mago") { 
+		if  (p.abilities.ab4[0] == ability) { return p.abilities.ab4[1]; }
+	}
+	else if (getClassFromPlayer(playerID).classname == "Mago") { 
+		if  (p.abilities.ab5[0] == ability) { return p.abilities.ab5[1]; }
+	}	
+	else if (getClassFromPlayer(playerID).classname == "Mago") { 
+		if  (p.abilities.ab6[0] == ability) { return p.abilities.ab6[1]; }
+	}
+	else return null;
 }
 
 // Scans the equipped Items and returns the total Stat Modifier for the chosen Stat
@@ -235,7 +248,7 @@ function getBaseArmor(playerID){
 }
 
 function getBonusArmor(playerID){
-	return 0;
+	return getArmorFromBuffs(playerID);
 }
 
 
