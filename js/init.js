@@ -111,6 +111,7 @@ function getArmorFromBuffs(playerID) {
 					 
 					if (fx.hasOwnProperty("armorMod")) {
 
+						// Test every ability because apparently you can't select the right ability
 						$.each(abilityName, function(index, value){
 							if (fx.armorMod.indexOf(value) !== -1) {
 								var divisionIndex = getDivisionIndex(fx.armorMod);
@@ -257,12 +258,32 @@ function getBonusArmor(playerID){
 
 function setMaxHP(playerID){
 	var p = players[playerID];
-	p.maxHP = p.stats[statName.vit] * 20 + p.stats[statName.for] * 4 + p.stats[statName.agi] * 2;
+	p.maxHP = getTotalStats(playerID, statName.vit) * 20 + getTotalStats(playerID, statName.for) * 4 + getTotalStats(playerID, statName.agi)  * 2;
+	return p.maxHP;
 }
 
 function setMaxMana(playerID){
 	var p = players[playerID];
-	p.maxMana = p.stats[statName.int] * 20 + p.stats[statName.sag] * 5;
+	p.maxMana = getTotalStats(playerID, statName.int)  * 20 + getTotalStats(playerID, statName.sag)  * 5;
+	return p.maxMana;
+}
+
+function getMaxHP(playerID){
+	if (players[playerID].maxHP == 0) { return setMaxHP(playerID)}
+	return players[playerID].maxHP;
+}
+
+function getMaxMana(playerID){
+	if (players[playerID].maxMana == 0) { return setMaxMana(playerID)}
+	return players[playerID].maxMana;
+}
+
+function getHP(playerID){
+	return players[playerID].HP;
+}
+
+function getMana(playerID){
+	return players[playerID].Mana;
 }
 
 

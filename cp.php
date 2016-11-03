@@ -44,7 +44,11 @@
         "equip" => $row["equip"],
         "buffs" => $row["buffs"],
         "PT" => $row['PT'],
-        "abilities" => $row['abilities']
+        "abilities" => $row['abilities'],
+        "maxHP" => 0,
+        "maxMana" => 0,
+        "HP" => 0,
+        "Mana" => 0
       ];
       array_push($players, $newPlayer);      
     }
@@ -257,7 +261,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-    <title>Traverlers' Fate</title>
+    <title>Travelers' Fate</title>
 
     <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -388,13 +392,12 @@
       var playersColumns = <?php print_r(json_encode($_SESSION['playersColumns'])); ?>;
       var items = <?php echo $_SESSION['items']; ?>;
       placePlayers();
-
       setup();
 
       initialiseTooltips();
 
       updateLocal();
-      
+
     </script>
 
   </body>

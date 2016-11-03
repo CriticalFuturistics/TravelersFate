@@ -106,3 +106,27 @@ body {
 	padding-left:8px;
 	margin-top:25px;
 }
+.nopadding .card-content {
+	padding: 0;
+}
+
+.hp {
+	height: 25px;
+	background-color: #F44336;
+	text-align: center;
+	color: #FFF;
+	font-size: 13px;
+	border-top-right-radius: 2px;
+	border-top-left-radius: 2px;
+}
+
+.mana {
+	height: 22px;
+	background-color: #2196F3;
+	border-top: 1px solid #FFF;
+	text-align: center;
+	color: #FFF;
+	font-size: 13px;
+	border-bottom-right-radius: 2px;
+	border-bottom-left-radius: 2px;
+}
