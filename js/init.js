@@ -254,7 +254,7 @@ function getBonusArmor(playerID){
 
 
 
-// --- Player chars from Stats --- //
+// --- HP and Mana --- //
 
 function setMaxHP(playerID){
 	var p = players[playerID];
@@ -266,6 +266,14 @@ function setMaxMana(playerID){
 	var p = players[playerID];
 	p.maxMana = getTotalStats(playerID, statName.int)  * 20 + getTotalStats(playerID, statName.sag)  * 5;
 	return p.maxMana;
+}
+
+function setHP(playerID, n){
+	players[playerID].HP = n;
+}
+
+function setMana(playerID, n){
+	players[playerID].Mana = n;
 }
 
 function getMaxHP(playerID){
@@ -286,7 +294,7 @@ function getMana(playerID){
 	return players[playerID].Mana;
 }
 
-
+// ------ //
 
 
 // Useful constants

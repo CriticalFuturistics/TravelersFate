@@ -2,11 +2,14 @@
 function setup(){
 	for (var i = 0; i < players.length; i++) {
 
+		// Set Initial HP and Mana
+		setHP(i, getMaxHP(i));
+		setMana(i, getMaxMana(i));
+
 		var player = getPlayerFromID(i + 1);
 		
 		if (player.abilities == "") {
 			var thisClass = getClassFromPlayer(i);
-			
 			
 			player.abilities = {
 				ab1 : [thisClass.abilities.AB1, 0],
@@ -18,16 +21,17 @@ function setup(){
 			}
 		}
 		
-		/*$.post({				TODO update the abilities on the DB
-        url: "update.php",
-        data: {	updateType: stat,
-        		value: value + parseInt(player.stats[stat]),
-        		playerID: playerID
-        	}
-	    }).done(function(response){
-	    	//console.log(response);
-	    });*/
 	}
+	DBupdateAbilities(players);
+}
+
+function DBupdateAbilities(players){
+	$.post({
+        url: "update/updateAb.php",
+        data: {	players: JSON.stringify(players) }
+	    }).done(function(response){
+	    	console.log(response);
+	    });
 }
 
 
@@ -111,7 +115,7 @@ function addStat(stat, value, playerID){
 	// Add the stat on the Database
 	var player = getPlayerFromID(playerID);
     $.post({
-        url: "updateStat.php",
+        url: "update/updateStat.php",
         data: {	stat: stat,
         		value: value + parseInt(player.stats[stat]),
         		playerID: playerID
@@ -144,7 +148,7 @@ function placePlayers(){
 
 	for (var i = 0; i < players.length; i++) {
 		var j = i + 1;
-		var div = '<h5 class="center player' + j + '">Player Name</h5> <p class="center class' + j + '"> </p><p class="center race' + j + '"> </p><div class="card nopadding"><div class="card-content"> <div class="hp hp' + j + '">' + getHP(i) + '/' + getMaxHP(i) + '</div> <div class="mana mana' + j + '">' + getMana(i) + '/' + getMaxMana(i) + '</div> </div></div>';
+		var div = '<h5 class="center player' + j + '">Player Name</h5> <div class="center"><span class="class' + j + '"> </span> | <span class="race' + j + '"> </span></div><br><div class="card nopadding"><div class="card-content"> <div class="hp hp' + j + '">' + getHP(i) + '/' + getMaxHP(i) + '</div> <div class="mana mana' + j + '">' + getMana(i) + '/' + getMaxMana(i) + '</div> </div></div>';
 		div += '<div class="card"> <div class="card-content"><span class="card-title grey-text text-darken-4 center valign center-block lvl' + j + '">LVL</span> <p> <table class="highlight">';
 		div += '<thead> <tr> <th data-field="stat">Stat</th> <th data-field="statbase">Base</th> <th data-field="statbuff">Buff</th> <th data-field="stattotal">Total</th> </tr></thead> <tbody class="boldcol p' + j + ' center"> <tr> <td>VIT</td><td class="vitBase">1</td><td class="vitBonus">1</td><td class="vitTotal">1</td></tr><tr> <td>FOR</td><td class="forBase">1</td><td class="forBonus">1</td><td class="forTotal">1</td></tr><tr> <td>AGI</td><td class="agiBase">1</td><td class="agiBonus">1</td><td class="agiTotal">1</td></tr><tr> <td>INT</td><td class="intBase">1</td><td class="intBonus">1</td><td class="intTotal">1</td></tr><tr> <td>VOL</td><td class="volBase">1</td><td class="volBonus">1</td><td class="volTotal">1</td></tr><tr> <td>TEM</td><td class="temBase">1</td><td class="temBonus">1</td><td class="temTotal">1</td></tr><tr> <td>SAG</td><td class="sagBase">1</td><td class="sagBonus">1</td><td class="sagTotal">1</td></tr></tbody> </table> </p></div></div>';
 		

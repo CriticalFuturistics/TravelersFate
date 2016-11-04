@@ -391,8 +391,9 @@
       var buffs   = <?php echo $_SESSION['buffs']; ?>;
       var playersColumns = <?php print_r(json_encode($_SESSION['playersColumns'])); ?>;
       var items = <?php echo $_SESSION['items']; ?>;
-      placePlayers();
+      //placePlayers();
       setup();
+      placePlayers();
 
       initialiseTooltips();
 
