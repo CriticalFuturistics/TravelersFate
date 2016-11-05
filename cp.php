@@ -47,8 +47,10 @@
         "abilities" => $row['abilities'],
         "maxHP" => 0,
         "maxMana" => 0,
+        "maxXP" => 100,
         "HP" => 0,
-        "Mana" => 0
+        "Mana" => 0,
+        "XP" => 0,
       ];
       array_push($players, $newPlayer);      
     }
@@ -391,7 +393,7 @@
       var buffs   = <?php echo $_SESSION['buffs']; ?>;
       var playersColumns = <?php print_r(json_encode($_SESSION['playersColumns'])); ?>;
       var items = <?php echo $_SESSION['items']; ?>;
-      //placePlayers();
+
       setup();
       placePlayers();
 

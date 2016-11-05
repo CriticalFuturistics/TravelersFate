@@ -16,20 +16,24 @@ for ($i=0; $i < count($players); $i++) {
 
 	$playerID = array_values($players)[$i]->ID;
 
-	$abilities = json_encode(array_values($players)[$i]->abilities->ab1);
-	echo $abilities;
-	/*
-	$query = "UPDATE players SET abilities = ". $abilities ." WHERE ID = ". $playerID;
-	
-	if (mysqli_query($con, $query)) {
-		// Nothing
-		echo " Value updated correctly";
+	$abilities = array_values($players)[$i]->abilities;
 
-	} else {	
-		echo "Error: " . $query . "<br>" . mysqli_error($con);
-	}*/
+	$abs = [$abilities->ab1, 
+			$abilities->ab2, 
+			$abilities->ab3, 
+			$abilities->ab4, 
+			$abilities->ab5,
+			$abilities->ab6
+			];
+
+	$query = "UPDATE players SET abilities = '". json_encode($abs) ."' WHERE ID = ". $playerID;
+	doQuery($con, $query);	
 }
 	
+function doQuery($con, $query){
+	if (mysqli_query($con, $query)) { echo " Value updated correctly"; }
+	else {	echo "Error: " . $query . "<br>" . mysqli_error($con);	}
+}
 
 mysqli_close($con);
 

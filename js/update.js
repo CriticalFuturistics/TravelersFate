@@ -8,29 +8,27 @@ function setup(){
 
 		var player = getPlayerFromID(i + 1);
 		
-		if (player.abilities == "") {
-			var thisClass = getClassFromPlayer(i);
-			
-			player.abilities = {
-				ab1 : [thisClass.abilities.AB1, 0],
-				ab2 : [thisClass.abilities.AB2, 0],
-				ab3 : [thisClass.abilities.AB3, 0],
-				ab4 : (thisClass.classname == "Mago") ? [thisClass.abilities.AB4, 0] : null,
-				ab5 : (thisClass.classname == "Mago") ? [thisClass.abilities.AB5, 0] : null,
-				ab6 : (thisClass.classname == "Mago") ? [thisClass.abilities.AB6, 0] : null
-			}
-		}
+		var thisClass = getClassFromPlayer(i);
 		
+		player.abilities = {
+			ab1 : [thisClass.abilities.AB1, 0],
+			ab2 : [thisClass.abilities.AB2, 0],
+			ab3 : [thisClass.abilities.AB3, 0],
+			ab4 : (thisClass.classname == "Mago") ? [thisClass.abilities.AB4, 0] : null,
+			ab5 : (thisClass.classname == "Mago") ? [thisClass.abilities.AB5, 0] : null,
+			ab6 : (thisClass.classname == "Mago") ? [thisClass.abilities.AB6, 0] : null
+		}		
 	}
 	DBupdateAbilities(players);
 }
 
 function DBupdateAbilities(players){
+
 	$.post({
         url: "update/updateAb.php",
         data: {	players: JSON.stringify(players) }
 	    }).done(function(response){
-	    	console.log(response);
+	    	
 	    });
 }
 
@@ -148,7 +146,7 @@ function placePlayers(){
 
 	for (var i = 0; i < players.length; i++) {
 		var j = i + 1;
-		var div = '<h5 class="center player' + j + '">Player Name</h5> <div class="center"><span class="class' + j + '"> </span> | <span class="race' + j + '"> </span></div><br><div class="card nopadding"><div class="card-content"> <div class="hp hp' + j + '">' + getHP(i) + '/' + getMaxHP(i) + '</div> <div class="mana mana' + j + '">' + getMana(i) + '/' + getMaxMana(i) + '</div> </div></div>';
+		var div = '<h5 class="center player' + j + '">Player Name</h5> <div class="center"><span class="class' + j + '"> </span> | <span class="race' + j + '"> </span></div><br><div class="card nopadding hpmargin"><div class="card-content"> <div class="hp hp' + j + '">' + getHP(i) + '/' + getMaxHP(i) + '</div> <div class="mana mana' + j + '">' + getMana(i) + '/' + getMaxMana(i) + '</div></div></div> <div class="xp xp' + j + '">' + getXP(i) + '/' + getMaxXP(i) + ' </div>';
 		div += '<div class="card"> <div class="card-content"><span class="card-title grey-text text-darken-4 center valign center-block lvl' + j + '">LVL</span> <p> <table class="highlight">';
 		div += '<thead> <tr> <th data-field="stat">Stat</th> <th data-field="statbase">Base</th> <th data-field="statbuff">Buff</th> <th data-field="stattotal">Total</th> </tr></thead> <tbody class="boldcol p' + j + ' center"> <tr> <td>VIT</td><td class="vitBase">1</td><td class="vitBonus">1</td><td class="vitTotal">1</td></tr><tr> <td>FOR</td><td class="forBase">1</td><td class="forBonus">1</td><td class="forTotal">1</td></tr><tr> <td>AGI</td><td class="agiBase">1</td><td class="agiBonus">1</td><td class="agiTotal">1</td></tr><tr> <td>INT</td><td class="intBase">1</td><td class="intBonus">1</td><td class="intTotal">1</td></tr><tr> <td>VOL</td><td class="volBase">1</td><td class="volBonus">1</td><td class="volTotal">1</td></tr><tr> <td>TEM</td><td class="temBase">1</td><td class="temBonus">1</td><td class="temTotal">1</td></tr><tr> <td>SAG</td><td class="sagBase">1</td><td class="sagBonus">1</td><td class="sagTotal">1</td></tr></tbody> </table> </p></div></div>';
 		
@@ -158,4 +156,14 @@ function placePlayers(){
 
 		$('.players .playerArmor' + j).append(adiv);
 	}
+}
+
+function updateHPBar(playerID){
+	$('.playerData' + playerID + ' .hp' + playerID).html(getHP(playerID) + '/' + getMaxHP(playerID));
+}
+function updateManaBar(playerID){
+	$('.playerData' + playerID + ' .mana' + playerID).html(getMana(playerID) + '/' + getMaxMana(playerID));
+}
+function updateXPBar(playerID){
+	$('.playerData' + playerID + ' .xp' + playerID).html(getXP(playerID) + '/' + getMaxXP(playerID));
 }

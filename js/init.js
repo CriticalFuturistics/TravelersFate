@@ -254,7 +254,7 @@ function getBonusArmor(playerID){
 
 
 
-// --- HP and Mana --- //
+// --- HP, Mana and XP --- //
 
 function setMaxHP(playerID){
 	var p = players[playerID];
@@ -268,6 +268,13 @@ function setMaxMana(playerID){
 	return p.maxMana;
 }
 
+function setMaxXP(playerID){
+	var p = players[playerID];
+	p.maxXP = p.level * 100;	// TODO XP Curve
+	return p.maxXP;
+}
+
+
 function setHP(playerID, n){
 	players[playerID].HP = n;
 }
@@ -275,6 +282,11 @@ function setHP(playerID, n){
 function setMana(playerID, n){
 	players[playerID].Mana = n;
 }
+
+function setXP(playerID, n){
+	players[playerID].XP = n;
+}
+
 
 function getMaxHP(playerID){
 	if (players[playerID].maxHP == 0) { return setMaxHP(playerID)}
@@ -286,6 +298,12 @@ function getMaxMana(playerID){
 	return players[playerID].maxMana;
 }
 
+function getMaxXP(playerID){
+	if (players[playerID].maxXP == 0) { return setMaxXP(playerID)}
+	return players[playerID].maxXP;
+}
+
+
 function getHP(playerID){
 	return players[playerID].HP;
 }
@@ -294,7 +312,65 @@ function getMana(playerID){
 	return players[playerID].Mana;
 }
 
+function getXP(playerID){
+	return players[playerID].XP;
+}
+
+
+function addHP(playerID, n){
+	var p = players[playerID];
+	if (p.HP + n <= getMaxHP(playerID)) {
+		p.HP += n;
+	} else {
+		p.HP = getMaxHP(playerID);
+	}
+}
+
+function addMana(playerID, n){
+	var p = players[playerID];
+	if (p.Mana + n <= getMaxMana(playerID)) {
+		p.Mana += n;
+	} else {
+		p.Mana = getMaxMana(playerID);
+	}
+}
+
+function addXP(playerID, n){
+	var p = players[playerID];
+
+	if (p.XP + n < getMaxXP(playerID)) {
+		//log(p.XP + n + " < " + getMaxXP(playerID) + ". +" + n + " xp.");
+		p.XP += n;
+		updateXPBar(playerID);
+	} else {
+		var extraXP = Math.abs(n - getMaxXP(playerID));
+		//log(p.XP + n + " > " + getMaxXP(playerID) + ". +" + getMaxXP(playerID) + " xp, then +" + extraXP);
+		levelUp(playerID);
+		addXP(playerID, extraXP);
+	}
+}
+
+function getXPForNextLevel(playerID){
+	return (parseInt(players[playerID].level) + 1) * 100;
+}
+
+function levelUp(playerID){
+	var p = players[playerID];
+	p.XP = 0;
+	p.maxXP = getXPForNextLevel(playerID);
+	p.level = parseInt(p.level) + 1;
+	updateXPBar(playerID);
+	unlockLevel(playerID);
+}
+
+function unlockLevel(playerID){
+	// Update the unlockable field on the player DB
+	// The player's app listen to the field change and unlocks the + and - buttons
+}
+
 // ------ //
+
+
 
 
 // Useful constants

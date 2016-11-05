@@ -110,23 +110,38 @@ body {
 	padding: 0;
 }
 
+.hpmargin {
+	margin-bottom: 8px;
+}
+
 .hp {
 	height: 25px;
 	background-color: #F44336;
 	text-align: center;
 	color: #FFF;
-	font-size: 13px;
+	font-size: 14px;
 	border-top-right-radius: 2px;
 	border-top-left-radius: 2px;
+	line-height: 25px;
 }
 
 .mana {
-	height: 22px;
+	height: 25px;
 	background-color: #2196F3;
-	border-top: 1px solid #FFF;
 	text-align: center;
 	color: #FFF;
-	font-size: 13px;
+	font-size: 14px;
+	line-height: 25px;
+}
+
+.xp {
+	height: 22px;
+	background-color: #FFC107;
+	text-align: center;
+	color: #333;
+	font-size: 12px;
 	border-bottom-right-radius: 2px;
 	border-bottom-left-radius: 2px;
+	line-height: 22px;
+	margin-top: 2px;
 }
