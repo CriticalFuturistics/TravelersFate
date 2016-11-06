@@ -5,6 +5,7 @@ function setup(){
 		// Set Initial HP and Mana
 		setHP(i, getMaxHP(i));
 		setMana(i, getMaxMana(i));
+		//setXP(i);
 
 		var player = getPlayerFromID(i + 1);
 		
@@ -30,6 +31,14 @@ function DBupdateAbilities(players){
 	    }).done(function(response){
 	    	
 	    });
+}
+function updateBars(){
+	for (var i = 0; i < players.length; i++) {
+		updateHPBar(i);
+		updateManaBar(i);
+		updateXPBar(i);
+	}
+	
 }
 
 
@@ -138,15 +147,12 @@ function addStatLocal(stat, value, playerID){
 }
 
 
-
-
-
 function placePlayers(){
 	//$('.players').html("");
 
 	for (var i = 0; i < players.length; i++) {
 		var j = i + 1;
-		var div = '<h5 class="center player' + j + '">Player Name</h5> <div class="center"><span class="class' + j + '"> </span> | <span class="race' + j + '"> </span></div><br><div class="card nopadding hpmargin"><div class="card-content"> <div class="hp hp' + j + '">' + getHP(i) + '/' + getMaxHP(i) + '</div> <div class="mana mana' + j + '">' + getMana(i) + '/' + getMaxMana(i) + '</div></div></div> <div class="xp xp' + j + '">' + getXP(i) + '/' + getMaxXP(i) + ' </div>';
+		var div = '<h5 class="center player' + j + '">Player Name</h5> <div class="center"><span class="class' + j + '"> </span> | <span class="race' + j + '"> </span></div><br><div class="card nopadding hpmargin"><div class="card-content"> <div class="hpbar"><div class="hp hp' + j + '"><div class="hpn hpn' + j + '">' + getHP(i) + '/' + getMaxHP(i) + '</div></div> </div> <div class="manabar"><div class="mana mana' + j + '"><div class="manan manan' + j + '">' + getMana(i) + '/' + getMaxMana(i) + '</div></div></div> <div class="xpbar"><div class="xp xp' + j + '"><div class="xpn xpn' + j + '">' + getXP(i) + '/' + getMaxXP(i) + '</div></div></div></div></div>';
 		div += '<div class="card"> <div class="card-content"><span class="card-title grey-text text-darken-4 center valign center-block lvl' + j + '">LVL</span> <p> <table class="highlight">';
 		div += '<thead> <tr> <th data-field="stat">Stat</th> <th data-field="statbase">Base</th> <th data-field="statbuff">Buff</th> <th data-field="stattotal">Total</th> </tr></thead> <tbody class="boldcol p' + j + ' center"> <tr> <td>VIT</td><td class="vitBase">1</td><td class="vitBonus">1</td><td class="vitTotal">1</td></tr><tr> <td>FOR</td><td class="forBase">1</td><td class="forBonus">1</td><td class="forTotal">1</td></tr><tr> <td>AGI</td><td class="agiBase">1</td><td class="agiBonus">1</td><td class="agiTotal">1</td></tr><tr> <td>INT</td><td class="intBase">1</td><td class="intBonus">1</td><td class="intTotal">1</td></tr><tr> <td>VOL</td><td class="volBase">1</td><td class="volBonus">1</td><td class="volTotal">1</td></tr><tr> <td>TEM</td><td class="temBase">1</td><td class="temBonus">1</td><td class="temTotal">1</td></tr><tr> <td>SAG</td><td class="sagBase">1</td><td class="sagBonus">1</td><td class="sagTotal">1</td></tr></tbody> </table> </p></div></div>';
 		
@@ -155,15 +161,25 @@ function placePlayers(){
 		var adiv = '<div class="card armorCard" style><div class="card-content armor"> <span class=" grey-text text-darken-4 center-block center"> Armor </span> <p class="text-darken-4 center-block center">' + getBaseArmor(i) + '<span class="bonus"> + ' + getBonusArmor(i) + '</span> (' + getDamageReduction(getTotalArmor(i)) + '%)</p> </div></div>';
 
 		$('.players .playerArmor' + j).append(adiv);
+
+		//$('.hp' + j).css('width', getHPasPercent(i) + '%' );
 	}
 }
 
 function updateHPBar(playerID){
-	$('.playerData' + playerID + ' .hp' + playerID).html(getHP(playerID) + '/' + getMaxHP(playerID));
+	var j = playerID + 1;
+	$('.playerData' + j + ' .hpn' + j).html(getHP(playerID) + '/' + getMaxHP(playerID));
+	$('.hp' + j).css('width', getHPasPercent(playerID) + '%' );
 }
+
 function updateManaBar(playerID){
-	$('.playerData' + playerID + ' .mana' + playerID).html(getMana(playerID) + '/' + getMaxMana(playerID));
+	var j = playerID + 1;
+	$('.playerData' + j + ' .manan' + j).html(getMana(playerID) + '/' + getMaxMana(playerID));
+	$('.mana' + j).css('width', getManaasPercent(playerID) + '%' );
 }
+
 function updateXPBar(playerID){
-	$('.playerData' + playerID + ' .xp' + playerID).html(getXP(playerID) + '/' + getMaxXP(playerID));
+	var j = playerID + 1;
+	$('.playerData' + j + ' .xpn' + j).html(getXP(playerID) + '/' + getMaxXP(playerID));
+	$('.xp' + j).css('width', getXPasPercent(playerID) + '%' );
 }

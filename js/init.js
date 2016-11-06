@@ -324,6 +324,7 @@ function addHP(playerID, n){
 	} else {
 		p.HP = getMaxHP(playerID);
 	}
+	updateHPBar(playerID);
 }
 
 function addMana(playerID, n){
@@ -333,6 +334,7 @@ function addMana(playerID, n){
 	} else {
 		p.Mana = getMaxMana(playerID);
 	}
+	updateManaBar(playerID);
 }
 
 function addXP(playerID, n){
@@ -341,16 +343,32 @@ function addXP(playerID, n){
 	if (p.XP + n < getMaxXP(playerID)) {
 		//log(p.XP + n + " < " + getMaxXP(playerID) + ". +" + n + " xp.");
 		p.XP += n;
-		updateXPBar(playerID);
 	} else {
 		var extraXP = Math.abs(n - getMaxXP(playerID));
 		//log(p.XP + n + " > " + getMaxXP(playerID) + ". +" + getMaxXP(playerID) + " xp, then +" + extraXP);
 		levelUp(playerID);
 		addXP(playerID, extraXP);
 	}
+	updateXPBar(playerID);
+}
+
+function removeHP(playerID, n){
+	var p = players[playerID];
+	p.HP = p.HP - n;
+	updateHPBar(playerID);
+}
+
+function removeMana(playerID, n){
+	var p = players[playerID];
+	p.Mana = p.Mana - n;
+	if (p.Mana < 0) {
+		p.Mana = 0;
+	}
+	updateManaBar(playerID);
 }
 
 function getXPForNextLevel(playerID){
+
 	return (parseInt(players[playerID].level) + 1) * 100;
 }
 
@@ -366,6 +384,21 @@ function levelUp(playerID){
 function unlockLevel(playerID){
 	// Update the unlockable field on the player DB
 	// The player's app listen to the field change and unlocks the + and - buttons
+}
+
+function getHPasPercent(playerID){
+	var p = players[playerID];
+	return (p.HP / p.maxHP) * 100;
+}
+
+function getManaasPercent(playerID){
+	var p = players[playerID];
+	return (p.Mana / p.maxMana) * 100;
+}
+
+function getXPasPercent(playerID){
+	var p = players[playerID];
+	return (p.XP / p.maxXP) * 100 ;
 }
 
 // ------ //
