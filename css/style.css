@@ -72,7 +72,7 @@ body {
 
 .center tr > td { text-align: center; }
 
-.card .card-content { padding-left: 10px; }
+.card .card-content {  }
 
 .lvl1, .lvl2, .lvl3, .lvl4, .lvl5 {
 	text-align:center;
@@ -81,7 +81,7 @@ body {
 
 
 .row .col.m2 {
-	width: 18%;
+	width: 20.0%;
 }
 .row .col {
     /*padding: 0 0.25rem;*/
@@ -102,16 +102,15 @@ body {
 }
 
 .armorCard {
-	height:90px;
-	padding-left:8px;
+	height:80px;
 	margin-top:25px;
 }
 .nopadding .card-content {
-	padding: 0;
+	padding: 0px;
 }
 
 .hpmargin {
-	margin-bottom: 10px;
+	margin-bottom: 24px;
 }
 
 
@@ -149,13 +148,23 @@ body {
 }
 
 .xp {
-	height: 22px;
+	height: 18px;
 	background-color: #FFC107;
 	text-align: center;
 	color: #333;
-	font-size: 12px;
+	font-size: 10px;
 	border-bottom-right-radius: 2px;
 	border-bottom-left-radius: 2px;
-	line-height: 22px;
+	line-height: 18px;
 	/*margin-top: 2px;*/
+}
+
+
+.inv tbody td {
+	font-size: 10pt;
+	text-align: center;
+}
+
+.inv td:nth-child(2) {
+	text-align: left;
 }

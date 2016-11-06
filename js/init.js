@@ -341,11 +341,9 @@ function addXP(playerID, n){
 	var p = players[playerID];
 
 	if (p.XP + n < getMaxXP(playerID)) {
-		//log(p.XP + n + " < " + getMaxXP(playerID) + ". +" + n + " xp.");
 		p.XP += n;
 	} else {
 		var extraXP = Math.abs(n - getMaxXP(playerID));
-		//log(p.XP + n + " > " + getMaxXP(playerID) + ". +" + getMaxXP(playerID) + " xp, then +" + extraXP);
 		levelUp(playerID);
 		addXP(playerID, extraXP);
 	}
@@ -401,9 +399,39 @@ function getXPasPercent(playerID){
 	return (p.XP / p.maxXP) * 100 ;
 }
 
-// ------ //
+// --- Items --- //
 
+function getInventoryAsHTML(playerID){
+	var inv = getInventory(playerID);
+	var html = '<table class="inv"> <thead> <tr> <th data-field="type"><i class="material-icons">layers</i></th>';
+	html += '<th data-field="name">Nome</th>';
+	//html += '<th data-field="amount">No.</th>';
+	html += '<th data-field="weight">Peso</th> </tr></thead>';
+	
+	for (var i = 0; i < inv.length; i++) {
+		var item = getItem(inv[i]);
+		html += '<tbody> <tr> <td>_</td> <td>' + item.name + '</td> <td>' + item.weight * getNumberOfItemsInInventory(item.ID) + '</td> </tr>';
+	}
+	html += '</tbody></table>';
+	return html;
+}
 
+function getInventory(playerID){
+	return JSON.parse(players[playerID].inventory);
+}
+
+function getItem(id){
+	for (var i = 0; i < items.length; i++) {
+		if (items[i].ID == id) {
+			return items[i];
+		}
+	}
+	return null;
+}
+
+function getNumberOfItemsInInventory(ID){
+	return 1;	// TODO
+}
 
 
 // Useful constants

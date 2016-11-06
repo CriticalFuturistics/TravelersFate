@@ -20,7 +20,7 @@ function setup(){
 			ab6 : (thisClass.classname == "Mago") ? [thisClass.abilities.AB6, 0] : null
 		}		
 	}
-	DBupdateAbilities(players);
+	DBupdateAbilities();
 }
 
 // --- DB Updates --- //
@@ -34,7 +34,7 @@ function DBupdateAbilities(){
 	    });
 }
 
-function DBupdatePlayer(players){
+function DBupdatePlayer(){
 	$.post({
         url: "update/updatePlayer.php",
         data: {	players: JSON.stringify(players) }
@@ -162,8 +162,6 @@ function addStatLocal(stat, value, playerID){
 
 
 function placePlayers(){
-	//$('.players').html("");
-
 	for (var i = 0; i < players.length; i++) {
 		var j = i + 1;
 		var div = '<h5 class="center player' + j + '">Player Name</h5> <div class="center"><span class="class' + j + '"> </span> | <span class="race' + j + '"> </span></div><br><div class="card nopadding hpmargin"><div class="card-content"> <div class="hpbar"><div class="hp hp' + j + '"><div class="hpn hpn' + j + '">' + getHP(i) + '/' + getMaxHP(i) + '</div></div> </div> <div class="manabar"><div class="mana mana' + j + '"><div class="manan manan' + j + '">' + getMana(i) + '/' + getMaxMana(i) + '</div></div></div> <div class="xpbar"><div class="xp xp' + j + '"><div class="xpn xpn' + j + '">' + getXP(i) + '/' + getMaxXP(i) + '</div></div></div></div></div>';
@@ -175,6 +173,10 @@ function placePlayers(){
 		var adiv = '<div class="card armorCard" style><div class="card-content armor"> <span class=" grey-text text-darken-4 center-block center"> Armor </span> <p class="text-darken-4 center-block center">' + getBaseArmor(i) + '<span class="bonus"> + ' + getBonusArmor(i) + '</span> (' + getDamageReduction(getTotalArmor(i)) + '%)</p> </div></div>';
 
 		$('.players .playerArmor' + j).append(adiv);
+
+		var idiv = '<div class="card itemsCard" style><div class="card-content items"> <span class=" grey-text text-darken-4 center-block center"> Inventory </span> <p class="text-darken-4 center-block center">' + getInventoryAsHTML(i) + '</p> </div></div>';
+
+		$('.players .playerInventory' + j).append(idiv);
 	}
 }
 

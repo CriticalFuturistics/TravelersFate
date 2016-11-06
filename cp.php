@@ -8,7 +8,8 @@
       header("location: login.php");
     }
   } 
-  $host="sql.criticalfuturistics.com"; // Host name 
+
+   $host="sql.criticalfuturistics.com"; // Host name 
   $dbusername="critical58585"; // Database username 
   $dbpassword="travelers"; // Database password 
   $dbname="critical58585";  // Database name 
@@ -42,6 +43,7 @@
                     "SAG" => $row["SAG"]
                   ],
         "equip" => $row["equip"],
+        "inventory" => $row["inventory"], 
         "buffs" => $row["buffs"],
         "PT" => $row['PT'],
         "abilities" => $row['abilities'],
@@ -56,8 +58,6 @@
     }
 
     $_SESSION['players'] = json_encode($players);
-    //$_SESSION['players'] = "'" . json_encode($players) . "'";
-    //$_SESSION['players'] = $players;
     $_SESSION['error'] = "";
   } else {
     $_SESSION['error'] = "Error: Failed to get the players from the server";
@@ -255,7 +255,6 @@
 
 
   // -------------------------------------------------- //
-
 ?>
 
 <!DOCTYPE html>
@@ -269,6 +268,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
   </head>
   <body>
@@ -305,6 +306,7 @@
                   
                 </div>
               </div>
+              <span class="playerInventory1">   </span>
             </div>
           </div>
 
@@ -318,6 +320,7 @@
                   
                 </div>
               </div>
+              <span class="playerInventory2">   </span>
             </div>
           </div>
 
@@ -331,6 +334,7 @@
                   
                 </div>
               </div>
+              <span class="playerInventory3">   </span>
             </div>
           </div>
 
@@ -344,6 +348,7 @@
                   
                 </div>
               </div>
+              <span class="playerInventory4">   </span>
             </div>
           </div>
 
@@ -357,6 +362,7 @@
                   
                 </div>
               </div>
+              <span class="playerInventory5">   </span>
             </div>
           </div>
 
@@ -379,7 +385,6 @@
     </footer>
 
     <!--  Scripts-->
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="js/materialize.js"></script>
     <script src="js/init.js"></script>
     <script src="js/update.js"></script>
@@ -402,15 +407,10 @@
       updateLocal();
       updateBars();
 
-      removeHP(2, 10);
-      removeMana(2, 95);
-      addXP(3, 20);
-
-      DBupdatePlayer(players);
+      DBupdatePlayer();
 
 
     </script>
-
   </body>
 </html>
 
