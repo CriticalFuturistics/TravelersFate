@@ -405,9 +405,10 @@
       initialiseTooltips();
 
       updateLocal();
-      updateBars();
-
+     
       DBupdatePlayer();
+
+      updateFields();
 
 
     </script>

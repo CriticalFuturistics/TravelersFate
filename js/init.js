@@ -418,18 +418,38 @@ function getInventoryAsHTML(playerID){
 }
 
 function getInventory(playerID){
-	return JSON.parse(players[playerID].inventory);
+	return players[playerID].inventory;
 }
 
-function getItem(id){
+function getItem(itemID){
 	for (var i = 0; i < items.length; i++) {
-		if (items[i].ID == id) {
+		if (items[i].ID == itemID) {
 			return items[i];
 		}
 	}
 	return null;
 }
 
+function addItem(playerID, itemID){
+	var p = players[playerID];
+	players[playerID].inventory.push([itemID, 1]);
+}
+
+function removeItem(playerID, itemID){
+	for (var i = 0; i < players[playerID].inventory.length; i++) {
+		if (players[playerID].inventory[i][0] == itemID){
+			players[playerID].inventory.splice(i, 1);
+		}
+	}
+}
+
+function checkInventoryIsArray(){
+	for (var i = 0; i < players.length; i++) {
+		if (typeof players[i].inventory === 'string') {
+			players[i].inventory = JSON.parse(players[i].inventory);
+		}
+	}
+}
 
 // Useful constants
 
