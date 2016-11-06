@@ -1,14 +1,13 @@
 
 function setup(){
 	for (var i = 0; i < players.length; i++) {
-
+		checkInventoryIsArray();
 		// Set Initial HP and Mana
 		setHP(i, getMaxHP(i));
 		setMana(i, getMaxMana(i));
 		//setXP(i);
 
-		var player = getPlayerFromID(i + 1);
-		
+		var player = getPlayerFromID(i + 1);		
 		var thisClass = getClassFromPlayer(i);
 		
 		player.abilities = {
@@ -46,11 +45,12 @@ function DBupdatePlayer(){
 // ------- //
 
 
-function updateBars(){
+function updateFields(){
 	for (var i = 0; i < players.length; i++) {
 		updateHPBar(i);
 		updateManaBar(i);
 		updateXPBar(i);
+		updateInventory(i);
 	}
 	
 }
@@ -173,7 +173,7 @@ function placePlayers(){
 		var adiv = '<div class="card armorCard" style><div class="card-content armor"> <span class=" grey-text text-darken-4 center-block center"> Armor </span> <p class="text-darken-4 center-block center">' + getBaseArmor(i) + '<span class="bonus"> + ' + getBonusArmor(i) + '</span> (' + getDamageReduction(getTotalArmor(i)) + '%)</p> </div></div>';
 
 		$('.players .playerArmor' + j).append(adiv);
-
+		
 		var idiv = '<div class="card itemsCard" style><div class="card-content items"> <span class=" grey-text text-darken-4 center-block center"> Inventory </span> <p class="text-darken-4 center-block center">' + getInventoryAsHTML(i) + '</p> </div></div>';
 
 		$('.players .playerInventory' + j).append(idiv);
@@ -196,4 +196,11 @@ function updateXPBar(playerID){
 	var j = playerID + 1;
 	$('.playerData' + j + ' .xpn' + j).html(getXP(playerID) + '/' + getMaxXP(playerID));
 	$('.xp' + j).css('width', getXPasPercent(playerID) + '%' );
+}
+
+function updateInventory(playerID){
+	var j = playerID + 1;
+	var idiv = '<div class="card itemsCard" style><div class="card-content items"> <span class=" grey-text text-darken-4 center-block center"> Inventory </span> <p class="text-darken-4 center-block center">' + getInventoryAsHTML(playerID) + '</p> </div></div>';
+	$('.players .playerInventory' + j).html("");
+	$('.players .playerInventory' + j).append(idiv);
 }
