@@ -409,8 +409,9 @@ function getInventoryAsHTML(playerID){
 	html += '<th data-field="weight">Peso</th> </tr></thead>';
 	
 	for (var i = 0; i < inv.length; i++) {
-		var item = getItem(inv[i]);
-		html += '<tbody> <tr> <td>_</td> <td>' + item.name + '</td> <td>' + item.weight * getNumberOfItemsInInventory(item.ID) + '</td> </tr>';
+		var item = getItem(inv[i][0]);
+		var quantity = inv[i][1];
+		html += '<tbody> <tr> <td>_</td> <td>' + quantity + ' ' + item.name + '</td> <td>' + item.weight * quantity + '</td> </tr>';
 	}
 	html += '</tbody></table>';
 	return html;
@@ -427,10 +428,6 @@ function getItem(id){
 		}
 	}
 	return null;
-}
-
-function getNumberOfItemsInInventory(ID){
-	return 1;	// TODO
 }
 
 
