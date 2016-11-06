@@ -405,7 +405,9 @@
       removeHP(2, 10);
       removeMana(2, 95);
       addXP(3, 20);
-      //$('.xp5').css('width', getXPasPercent(4) + '%' );
+
+      DBupdatePlayer(players);
+
 
     </script>
 

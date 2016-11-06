@@ -23,8 +23,9 @@ function setup(){
 	DBupdateAbilities(players);
 }
 
-function DBupdateAbilities(players){
+// --- DB Updates --- //
 
+function DBupdateAbilities(){
 	$.post({
         url: "update/updateAb.php",
         data: {	players: JSON.stringify(players) }
@@ -32,6 +33,19 @@ function DBupdateAbilities(players){
 	    	
 	    });
 }
+
+function DBupdatePlayer(players){
+	$.post({
+        url: "update/updatePlayer.php",
+        data: {	players: JSON.stringify(players) }
+	    }).done(function(response){
+	    	
+	    });
+}
+
+// ------- //
+
+
 function updateBars(){
 	for (var i = 0; i < players.length; i++) {
 		updateHPBar(i);
@@ -161,8 +175,6 @@ function placePlayers(){
 		var adiv = '<div class="card armorCard" style><div class="card-content armor"> <span class=" grey-text text-darken-4 center-block center"> Armor </span> <p class="text-darken-4 center-block center">' + getBaseArmor(i) + '<span class="bonus"> + ' + getBonusArmor(i) + '</span> (' + getDamageReduction(getTotalArmor(i)) + '%)</p> </div></div>';
 
 		$('.players .playerArmor' + j).append(adiv);
-
-		//$('.hp' + j).css('width', getHPasPercent(i) + '%' );
 	}
 }
 

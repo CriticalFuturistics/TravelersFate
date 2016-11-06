@@ -13,18 +13,19 @@ if (!$con) { die("Connection failed: " . mysqli_connect_error()); }
 for ($i=0; $i < count($players); $i++) { 
 
 	$playerID = array_values($players)[$i]->ID;
+	$hp = array_values($players)[$i]->HP;
+	$mana = array_values($players)[$i]->Mana;
+	$xp = array_values($players)[$i]->XP;
 
-	$abilities = array_values($players)[$i]->abilities;
+	echo json_encode($hp);
 
-	$abs = [$abilities->ab1, 
-			$abilities->ab2, 
-			$abilities->ab3, 
-			$abilities->ab4, 
-			$abilities->ab5,
-			$abilities->ab6
-			];
+	$query = "UPDATE players SET hp = '". json_encode($hp) ."' WHERE ID = ". $playerID;
+	doQuery($con, $query);	
 
-	$query = "UPDATE players SET abilities = '". json_encode($abs) ."' WHERE ID = ". $playerID;
+	$query = "UPDATE players SET mana = '". json_encode($mana) ."' WHERE ID = ". $playerID;
+	doQuery($con, $query);
+
+	$query = "UPDATE players SET xp = '". json_encode($xp) ."' WHERE ID = ". $playerID;
 	doQuery($con, $query);	
 }
 	
