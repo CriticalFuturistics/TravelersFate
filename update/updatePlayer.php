@@ -26,16 +26,14 @@ for ($i=0; $i < count($players); $i++) {
 			$abilities->ab5,
 			$abilities->ab6
 			];
-
-	$statNames = ['VIT', 'FOR', 'AGI', 'INT', 'VOL', 'TEM', 'SAG'];
 	
 	$query = 'UPDATE players SET VIT = '. json_encode($stats->VIT) .' WHERE ID = '. $playerID;
 	doQuery($con, $query);
-	$query = "UPDATE players SET " . json_encode($statNames[1]) . " = ". json_encode($stats->FOR) ." WHERE ID = ". $playerID;
+	$query = "UPDATE players SET FORZ = ". json_encode($stats->FORZ) ." WHERE ID = ". $playerID;
 	doQuery($con, $query);
 	$query = "UPDATE players SET AGI = ". json_encode($stats->AGI) ." WHERE ID = ". $playerID;
 	doQuery($con, $query);
-	$query = "UPDATE players SET " . json_encode($statNames[3]) . " = ". json_encode($stats->INT) ." WHERE ID = ". $playerID;
+	$query = "UPDATE players SET INTE = ". json_encode($stats->INTE) ." WHERE ID = ". $playerID;
 	doQuery($con, $query);
 	$query = "UPDATE players SET VOL = ". json_encode($stats->VOL) ." WHERE ID = ". $playerID;
 	doQuery($con, $query);

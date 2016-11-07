@@ -37,7 +37,7 @@
         "race" => $row["race"],
         "level" => $row["level"],
         "armor" => $row["armor"],
-        "stats" => ["VIT" => $row["VIT"], "FOR" => $row["FOR"], 
+        "stats" => ["VIT" => $row["VIT"], "FORZ" => $row["FORZ"], 
                     "AGI" => $row["AGI"], "INT" => $row["INT"],
                     "VOL" => $row["VOL"], "TEM" => $row["TEM"],
                     "SAG" => $row["SAG"]
@@ -88,7 +88,7 @@
       // Add a new array with name, class and race to the players array
       $newRace = [
         "racename" => $row["Racename"],
-        "stats" => ["VIT" => $row["VIT"], "FOR" => $row["FOR"], 
+        "stats" => ["VIT" => $row["VIT"], "FORZ" => $row["FORZ"], 
                     "AGI" => $row["AGI"], "INT" => $row["INT"],
                     "VOL" => $row["VOL"], "TEM" => $row["TEM"],
                     "SAG" => $row["SAG"]
@@ -127,7 +127,7 @@
       // Add a new array with name, class and race to the players array
       $newClass = [
         "classname" => $row["Classname"],
-        "stats" => ["VIT" => $row["VIT"], "FOR" => $row["FOR"], 
+        "stats" => ["VIT" => $row["VIT"], "FORZ" => $row["FORZ"], 
                     "AGI" => $row["AGI"], "INT" => $row["INT"],
                     "VOL" => $row["VOL"], "TEM" => $row["TEM"],
                     "SAG" => $row["SAG"]

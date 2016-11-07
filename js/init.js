@@ -258,13 +258,13 @@ function getBonusArmor(playerID){
 
 function setMaxHP(playerID){
 	var p = players[playerID];
-	p.maxHP = getTotalStats(playerID, statName.vit) * 20 + getTotalStats(playerID, statName.for) * 4 + getTotalStats(playerID, statName.agi)  * 2;
+	p.maxHP = getTotalStats(playerID, statName.vit) * 20 + getTotalStats(playerID, statName.forz) * 4 + getTotalStats(playerID, statName.agi)  * 2;
 	return p.maxHP;
 }
 
 function setMaxMana(playerID){
 	var p = players[playerID];
-	p.maxMana = getTotalStats(playerID, statName.int)  * 20 + getTotalStats(playerID, statName.sag)  * 5;
+	p.maxMana = getTotalStats(playerID, statName.inte)  * 20 + getTotalStats(playerID, statName.sag)  * 5;
 	return p.maxMana;
 }
 
@@ -455,9 +455,9 @@ function checkInventoryIsArray(){
 
 const statName = {
 	vit: "VIT",
-	for: "FOR",
+	forz: "FORZ",
 	agi: "AGI",
-	int: "INT",
+	inte: "INTE",
 	vol: "VOL",
 	tem: "TEM",
 	sag: "SAG"

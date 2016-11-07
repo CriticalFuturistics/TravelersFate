@@ -27,9 +27,9 @@ function setup(){
 function DBUpdatePlayer(){
 	$.post({
         url: "update/updatePlayer.php",
-        data: {	players: JSON.stringify(players) }
+        data: {	players: JSON.stringify(players)}
 	    }).done(function(response){
-	    	log(response);
+	    	//log(response);
 	    });
 }
 
@@ -70,25 +70,25 @@ function updateStats(){
 	  $(".race" + j).html(players[i].race);
 	  $(".lvl" + j).html("LVL " + players[i].level);
 	  $(".p" + j + " > tr > .vitBase").html(parseInt(players[i].stats.VIT));
-	  $(".p" + j + " > tr > .forBase").html(parseInt(players[i].stats.FOR));
+	  $(".p" + j + " > tr > .forBase").html(parseInt(players[i].stats.FORZ));
 	  $(".p" + j + " > tr > .agiBase").html(parseInt(players[i].stats.AGI));
-	  $(".p" + j + " > tr > .intBase").html(parseInt(players[i].stats.INT));
+	  $(".p" + j + " > tr > .intBase").html(parseInt(players[i].stats.INTE));
 	  $(".p" + j + " > tr > .volBase").html(parseInt(players[i].stats.VOL));
 	  $(".p" + j + " > tr > .temBase").html(parseInt(players[i].stats.TEM)); //+ parseInt(getBaseStats(players, i, 'TEM')));
 	  $(".p" + j + " > tr > .sagBase").html(parseInt(players[i].stats.SAG));
 
 	  $(".p" + j + " > tr > .vitBonus").html(parseInt(getBonusStats(i, statName.vit)));
-	  $(".p" + j + " > tr > .forBonus").html(parseInt(getBonusStats(i, statName.for)));
+	  $(".p" + j + " > tr > .forBonus").html(parseInt(getBonusStats(i, statName.forz)));
 	  $(".p" + j + " > tr > .agiBonus").html(parseInt(getBonusStats(i, statName.agi)));
-	  $(".p" + j + " > tr > .intBonus").html(parseInt(getBonusStats(i, statName.int)));
+	  $(".p" + j + " > tr > .intBonus").html(parseInt(getBonusStats(i, statName.inte)));
 	  $(".p" + j + " > tr > .volBonus").html(parseInt(getBonusStats(i, statName.vol)));
 	  $(".p" + j + " > tr > .temBonus").html(parseInt(getBonusStats(i, statName.tem)));
 	  $(".p" + j + " > tr > .sagBonus").html(parseInt(getBonusStats(i, statName.sag)));
 
 	  $(".p" + j + " > tr > .vitTotal").html(parseInt(getTotalStats(i, statName.vit)));
-	  $(".p" + j + " > tr > .forTotal").html(parseInt(getTotalStats(i, statName.for)));
+	  $(".p" + j + " > tr > .forTotal").html(parseInt(getTotalStats(i, statName.forz)));
 	  $(".p" + j + " > tr > .agiTotal").html(parseInt(getTotalStats(i, statName.agi)));
-	  $(".p" + j + " > tr > .intTotal").html(parseInt(getTotalStats(i, statName.int)));
+	  $(".p" + j + " > tr > .intTotal").html(parseInt(getTotalStats(i, statName.inte)));
 	  $(".p" + j + " > tr > .volTotal").html(parseInt(getTotalStats(i, statName.vol)));
 	  $(".p" + j + " > tr > .temTotal").html(parseInt(getTotalStats(i, statName.tem)));
 	  $(".p" + j + " > tr > .sagTotal").html(parseInt(getTotalStats(i, statName.sag)));
