@@ -19,26 +19,17 @@ function setup(){
 			ab6 : (thisClass.classname == "Mago") ? [thisClass.abilities.AB6, 0] : null
 		}		
 	}
-	DBupdateAbilities();
+	DBUpdatePlayer();
 }
 
 // --- DB Updates --- //
 
-function DBupdateAbilities(){
-	$.post({
-        url: "update/updateAb.php",
-        data: {	players: JSON.stringify(players) }
-	    }).done(function(response){
-	    	
-	    });
-}
-
-function DBupdatePlayer(){
+function DBUpdatePlayer(){
 	$.post({
         url: "update/updatePlayer.php",
         data: {	players: JSON.stringify(players) }
 	    }).done(function(response){
-	    	
+	    	log(response);
 	    });
 }
 

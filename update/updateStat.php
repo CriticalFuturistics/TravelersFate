@@ -1,6 +1,4 @@
 <?php
-//ob_start();
-//session_start();
 
 $host="sql.criticalfuturistics.com";// Host name 
 $dbusername="critical58585"; 		// Database username 

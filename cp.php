@@ -406,7 +406,7 @@
 
       updateLocal();
      
-      DBupdatePlayer();
+      DBUpdatePlayer();
 
       updateFields();
 
