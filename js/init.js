@@ -28,6 +28,8 @@ function getBaseStats(playerID, stat) {
 	    		var statValue = players[playerID].stats[key];
 	    		var raceStats = getStatFromRace(getRaceFromPlayer(playerID), stat);
 	    		var classStats = getStatFromClass(getClassFromPlayer(playerID).classname, stat);
+
+
 	    		return parseInt(statValue) + parseInt(raceStats) + parseInt(classStats);
 	    	}
 	    } return undefined;
@@ -38,12 +40,11 @@ function getBaseStats(playerID, stat) {
 
 // Return the total number of a Stat at the time
 function getTotalStats(playerID, stat){
-	
-	return players[playerID].stats[stat] + getBonusStats(playerID, stat);
+	return parseInt(players[playerID].stats[stat]) + getBonusStats(playerID, stat);
 }
 
 function getBonusStats(playerID, stat){
-	return getBaseStats(playerID, stat) + getStatFromBuffs(playerID, stat) + getStatFromItems(playerID, stat);
+	return getBaseStats(playerID, stat) + getStatFromBuffs(playerID, stat) + getStatsFromEquip(playerID, stat);
 }
 
 // Rrturns the value of a chosen Stat
@@ -82,7 +83,7 @@ function getStatFromBuffs(playerID, stat) {
 				if (fx.hasOwnProperty("stat")) {
 					if (fx.stat) {
 						if (fx.hasOwnProperty("statMod")) {
-							return fx.statMod[stat];
+							return parseInt(fx.statMod[stat]);
 						}
 					}
 				}
@@ -165,8 +166,9 @@ function getAbilityLevel(playerID, ability){
 }
 
 // Scans the equipped Items and returns the total Stat Modifier for the chosen Stat
-function getStatFromItems(playerID, stat) {
+function getStatsFromEquip(playerID, stat) {
 	var items = players[playerID].equip;
+
 	var total = 0;
 	// TODO
 
@@ -443,6 +445,25 @@ function removeItem(playerID, itemID){
 	}
 }
 
+function equipItem(playerID, itemID, slot){
+	if (getItem(itemID).type == "Equip" || getItem(itemID).type == "Arma") {
+		var p = players[playerID];
+		if (p.equip[slot] != "") {
+			addItem(playerID, p.equip[slot]);
+		} 
+		p.equip[slot] = itemID;
+		removeItem(playerID, itemID);
+	} else {
+		log("You can't equip something other than a weapon or a piece of armor");
+	}
+}
+
+function unequipItem(playerID, slot){
+	var p = players[playerID];
+	addItem(playerID, p.equip[slot]);
+	p.equip[slot] = "";
+}
+
 function checkInventoryIsArray(){
 	for (var i = 0; i < players.length; i++) {
 		if (typeof players[i].inventory === 'string') {
@@ -491,6 +512,19 @@ const abilityName = {
 	risanazione : "Risanazione",
 	rituali : "Rituali",
 	maledizioni : "Maledizioni"
+}
+
+const slot = {
+	"head":"head",
+	"neck":"neck", 
+	"ringLeft":"ringLeft", 
+	"ringRight":"ringRight", 
+	"chest":"chest", 
+	"gloves":"gloves", 
+	"weaponLeft":"weaponLeft", 
+	"weaponRight":"weaponRight", 
+	"legs":"legs", 
+	"boots":"boots"
 }
 
 function log(str){

@@ -38,11 +38,11 @@
         "level" => $row["level"],
         "armor" => $row["armor"],
         "stats" => ["VIT" => $row["VIT"], "FORZ" => $row["FORZ"], 
-                    "AGI" => $row["AGI"], "INT" => $row["INT"],
+                    "AGI" => $row["AGI"], "INTE" => $row["INTE"],
                     "VOL" => $row["VOL"], "TEM" => $row["TEM"],
                     "SAG" => $row["SAG"]
                   ],
-        "equip" => $row["equip"],
+        "equip" => json_decode($row["equip"]),
         "inventory" => $row["inventory"], 
         "buffs" => $row["buffs"],
         "PT" => $row['PT'],
@@ -89,7 +89,7 @@
       $newRace = [
         "racename" => $row["Racename"],
         "stats" => ["VIT" => $row["VIT"], "FORZ" => $row["FORZ"], 
-                    "AGI" => $row["AGI"], "INT" => $row["INT"],
+                    "AGI" => $row["AGI"], "INTE" => $row["INTE"],
                     "VOL" => $row["VOL"], "TEM" => $row["TEM"],
                     "SAG" => $row["SAG"]
                   ],
@@ -128,7 +128,7 @@
       $newClass = [
         "classname" => $row["Classname"],
         "stats" => ["VIT" => $row["VIT"], "FORZ" => $row["FORZ"], 
-                    "AGI" => $row["AGI"], "INT" => $row["INT"],
+                    "AGI" => $row["AGI"], "INTE" => $row["INTE"],
                     "VOL" => $row["VOL"], "TEM" => $row["TEM"],
                     "SAG" => $row["SAG"]
                   ],
@@ -399,6 +399,7 @@
       var playersColumns = <?php print_r(json_encode($_SESSION['playersColumns'])); ?>;
       var items = <?php echo $_SESSION['items']; ?>;
 
+
       setup();
       placePlayers();
 
@@ -407,8 +408,9 @@
       updateLocal();
      
       DBUpdatePlayer();
-
       updateFields();
+
+      equipItem(0, 12, slot.head);
 
 
     </script>

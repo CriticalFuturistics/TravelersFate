@@ -123,9 +123,9 @@ function updateBuffs(){
 function addStat(stat, value, playerID){
 	// Add the stat locally
 	addStatLocal(stat, value, playerID);
-
+	DBUpdatePlayer();
 	// Add the stat on the Database
-	var player = getPlayerFromID(playerID);
+	/*var player = getPlayerFromID(playerID);
     $.post({
         url: "update/updateStat.php",
         data: {	stat: stat,
@@ -134,7 +134,7 @@ function addStat(stat, value, playerID){
         	}
     }).done(function(response){
     	//console.log(response);
-    });
+    });*/
     updateLocal();
 }
 
