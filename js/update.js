@@ -121,20 +121,12 @@ function updateBuffs(){
 
 //		 addStat(string, int, int)
 function addStat(stat, value, playerID){
-	// Add the stat locally
-	addStatLocal(stat, value, playerID);
+	var player = getPlayerFromID(playerID);
+	var old = player.stats[stat];
+	player.stats[stat] = value + parseInt(player.stats[stat]);
+	console.log(getPlayerFromID(playerID).name + "'s base " + stat + " " + old + " -> " + player.stats[stat]);
+
 	DBUpdatePlayer();
-	// Add the stat on the Database
-	/*var player = getPlayerFromID(playerID);
-    $.post({
-        url: "update/updateStat.php",
-        data: {	stat: stat,
-        		value: value + parseInt(player.stats[stat]),
-        		playerID: playerID
-        	}
-    }).done(function(response){
-    	//console.log(response);
-    });*/
     updateLocal();
 }
 
@@ -143,14 +135,6 @@ function removeStat(stat, value, playerID){
 
 	addStat(stat, -value, playerID);
 }
-
-function addStatLocal(stat, value, playerID){
-	var player = getPlayerFromID(playerID);
-	var old = player.stats[stat];
-	player.stats[stat] = value + parseInt(player.stats[stat]);
-	console.log(getPlayerFromID(playerID).name + "'s base " + stat + " " + old + " -> " + player.stats[stat]);
-}
-
 
 function placePlayers(){
 	for (var i = 0; i < players.length; i++) {
@@ -168,6 +152,12 @@ function placePlayers(){
 		var idiv = '<div class="card itemsCard" style><div class="card-content items"> <span class=" grey-text text-darken-4 center-block center"> Inventory </span> <p class="text-darken-4 center-block center">' + getInventoryAsHTML(i) + '</p> </div></div>';
 
 		$('.players .playerInventory' + j).append(idiv);
+
+		var helm = 'url("img/slots/helm.png")';
+		log(helm);
+		var ediv = '<div class="row q"> <div class="col s4 offset-s4 slot" style="background-image:' + helm + ';"> </div></div><div class="row q"> <div class="col s4 slot"> <span>anello dx</span></div><div class="col s4 slot"> <span>collana</span></div><div class="col s4 slot"> <span>anello sx</span></div></div><div class="row q"> <div class="col s4 slot"> <span>arma dx</span></div><div class="col s4 slot"> <span>petto</span></div><div class="col s4 slot"> <span>arma sx</span></div></div><div class="row q"> <div class="col s4 slot"> <span>guanti</span></div><div class="col s4 slot"> <span>gambe</span></div></div><div class="row q"> <div class="col s4 offset-s4 slot"> <span>piedi</span></div></div>';
+
+		$('.players .playerEquip' + j).append(ediv);
 	}
 }
 

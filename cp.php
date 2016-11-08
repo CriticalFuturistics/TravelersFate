@@ -306,6 +306,11 @@
                   
                 </div>
               </div>
+              <span class="playerEquip1"> 
+
+                
+
+              </span>
               <span class="playerInventory1">   </span>
             </div>
           </div>
@@ -320,6 +325,7 @@
                   
                 </div>
               </div>
+              <span class="playerEquip2">   </span>
               <span class="playerInventory2">   </span>
             </div>
           </div>
@@ -334,6 +340,7 @@
                   
                 </div>
               </div>
+              <span class="playerEquip3">   </span>
               <span class="playerInventory3">   </span>
             </div>
           </div>
@@ -348,6 +355,7 @@
                   
                 </div>
               </div>
+              <span class="playerEquip4">   </span>
               <span class="playerInventory4">   </span>
             </div>
           </div>
@@ -362,6 +370,7 @@
                   
                 </div>
               </div>
+              <span class="playerEquip5">   </span>
               <span class="playerInventory5">   </span>
             </div>
           </div>
@@ -412,7 +421,8 @@
 
       equipItem(0, 12, slot.head);
 
-
+      // set of functions to be run when everything else has loaded
+      finish();
     </script>
   </body>
 </html>

@@ -12,6 +12,17 @@ function initialiseTooltips(){
 	  });
 }
 
+function finish(){
+
+
+
+
+	// Make the slots square
+	var w = $('.slot').width();
+    $('.slot').css('height', w);
+    $('.q').css('margin-bottom', 0);
+}
+
 function getPlayerFromID(id){
 	for (var i = 0; i < players.length; i++) {
 		if (players[i].ID == id){
@@ -145,7 +156,6 @@ function getDivisionIndex(s){
 	}
 	return s.length;
 }
-
 
 function getAbilityLevel(playerID, ability){
 	var p = players[playerID];
@@ -382,6 +392,7 @@ function levelUp(playerID){
 }
 
 function unlockLevel(playerID){
+	// TODO
 	// Update the unlockable field on the player DB
 	// The player's app listen to the field change and unlocks the + and - buttons
 }
@@ -401,7 +412,7 @@ function getXPasPercent(playerID){
 	return (p.XP / p.maxXP) * 100 ;
 }
 
-// --- Items --- //
+// --- Items and Inventory Management --- //
 
 function getInventoryAsHTML(playerID){
 	var inv = getInventory(playerID);
@@ -413,10 +424,20 @@ function getInventoryAsHTML(playerID){
 	for (var i = 0; i < inv.length; i++) {
 		var item = getItem(inv[i][0]);
 		var quantity = inv[i][1];
-		html += '<tbody> <tr> <td>_</td> <td>' + quantity + ' ' + item.name + '</td> <td>' + item.weight * quantity + '</td> </tr>';
+		html += '<tbody> <tr> <td>' + getItemIcon(item.ID) + '</td> <td>' + quantity + ' ' + item.name + '</td> <td>' + item.weight * quantity + '</td> </tr>';
 	}
 	html += '</tbody></table>';
 	return html;
+}
+
+function getItemIcon(itemID){
+	var type = items[itemID].type;
+	if (type == "Consumabile") {
+		return '<i class="material-icons">fiber_manual_record</i>';
+	} else if (type == 'Equip') {
+		return '_'
+	}
+	return "_";	// TODO
 }
 
 function getInventory(playerID){
@@ -471,6 +492,14 @@ function checkInventoryIsArray(){
 		}
 	}
 }
+
+
+
+
+
+
+
+
 
 // Useful constants
 
