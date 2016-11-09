@@ -152,12 +152,39 @@ function placePlayers(){
 		var idiv = '<div class="card itemsCard" style><div class="card-content items"> <span class=" grey-text text-darken-4 center-block center"> Inventory </span> <p class="text-darken-4 center-block center">' + getInventoryAsHTML(i) + '</p> </div></div>';
 
 		$('.players .playerInventory' + j).append(idiv);
-
-		var helm = 'url("img/slots/helm.png")';
-		log(helm);
-		var ediv = '<div class="row q"> <div class="col s4 offset-s4 slot" style="background-image:' + helm + ';"> </div></div><div class="row q"> <div class="col s4 slot"> <span>anello dx</span></div><div class="col s4 slot"> <span>collana</span></div><div class="col s4 slot"> <span>anello sx</span></div></div><div class="row q"> <div class="col s4 slot"> <span>arma dx</span></div><div class="col s4 slot"> <span>petto</span></div><div class="col s4 slot"> <span>arma sx</span></div></div><div class="row q"> <div class="col s4 slot"> <span>guanti</span></div><div class="col s4 slot"> <span>gambe</span></div></div><div class="row q"> <div class="col s4 offset-s4 slot"> <span>piedi</span></div></div>';
-
+		
+		var ediv = '<div class="row q"> <div class="col s4 offset-s4 slot" id="head' + j + '"> </div></div><div class="row q"> <div class="col s4 slot" id="an' + j + '"> <span></span></div><div class="col s4 slot" id="collana' + j + '"> <span></span></div><div class="col s4 slot" id="an' + j + '"> <span></span></div></div><div class="row q"> <div class="col s4 slot" id="arm' + j + '"> <span></span></div><div class="col s4 slot" id="chest' + j + '"> <span></span></div><div class="col s4 slot" id="arm' + j + '"> <span></span></div></div><div class="row q"> <div class="col s4 slot" id="guanti' + j + '"> <span></span></div><div class="col s4 slot" id="gambe' + j + '"> <span></span></div></div><div class="row q"> <div class="col s4 offset-s4 slot" id="piedi' + j + '"> <span></span></div></div>';
+		
 		$('.players .playerEquip' + j).append(ediv);
+		$('#head' + j).css("background-image", "url(img/slots/helm.png)");
+		$('#head' + j).css("background-repeat", "no-repeat");
+		$('#head' + j).css("background-position", "center");
+
+		// $('#an' + j).css("background-image", "url(img/slots/helm.png)");
+		// $('#an' + j).css("background-repeat", "no-repeat");
+		// $('#an' + j).css("background-position", "center");
+
+		// $('#arm' + j).css("background-image", "url(img/slots/helm.png)");
+		// $('#arm' + j).css("background-repeat", "no-repeat");
+		// $('#arm' + j).css("background-position", "center");
+
+		$('#chest' + j).css("background-image", "url(img/slots/armor.png)");
+		$('#chest' + j).css("background-repeat", "no-repeat");
+		$('#chest' + j).css("background-position", "center");
+
+		// $('#guanti' + j).css("background-image", "url(img/slots/helm.png)");
+		// $('#guanti' + j).css("background-repeat", "no-repeat");
+		// $('#guanti' + j).css("background-position", "center");
+
+		// $('#collana' + j).css("background-image", "url(img/slots/helm.png)");
+		// $('#collana' + j).css("background-repeat", "no-repeat");
+		// $('#collana' + j).css("background-position", "center");
+
+		// $('#piedi' + j).css("background-image", "url(img/slots/helm.png)");
+		// $('#piedi' + j).css("background-repeat", "no-repeat");
+		// $('#piedi' + j).css("background-position", "center");
+
+
 	}
 }
 
@@ -184,4 +211,11 @@ function updateInventory(playerID){
 	var idiv = '<div class="card itemsCard" style><div class="card-content items"> <span class=" grey-text text-darken-4 center-block center"> Inventory </span> <p class="text-darken-4 center-block center">' + getInventoryAsHTML(playerID) + '</p> </div></div>';
 	$('.players .playerInventory' + j).html("");
 	$('.players .playerInventory' + j).append(idiv);
+
+	for (var i = 0; i < players[playerID].inventory.length; i++) {
+		var tooltipData = getItemTooltipHTML(players[playerID].inventory[i][0]);
+		var id = i + "" + playerID;
+		$('.i' + id).addClass('tooltipped');
+		$('.i' + id).attr({ 'data-tooltip': tooltipData, 'data-position': 'top' });
+	}
 }

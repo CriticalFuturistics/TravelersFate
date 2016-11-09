@@ -8,7 +8,7 @@
 
 function initialiseTooltips(){
 	$(document).ready(function(){
-	    $('.tooltipped').tooltip({delay: 40});
+	    $('.tooltipped').tooltip({delay: 40, html: true});
 	  });
 }
 
@@ -337,6 +337,7 @@ function addHP(playerID, n){
 		p.HP = getMaxHP(playerID);
 	}
 	updateHPBar(playerID);
+	DBUpdatePlayer();
 }
 
 function addMana(playerID, n){
@@ -347,6 +348,7 @@ function addMana(playerID, n){
 		p.Mana = getMaxMana(playerID);
 	}
 	updateManaBar(playerID);
+	DBUpdatePlayer();
 }
 
 function addXP(playerID, n){
@@ -366,6 +368,7 @@ function removeHP(playerID, n){
 	var p = players[playerID];
 	p.HP = p.HP - n;
 	updateHPBar(playerID);
+	DBUpdatePlayer();
 }
 
 function removeMana(playerID, n){
@@ -375,6 +378,7 @@ function removeMana(playerID, n){
 		p.Mana = 0;
 	}
 	updateManaBar(playerID);
+	DBUpdatePlayer();
 }
 
 function getXPForNextLevel(playerID){
@@ -416,15 +420,16 @@ function getXPasPercent(playerID){
 
 function getInventoryAsHTML(playerID){
 	var inv = getInventory(playerID);
-	var html = '<table class="inv"> <thead> <tr> <th data-field="type"><i class="material-icons">layers</i></th>';
+	var html = '<table  class="highlight inv" data-delay="40"> <thead> <tr> <th data-field="type"><i class="material-icons">layers</i></th>';
 	html += '<th data-field="name">Nome</th>';
 	//html += '<th data-field="amount">No.</th>';
-	html += '<th data-field="weight">Peso</th> </tr></thead>';
+	html += '<th data-field="weight">Peso</th> </tr></thead><tbody>';
 	
 	for (var i = 0; i < inv.length; i++) {
 		var item = getItem(inv[i][0]);
 		var quantity = inv[i][1];
-		html += '<tbody> <tr> <td>' + getItemIcon(item.ID) + '</td> <td>' + quantity + ' ' + item.name + '</td> <td>' + item.weight * quantity + '</td> </tr>';
+		var id = i + "" + playerID;
+		html += ' <tr class="i' + id + '"> <td>' + getItemIcon(item.ID) + '</td> <td>' + quantity + ' ' + item.name + '</td> <td>' + item.weight * quantity + '</td> </tr>';
 	}
 	html += '</tbody></table>';
 	return html;
@@ -485,6 +490,25 @@ function unequipItem(playerID, slot){
 	p.equip[slot] = "";
 }
 
+function getItemTooltipHTML(itemID){
+	var item = items[itemID-1];
+	var name = '<span class="title">' + item.name + '</span>';
+	var p;
+
+	if (item.type == itemType.consumabile) {
+		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + ' </p>';
+	} else if (item.type == itemType.arma) {
+		var arma = getArma(item.ID);																														// getFx(itemID); TODO
+		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + '<br> Danno: ' + arma.damage + '<br> Effetto: ' + arma.fxDex + '<br> PA: ' + arma.PA + ' </p>';
+	} else if (item.type == itemType.equip) {
+		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + ' </p>';
+	}
+	
+ 
+	return name + p;
+
+}
+
 function checkInventoryIsArray(){
 	for (var i = 0; i < players.length; i++) {
 		if (typeof players[i].inventory === 'string') {
@@ -492,6 +516,11 @@ function checkInventoryIsArray(){
 		}
 	}
 }
+
+function getArma(itemID){
+	return armi[itemID];
+}
+
 
 
 
@@ -554,6 +583,14 @@ const slot = {
 	"weaponRight":"weaponRight", 
 	"legs":"legs", 
 	"boots":"boots"
+}
+
+const itemType = {
+	valuta: 'valuta',
+	consumabile: 'Consumabile',
+	arma: 'Arma',
+	equip: 'Equip',
+	oggetto: 'Oggetto',
 }
 
 function log(str){

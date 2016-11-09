@@ -180,7 +180,8 @@
     $_SESSION['error'] = "Error: Failed to get the items from the server";
   }
 
-    // -------------------------------------------------- //
+  // -------------------------------------------------- //
+
   // Classes
   $query = "SELECT * FROM buffs";
   $result = mysqli_query($con, $query);
@@ -203,56 +204,38 @@
     $_SESSION['error'] = "Error: Failed to get the buffs/debuffs from the server";
   }
 
+  // -------------------------------------------------- //
 
-  /**       
-          $item = [
-              "name" => $row["name"],
-              "price" => $row["weight"], 
-              "weight" => $row["weight"], 
-              "type" => $row["type"],
-              "effect" => $row["effect"],
-              "PA" => $row["PA"],
-              "duration" => $row["duration"]
-            ];
-          } else if ($type == "equip") {
-            $item = [
-              "name" => $row["name"],
-              "price" => $row["weight"], 
-              "weight" => $row["weight"], 
-              "type" => $row["type"],
-              "effect" => $row["effect"],
-              "slot" => $row["slot"],
-              "armor" => $row["armor"],
-              "DF" => $row["DF"],
-              "DE" => $row["DE"],
-              "RB" => $row["RB"],
-              "RS" => $row["RS"],
-              "RC" => $row["RC"],
-              "RI" => $row["RI"],
-              "TOX" => $row["TOX"]
-            ];
-          } else if ($type == "weapon") {
-            $item = [
-              "name" => $row["name"],
-              "price" => $row["weight"], 
-              "weight" => $row["weight"], 
-              "type" => $row["type"],
-              "effect" => $row["effect"],
-              "PA" => $row["PA"],
-              "weaponType" => $row["weaponType"]
-            ];
-          } else if ($type == "item") {
-            $item = [
-              "name" => $row["name"],
-              "price" => $row["weight"], 
-              "weight" => $row["weight"], 
-              "type" => $row["type"],
-              "effect" => $row["effect"],
-              "PA" => $row["PA"],
-              "dex" => $row["dex"]
-            ];
-  */
+  // Weapons (Armi)
+  $query = "SELECT * FROM armi";
+  $result = mysqli_query($con, $query);
 
+  // Test failure in the result
+  if (!$result) echo mysql_error();
+
+  // Get the data
+  if (mysqli_num_rows($result) > 0) {
+    // Create empty array
+    $armi = [];
+    while($row = mysqli_fetch_assoc($result)) {      
+      // Add a new array with name, class and race to the players array
+      $newArma = [
+        "ID" => $row["ID"],
+        "name" => $row["name"],
+        "type" => $row["type"], 
+        "fxDex" => $row["fxDex"], 
+        "fx" => $row["fx"],
+        "dmg" => $row["dmg"],
+        "PA" => $row["PA"]
+      ];
+      array_push($armi, $newArma);      
+    }
+
+    $_SESSION['armi'] = json_encode($armi);
+    $_SESSION['error'] = "";
+  } else {
+    $_SESSION['error'] = "Error: Failed to get the Weapons (Armi) from the server";
+  }
 
   // -------------------------------------------------- //
 ?>
@@ -307,7 +290,6 @@
                 </div>
               </div>
               <span class="playerEquip1"> 
-
                 
 
               </span>
@@ -407,6 +389,7 @@
       var buffs   = <?php echo $_SESSION['buffs']; ?>;
       var playersColumns = <?php print_r(json_encode($_SESSION['playersColumns'])); ?>;
       var items = <?php echo $_SESSION['items']; ?>;
+      var armi = <?php echo $_SESSION['armi']; ?>;
 
 
       setup();
@@ -419,7 +402,7 @@
       DBUpdatePlayer();
       updateFields();
 
-      equipItem(0, 12, slot.head);
+      //equipItem(0, 12, slot.head);
 
       // set of functions to be run when everything else has loaded
       finish();
