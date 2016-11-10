@@ -501,6 +501,8 @@ function getItemTooltipHTML(itemID){
 		var arma = getArma(item.ID);																														// getFx(itemID); TODO
 		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + '<br> Danno: ' + arma.damage + '<br> Effetto: ' + arma.fxDex + '<br> PA: ' + arma.PA + ' </p>';
 	} else if (item.type == itemType.equip) {
+		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + '<br> Danno: ' + equip.armor + ' </p>';
+	} else if (item.type == itemType.oggetto) {
 		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + ' </p>';
 	}
 	
