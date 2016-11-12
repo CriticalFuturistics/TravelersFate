@@ -9,6 +9,8 @@
 function initialiseTooltips(){
 	$(document).ready(function(){
 	    $('.tooltipped').tooltip({delay: 40, html: true});
+	    $('select').material_select();
+	    $('.modal-trigger').leanModal();
 	  });
 }
 
@@ -17,10 +19,11 @@ function finish(){
 
 
 
-	// Make the slots square
+	// Adjust the slots divs
 	var w = $('.slot').width();
     $('.slot').css('height', w);
     $('.q').css('margin-bottom', 0);
+
 }
 
 function getPlayerFromID(id){
@@ -177,8 +180,9 @@ function getAbilityLevel(playerID, ability){
 
 // Scans the equipped Items and returns the total Stat Modifier for the chosen Stat
 function getStatsFromEquip(playerID, stat) {
-	var items = players[playerID].equip;
+	var equips = players[playerID].equip;
 
+	
 	var total = 0;
 	// TODO
 
@@ -362,6 +366,7 @@ function addXP(playerID, n){
 		addXP(playerID, extraXP);
 	}
 	updateXPBar(playerID);
+	DBUpdatePlayer();
 }
 
 function removeHP(playerID, n){
@@ -469,6 +474,7 @@ function removeItem(playerID, itemID){
 			players[playerID].inventory.splice(i, 1);
 		}
 	}
+	updateInventory(playerID);
 }
 
 function equipItem(playerID, itemID, slot){
@@ -479,6 +485,8 @@ function equipItem(playerID, itemID, slot){
 		} 
 		p.equip[slot] = itemID;
 		removeItem(playerID, itemID);
+		updateEquip(playerID, itemID, slot);
+		//DBUpdatePlayer();
 	} else {
 		log("You can't equip something other than a weapon or a piece of armor");
 	}
@@ -498,10 +506,11 @@ function getItemTooltipHTML(itemID){
 	if (item.type == itemType.consumabile) {
 		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + ' </p>';
 	} else if (item.type == itemType.arma) {
-		var arma = getArma(item.ID);																														// getFx(itemID); TODO
-		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + '<br> Danno: ' + arma.damage + '<br> Effetto: ' + arma.fxDex + '<br> PA: ' + arma.PA + ' </p>';
+		var armaObj = getArma(item.ID);																														// getFx(itemID); TODO
+		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + '<br> Danno: ' + armaObj.dmg + '<br> Effetto: ' + armaObj.fxDex + '<br> PA: ' + armaObj.PA + ' </p>';
 	} else if (item.type == itemType.equip) {
-		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + '<br> Danno: ' + equip.armor + ' </p>';
+		var equipObj = getEquip(item.ID);
+		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + '<br> Armatura: +' + equipObj.armor + ' </p>';
 	} else if (item.type == itemType.oggetto) {
 		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + ' </p>';
 	}
@@ -520,9 +529,52 @@ function checkInventoryIsArray(){
 }
 
 function getArma(itemID){
-	return armi[itemID];
+	for (var i = 0; i < armi.length; i++) {
+		if(armi[i].ID == itemID){
+			return armi[i];
+		}
+	}
+	log("Arma con id " + itemID + " non trovata.")
+	return null;
 }
 
+function getEquip(itemID){
+	for (var i = 0; i < equip.length; i++) {
+		if(equip[i].ID == itemID){
+			return equip[i];
+		}
+	}
+	return null;
+}
+
+function getChangesHTML(){
+	return "test";
+}
+
+
+
+
+
+function getRarity(itemID){
+	return parseInt(getItem(itemID).rarity);
+}
+
+function getRarityColor(n){
+	switch(n) {
+    case 0:
+        return '#111111';
+        break;
+    case 1:
+        return '#3F51B5';
+        break;
+    case 2:
+        return '#FF9800';
+        break;
+    case 3:
+        return '#9C27B0';
+        break;
+	}
+}
 
 
 
@@ -585,6 +637,17 @@ const slot = {
 	"weaponRight":"weaponRight", 
 	"legs":"legs", 
 	"boots":"boots"
+}
+
+const slotName = {
+	ring: "Anello",
+	head: "Testa",
+	chest: "Petto",
+	gloves: "Guanti",
+	legs: "Gambe",
+	neck: "Collana",
+	chestLegs: "Petto + Gambe",
+	weapon: "Arma"
 }
 
 const itemType = {

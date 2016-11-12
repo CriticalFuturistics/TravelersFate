@@ -153,20 +153,25 @@ function placePlayers(){
 
 		$('.players .playerInventory' + j).append(idiv);
 		
-		var ediv = '<div class="row q"> <div class="col s4 offset-s4 slot" id="head' + j + '"> </div></div><div class="row q"> <div class="col s4 slot" id="an' + j + '"> <span></span></div><div class="col s4 slot" id="collana' + j + '"> <span></span></div><div class="col s4 slot" id="an' + j + '"> <span></span></div></div><div class="row q"> <div class="col s4 slot" id="arm' + j + '"> <span></span></div><div class="col s4 slot" id="chest' + j + '"> <span></span></div><div class="col s4 slot" id="arm' + j + '"> <span></span></div></div><div class="row q"> <div class="col s4 slot" id="guanti' + j + '"> <span></span></div><div class="col s4 slot" id="gambe' + j + '"> <span></span></div></div><div class="row q"> <div class="col s4 offset-s4 slot" id="piedi' + j + '"> <span></span></div></div>';
+		var ediv = '<div class="row q"> <div class="col s4 offset-s4 slot head' + j + '"> </div></div><div class="row q"> <div class="col s4 slot ringLeft' + j + '"> <span></span></div><div class="col s4 slot" id="collana' + j + '"> <span></span></div><div class="col s4 slot ringRight' + j + '"> <span></span></div></div><div class="row q"> <div class="col s4 slot arm' + j + '"> <span></span></div><div class="col s4 slot" id="chest' + j + '"> <span></span></div><div class="col s4 slot arm' + j + '"> <span></span></div></div><div class="row q"> <div class="col s4 slot" id="guanti' + j + '"> <span></span></div><div class="col s4 slot" id="gambe' + j + '"> <span></span></div></div><div class="row q"> <div class="col s4 offset-s4 slot" id="piedi' + j + '"> <span></span></div></div>';
 		
 		$('.players .playerEquip' + j).append(ediv);
-		$('#head' + j).css("background-image", "url(img/slots/helm.png)");
-		$('#head' + j).css("background-repeat", "no-repeat");
-		$('#head' + j).css("background-position", "center");
+		$('.head' + j).css("background-image", "url(img/slots/helm.png)");
+		$('.head' + j).css("background-repeat", "no-repeat");
+		$('.head' + j).css("background-position", "center");
 
-		// $('#an' + j).css("background-image", "url(img/slots/helm.png)");
-		// $('#an' + j).css("background-repeat", "no-repeat");
-		// $('#an' + j).css("background-position", "center");
+		$('.ringLeft' + j).css("background-image", "url(img/slots/ring.png)");
+		$('.ringLeft' + j).css("background-repeat", "no-repeat");
+		$('.ringLeft' + j).css("background-position", "center");
 
-		// $('#arm' + j).css("background-image", "url(img/slots/helm.png)");
-		// $('#arm' + j).css("background-repeat", "no-repeat");
-		// $('#arm' + j).css("background-position", "center");
+		$('.ringRight' + j).css("background-image", "url(img/slots/ring.png)");
+		$('.ringRight' + j).css("background-repeat", "no-repeat");
+		$('.ringRight' + j).css("background-position", "center");
+
+
+		$('.arm' + j).css("background-image", "url(img/slots/weapon.png)");
+		$('.arm' + j).css("background-repeat", "no-repeat");
+		$('.arm' + j).css("background-position", "center");
 
 		$('#chest' + j).css("background-image", "url(img/slots/armor.png)");
 		$('#chest' + j).css("background-repeat", "no-repeat");
@@ -176,9 +181,9 @@ function placePlayers(){
 		// $('#guanti' + j).css("background-repeat", "no-repeat");
 		// $('#guanti' + j).css("background-position", "center");
 
-		// $('#collana' + j).css("background-image", "url(img/slots/helm.png)");
-		// $('#collana' + j).css("background-repeat", "no-repeat");
-		// $('#collana' + j).css("background-position", "center");
+		$('#collana' + j).css("background-image", "url(img/slots/neck.png)");
+		$('#collana' + j).css("background-repeat", "no-repeat");
+		$('#collana' + j).css("background-position", "center");
 
 		// $('#piedi' + j).css("background-image", "url(img/slots/helm.png)");
 		// $('#piedi' + j).css("background-repeat", "no-repeat");
@@ -213,9 +218,78 @@ function updateInventory(playerID){
 	$('.players .playerInventory' + j).append(idiv);
 
 	for (var i = 0; i < players[playerID].inventory.length; i++) {
-		var tooltipData = getItemTooltipHTML(players[playerID].inventory[i][0]);
+		var item = players[playerID].inventory[i][0];
+		var tooltipData = getItemTooltipHTML(item);
 		var id = i + "" + playerID;
 		$('.i' + id).addClass('tooltipped');
 		$('.i' + id).attr({ 'data-tooltip': tooltipData, 'data-position': 'top' });
+		$('.i' + id).attr({ 'onClick': 'itemDialog(' + playerID + ', ' + players[playerID].inventory[i][0] + ')'});
+	}
+}
+
+function updateEquip(playerID, itemID, slot){
+	var j = playerID + 1;
+	var c = getRarityColor(getRarity(itemID));
+	$('.' + slot + j).css('border', '1px solid ' + c);
+}
+
+
+function itemDialog(playerID, itemID){
+	var item = getItem(itemID);
+	if (item.type == itemType.consumabile) {
+		// Consume Modal
+
+	} else if (item.type == itemType.equip) {
+		var eq = getEquip(itemID);
+		var customSlot = false;
+		// Show data changes
+		$('#doEquipItem div h4').html("");
+		$('#doEquipItem div h4').html(eq.name);
+
+		var changes = getChangesHTML();
+		$('#doEquipItem div p').html(changes);
+
+
+		// Show Slot choices
+		if (eq.slot == slotName.ring) {
+			$('#doEquipItem div p').append('<br><input name="ring" type="radio" id="ringLeft" /> <label for="ringLeft">Anello di Sinistra</label>');
+			$('#doEquipItem div p').append('<br><input name="ring" type="radio" id="ringRight" /> <label for="ringRight">Anello di Destra</label>');
+			customSlot = true;
+		} else if (eq.slot == slotName.weapon) {
+			$('#doEquipItem div p').append('<br><input name="weapon" type="radio" id="weaponRight" /> <label for="weaponRight">Arma di Sinistra</label>');
+			$('#doEquipItem div p').append('<br><input name="weapon" type="radio" id="weaponLeft" /> <label for="weaponLeft">Arma di Destra</label>');
+			customSlot = true;
+		}
+
+		// Add click functionality
+		$('#doEquipItem a').attr("onClick", "checkSlotSelected(" + playerID + ", " + itemID + ", '" + eq.slot + "', " + customSlot + ")");
+
+		// Show the dialog modal
+		$('#doEquipItem').openModal();
+	}
+}
+
+function checkSlotSelected(playerID, itemID, slot, customSlot){
+	if (!customSlot) {
+		equipItem(playerID, itemID, slot);
+		$('#doEquipItem').closeModal();
+	} else if (customSlot) {
+		if (slot == slotName.ring){
+			var id = $("input[name=ring]:checked").attr('id');
+			if (id != null) {
+				equipItem(playerID, itemID, id);
+				$('#doEquipItem').closeModal();
+			} else { 
+				log("Missing selection")
+			}		
+		} else if (slot == slotName.weapon){
+			var id = $("input[name=weapon]:checked").attr('id');
+			if (id != null) {
+				equipItem(playerID, itemID, id);
+				$('#doEquipItem').closeModal();
+			} else { 
+				log("Missing selection")
+			}	
+		}
 	}
 }

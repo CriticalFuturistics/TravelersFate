@@ -169,7 +169,8 @@
         "name" => $row["name"],
         "price" => $row["price"], 
         "weight" => $row["weight"], 
-        "type" => $row["type"] 
+        "type" => $row["type"],
+        "rarity" => $row["rarity"]
       ];
       array_push($items, $newItem);      
     }
@@ -182,7 +183,7 @@
 
   // -------------------------------------------------- //
 
-  // Classes
+  // Buffs
   $query = "SELECT * FROM buffs";
   $result = mysqli_query($con, $query);
   if (!$result) echo mysql_error();
@@ -235,6 +236,39 @@
     $_SESSION['error'] = "";
   } else {
     $_SESSION['error'] = "Error: Failed to get the Weapons (Armi) from the server";
+  }
+
+  // -------------------------------------------------- //
+
+  // Equip
+  $query = "SELECT * FROM equip";
+  $result = mysqli_query($con, $query);
+  if (!$result) echo mysql_error();
+  if (mysqli_num_rows($result) > 0) {
+    $equip = [];
+    while($row = mysqli_fetch_assoc($result)) {                                                         
+      $newEquip = [
+        "ID" => $row["ID"],
+        "name" => $row["name"],
+        "slot" => $row["slot"],
+        "fxDex" => $row["fxDex"],
+        "fx" => $row["fx"],
+        "armor" => $row["armor"],
+        "DF" => $row["DF"],
+        "DE" => $row["DE"],
+        "RB" => $row["RB"],
+        "RS" => $row["RS"],
+        "RC" => $row["RC"],
+        "RI" => $row["RI"],
+        "TOX" => $row["TOX"]
+      ];
+      array_push($equip, $newEquip);      
+    }
+
+    $_SESSION['equip'] = json_encode($equip);
+    $_SESSION['error'] = "";
+  } else {
+    $_SESSION['error'] = "Error: Failed to get the equipment from the server";
   }
 
   // -------------------------------------------------- //
@@ -367,6 +401,19 @@
       </div>
     </div>
 
+    <!-- Dialog Modal Structure -->
+    <div id="doEquipItem" class="modal">
+      <div class="modal-content">
+        <h4>_</h4>
+        <p>_</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class=" modal-action waves-effect btn-flat doEquip">Equipaggia</a>
+        <a href="#!" class=" modal-action modal-close waves-effect btn-flat">Annulla</a>
+      </div>
+    </div>
+
+
     <footer class="page-footer orange">
       <div class="footer-copyright">
         <div class="container">
@@ -390,7 +437,7 @@
       var playersColumns = <?php print_r(json_encode($_SESSION['playersColumns'])); ?>;
       var items = <?php echo $_SESSION['items']; ?>;
       var armi = <?php echo $_SESSION['armi']; ?>;
-
+      var equip = <?php echo $_SESSION['equip']; ?>;
 
       setup();
       placePlayers();
