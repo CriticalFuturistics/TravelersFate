@@ -42,6 +42,7 @@ function updateFields(){
 		updateManaBar(i);
 		updateXPBar(i);
 		updateInventory(i);
+		updateEquipAll(i);
 	}
 	
 }
@@ -229,10 +230,26 @@ function updateInventory(playerID){
 
 function updateEquip(playerID, itemID, slot){
 	var j = playerID + 1;
-	var c = getRarityColor(getRarity(itemID));
-	$('.' + slot + j).css('border', '1px solid ' + c);
+	if (itemID == "" || itemID == null || itemID == JSON.stringify("")) {
+		$('.' + slot + j).css('border', '1px solid #FFF');
+	} else {
+		var c = getRarityColor(getRarity(itemID));
+		var tooltipData = getItemTooltipHTML(itemID);
+		$('.' + slot + j).css('border', '1px solid ' + c);
+		$('.' + slot + j).addClass('tooltipped');
+		$('.' + slot + j).attr({ 'data-tooltip': tooltipData, 'data-position': 'top' });
+		$('.' + slot + j).attr({ 'onClick': 'itemDialogEquipped(' + playerID + ', ' + itemID + ', "' + slot + '")'});
+	}
 }
 
+function updateEquipAll(playerID){
+	var eq = players[playerID].equip;
+	for (var k in eq) {
+		if (eq[k] != null && eq[k] != "" && eq[k] != JSON.stringify("")) {
+			updateEquip(playerID, eq[k], k);
+		}
+	}
+}
 
 function itemDialog(playerID, itemID){
 	var item = getItem(itemID);
@@ -262,10 +279,32 @@ function itemDialog(playerID, itemID){
 		}
 
 		// Add click functionality
-		$('#doEquipItem a').attr("onClick", "checkSlotSelected(" + playerID + ", " + itemID + ", '" + eq.slot + "', " + customSlot + ")");
+		$('#doEquipItem .modal-footer > a').attr("onClick", "checkSlotSelected(" + playerID + ", " + itemID + ", '" + eq.slot + "', " + customSlot + ")");
 
 		// Show the dialog modal
 		$('#doEquipItem').openModal();
+	}
+}
+
+function itemDialogEquipped(playerID, itemID, slotx){
+	var item = getItem(itemID);
+	if (item.type == itemType.equip) {
+		var eq = getEquip(itemID);
+		
+		var customSlot = false;
+		if (slotx == slot.ringLeft || slotx == slot.ringRight || slotx == slot.weaponLeft || slotx == slot.weaponRight) {
+			customSlot = true;
+		}
+
+		// Show data
+		$('#doUnequipItem div h4').html("");
+		$('#doUnequipItem div h4').html(eq.name);
+
+		// Add click functionality
+		$('#doUnequipItem .modal-footer > a').attr("onClick", "unequipItem(" + playerID + ", '" + slotx + "')");
+
+		// Show the dialog modal
+		$('#doUnequipItem').openModal();
 	}
 }
 

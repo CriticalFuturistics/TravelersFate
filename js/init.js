@@ -486,7 +486,7 @@ function equipItem(playerID, itemID, slot){
 		p.equip[slot] = itemID;
 		removeItem(playerID, itemID);
 		updateEquip(playerID, itemID, slot);
-		//DBUpdatePlayer();
+		DBUpdatePlayer();
 	} else {
 		log("You can't equip something other than a weapon or a piece of armor");
 	}
@@ -494,8 +494,19 @@ function equipItem(playerID, itemID, slot){
 
 function unequipItem(playerID, slot){
 	var p = players[playerID];
-	addItem(playerID, p.equip[slot]);
-	p.equip[slot] = "";
+	if (!isSlotEmpty(playerID, slot)) {
+		addItem(playerID, p.equip[slot]);
+		p.equip[slot] = "";
+		updateInventory(playerID);
+		updateEquip(playerID, p.equip[slot], slot);
+		DBUpdatePlayer();
+	}
+	$('#doUnequipItem').closeModal();
+}
+
+function isSlotEmpty(playerID, slot){
+	var e = players[playerID].equip[slot];
+	return (e == null || e == "" || e == JSON.stringify(""));
 }
 
 function getItemTooltipHTML(itemID){
@@ -548,7 +559,7 @@ function getEquip(itemID){
 }
 
 function getChangesHTML(){
-	return "test";
+	return "test";	// TODO
 }
 
 
@@ -649,7 +660,18 @@ const slotName = {
 	chestLegs: "Petto + Gambe",
 	weapon: "Arma"
 }
-
+/*
+const slotNameInverted = {
+	"Anello":
+	"Testa":
+	"Petto":
+	"Guanti":
+	"Gambe":
+	"Collana":
+	"Petto + Gambe":
+	"Arma":
+}
+*/
 const itemType = {
 	valuta: 'valuta',
 	consumabile: 'Consumabile',
@@ -657,6 +679,8 @@ const itemType = {
 	equip: 'Equip',
 	oggetto: 'Oggetto',
 }
+
+const emptyEquip = {"head":"","neck":"","ringLeft":"","ringRight":"","chest":"","gloves":"","weaponLeft":"","weaponRight":"","legs":"","boots":""}
 
 function log(str){
 	console.log(str);

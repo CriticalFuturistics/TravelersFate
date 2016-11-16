@@ -18,6 +18,8 @@ for ($i=0; $i < count($players); $i++) {
 	$xp = array_values($players)[$i]->XP;
 	$stats = array_values($players)[$i]->stats;
 	$abilities = array_values($players)[$i]->abilities;
+	$inventory = array_values($players)[$i]->inventory;
+	$equip = array_values($players)[$i]->equip;
 
 	$abs = [$abilities->ab1, 
 			$abilities->ab2, 
@@ -53,7 +55,13 @@ for ($i=0; $i < count($players); $i++) {
 	doQuery($con, $query);
 
 	$query = "UPDATE players SET xp = '". json_encode($xp) ."' WHERE ID = ". $playerID;
-	doQuery($con, $query);	
+	doQuery($con, $query);
+
+	$query = "UPDATE players SET equip = '". json_encode($equip) ."' WHERE ID = ". $playerID;
+	doQuery($con, $query);
+
+	$query = "UPDATE players SET inventory = '". json_encode($inventory) ."' WHERE ID = ". $playerID;
+	doQuery($con, $query);
 }
 	
 function doQuery($con, $query){

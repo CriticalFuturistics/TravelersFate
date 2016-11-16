@@ -413,6 +413,18 @@
       </div>
     </div>
 
+    <!-- Dialog Modal Structure Equipped -->
+    <div id="doUnequipItem" class="modal">
+      <div class="modal-content">
+        <h4>_</h4>
+        <p>_</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class=" modal-action waves-effect btn-flat doUnequip">Disequipaggia</a>
+        <a href="#!" class=" modal-action modal-close waves-effect btn-flat">Annulla</a>
+      </div>
+    </div>
+
 
     <footer class="page-footer orange">
       <div class="footer-copyright">
@@ -445,12 +457,8 @@
       initialiseTooltips();
 
       updateLocal();
-     
-      DBUpdatePlayer();
       updateFields();
-
-      //equipItem(0, 12, slot.head);
-
+     
       // set of functions to be run when everything else has loaded
       finish();
     </script>
