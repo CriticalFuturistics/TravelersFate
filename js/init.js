@@ -502,6 +502,7 @@ function unequipItem(playerID, slot){
 		DBUpdatePlayer();
 	}
 	$('#doUnequipItem').closeModal();
+	updateFields();
 }
 
 function isSlotEmpty(playerID, slot){
@@ -521,14 +522,48 @@ function getItemTooltipHTML(itemID){
 		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + '<br> Danno: ' + armaObj.dmg + '<br> Effetto: ' + armaObj.fxDex + '<br> PA: ' + armaObj.PA + ' </p>';
 	} else if (item.type == itemType.equip) {
 		var equipObj = getEquip(item.ID);
-		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + '<br> Armatura: +' + equipObj.armor + ' </p>';
+		p = '<p class="dex"> Tipo: ' + item.type + '<br>';
+		p += 'Peso: ' + item.weight + '<br>';
+		p += 'Prezzo: ' + item.price + '<br>';
+		if (equipObj.armor != 0) {
+			p += 'Armatura: +' + equipObj.armor + ' <br>';
+		}
+		if (equipObj.hasOwnProperty('fx')) {
+			
+			equipObj.fx = JSON.parse(equipObj.fx);
+			
+			if (equipObj.fx.hasOwnProperty("VIT")) {
+				p += 'VIT: + ' + equipObj.fx.VIT + ' <br>'
+			}
+			if (equipObj.fx.hasOwnProperty(statName.forz)) {
+				p += 'FOR: + ' + equipObj.fx.FOR + ' <br>'	// Non deve essere FORZ
+			}
+			if (equipObj.fx.hasOwnProperty(statName.agi)) {
+				p += 'AGI: + ' + equipObj.fx.AGI + ' <br>'
+			}
+			if (equipObj.fx.hasOwnProperty(statName.inte)) {
+				p += 'INT: + ' + equipObj.fx.INT + ' <br>'	// Non deve essere INTE
+			}
+			if (equipObj.fx.hasOwnProperty(statName.tem)) {
+				p += 'TEM: + ' + equipObj.fx.TEM + ' <br>'
+			}
+			if (equipObj.fx.hasOwnProperty(statName.vol)) {
+				p += 'VOL: + ' + equipObj.fx.VOL + ' <br>'
+			}
+			if (equipObj.fx.hasOwnProperty(statName.sag)) {
+				p += 'SAG: + ' + equipObj.fx.SAG + ' <br>'
+			}
+			if (equipObj.fx.hasOwnProperty('PT')) {
+				p += 'PT: + ' + equipObj.fx.PT + ' <br>'
+			}
+		}
+		p += '</p>';
 	} else if (item.type == itemType.oggetto) {
 		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + ' </p>';
 	}
 	
  
 	return name + p;
-
 }
 
 function checkInventoryIsArray(){

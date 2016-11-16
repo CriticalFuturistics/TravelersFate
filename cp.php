@@ -408,7 +408,7 @@
         <p>_</p>
       </div>
       <div class="modal-footer">
-        <a href="#!" class=" modal-action waves-effect btn-flat doEquip">Equipaggia</a>
+        <a href="#!" class=" modal-action waves-effect btn-flat" id="doEquip">Equipaggia</a>
         <a href="#!" class=" modal-action modal-close waves-effect btn-flat">Annulla</a>
       </div>
     </div>
@@ -420,8 +420,8 @@
         <p>_</p>
       </div>
       <div class="modal-footer">
-        <a href="#!" class=" modal-action waves-effect btn-flat doUnequip">Disequipaggia</a>
-        <a href="#!" class=" modal-action modal-close waves-effect btn-flat">Annulla</a>
+        <a href="#!" class="modal-action waves-effect btn-flat" id="doUnequip">Disequipaggia</a>
+        <a href="#!" class="modal-action modal-close waves-effect btn-flat">Annulla</a>
       </div>
     </div>
 

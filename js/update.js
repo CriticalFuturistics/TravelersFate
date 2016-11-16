@@ -44,6 +44,7 @@ function updateFields(){
 		updateInventory(i);
 		updateEquipAll(i);
 	}
+	initialiseTooltips();
 	
 }
 
@@ -279,11 +280,12 @@ function itemDialog(playerID, itemID){
 		}
 
 		// Add click functionality
-		$('#doEquipItem .modal-footer > a').attr("onClick", "checkSlotSelected(" + playerID + ", " + itemID + ", '" + eq.slot + "', " + customSlot + ")");
+		$('#doEquip').attr("onClick", "checkSlotSelected(" + playerID + ", " + itemID + ", '" + eq.slot + "', " + customSlot + ")");
 
 		// Show the dialog modal
 		$('#doEquipItem').openModal();
 	}
+	initialiseTooltips();
 }
 
 function itemDialogEquipped(playerID, itemID, slotx){
@@ -301,11 +303,12 @@ function itemDialogEquipped(playerID, itemID, slotx){
 		$('#doUnequipItem div h4').html(eq.name);
 
 		// Add click functionality
-		$('#doUnequipItem .modal-footer > a').attr("onClick", "unequipItem(" + playerID + ", '" + slotx + "')");
+		$('#doUnequip').attr("onClick", "unequipItem(" + playerID + ", '" + slotx + "')");
 
 		// Show the dialog modal
 		$('#doUnequipItem').openModal();
 	}
+	initialiseTooltips();
 }
 
 function checkSlotSelected(playerID, itemID, slot, customSlot){
@@ -331,4 +334,6 @@ function checkSlotSelected(playerID, itemID, slot, customSlot){
 			}	
 		}
 	}
+	initialiseTooltips();
+	updateFields();
 }
