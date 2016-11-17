@@ -502,12 +502,22 @@ function unequipItem(playerID, slot){
 		DBUpdatePlayer();
 	}
 	$('#doUnequipItem').closeModal();
+	
+	removeTooltip(playerID, slot);
 	updateFields();
 }
 
 function isSlotEmpty(playerID, slot){
 	var e = players[playerID].equip[slot];
 	return (e == null || e == "" || e == JSON.stringify(""));
+}
+
+function removeTooltip(playerID, slotx){
+	var j = playerID + 1;
+	$('.' + slotx + j).removeClass('tooltipped');	// TODO the tooltip is not being removed idk why
+	$('.' + slotx + j).removeAttr('data-tooltip');
+	$('.' + slotx + j).removeAttr('data-position');
+	$('.' + slotx + j).prop( "onclick", null );
 }
 
 function getItemTooltipHTML(itemID){
@@ -519,49 +529,58 @@ function getItemTooltipHTML(itemID){
 		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + ' </p>';
 	} else if (item.type == itemType.arma) {
 		var armaObj = getArma(item.ID);																														// getFx(itemID); TODO
-		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + '<br> Danno: ' + armaObj.dmg + '<br> Effetto: ' + armaObj.fxDex + '<br> PA: ' + armaObj.PA + ' </p>';
+		p = '<p class="dex"> Tipo: ' + armaObj.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + '<br> Danno: ' + armaObj.dmg + '<br> Effetto: ' + armaObj.fxDex + '<br> PA: ' + armaObj.PA + ' </p>';
 	} else if (item.type == itemType.equip) {
 		var equipObj = getEquip(item.ID);
-		p = '<p class="dex"> Tipo: ' + item.type + '<br>';
+		p = '<p class="dex">';
 		p += 'Peso: ' + item.weight + '<br>';
 		p += 'Prezzo: ' + item.price + '<br>';
 		if (equipObj.armor != 0) {
 			p += 'Armatura: +' + equipObj.armor + ' <br>';
 		}
 		if (equipObj.hasOwnProperty('fx')) {
-			
-			equipObj.fx = JSON.parse(equipObj.fx);
-			
+			// Check if it has been parsed before or not
+			if (typeof equipObj.fx === 'string') {	
+				equipObj.fx = JSON.parse(equipObj.fx);
+			}
+			var s = "+";
 			if (equipObj.fx.hasOwnProperty("VIT")) {
-				p += 'VIT: + ' + equipObj.fx.VIT + ' <br>'
+				if (equipObj.fx.VIT < 0) { s = "-"; }
+				p += 'VIT: ' + s + ' ' + equipObj.fx.VIT + ' <br>'
 			}
 			if (equipObj.fx.hasOwnProperty(statName.forz)) {
-				p += 'FOR: + ' + equipObj.fx.FOR + ' <br>'	// Non deve essere FORZ
+				if (equipObj.fx.FOR < 0) { s = "-"; }
+				p += 'FOR: ' + s + ' ' + equipObj.fx.FOR + ' <br>'	// Non deve essere FORZ
 			}
 			if (equipObj.fx.hasOwnProperty(statName.agi)) {
-				p += 'AGI: + ' + equipObj.fx.AGI + ' <br>'
+				if (equipObj.fx.AGI < 0) { s = "-"; }
+				p += 'AGI: ' + s + ' ' + equipObj.fx.AGI + ' <br>'
 			}
 			if (equipObj.fx.hasOwnProperty(statName.inte)) {
-				p += 'INT: + ' + equipObj.fx.INT + ' <br>'	// Non deve essere INTE
+				if (equipObj.fx.INT < 0) { s = "-"; }
+				p += 'INT: ' + s + ' ' + equipObj.fx.INT + ' <br>'	// Non deve essere INTE
 			}
 			if (equipObj.fx.hasOwnProperty(statName.tem)) {
-				p += 'TEM: + ' + equipObj.fx.TEM + ' <br>'
+				if (equipObj.fx.TEM < 0) { s = "-"; }
+				p += 'TEM: ' + s + ' ' + equipObj.fx.TEM + ' <br>'
 			}
 			if (equipObj.fx.hasOwnProperty(statName.vol)) {
-				p += 'VOL: + ' + equipObj.fx.VOL + ' <br>'
+				if (equipObj.fx.VOL < 0) { s = "-"; }
+				p += 'VOL: ' + s + ' ' + equipObj.fx.VOL + ' <br>'
 			}
 			if (equipObj.fx.hasOwnProperty(statName.sag)) {
-				p += 'SAG: + ' + equipObj.fx.SAG + ' <br>'
+				if (equipObj.fx.SAG < 0) { s = "-"; }
+				p += 'SAG: ' + s + ' ' + equipObj.fx.SAG + ' <br>'
 			}
 			if (equipObj.fx.hasOwnProperty('PT')) {
-				p += 'PT: + ' + equipObj.fx.PT + ' <br>'
+				if (equipObj.fx.PT < 0) { s = "-"; }
+				p += 'PT: ' + s + ' ' + equipObj.fx.PT + ' <br>'
 			}
 		}
 		p += '</p>';
 	} else if (item.type == itemType.oggetto) {
 		p = '<p class="dex"> Tipo: ' + item.type + '<br> Peso: ' + item.weight + '<br> Prezzo: ' + item.price + ' </p>';
 	}
-	
  
 	return name + p;
 }
