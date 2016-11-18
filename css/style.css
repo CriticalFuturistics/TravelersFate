@@ -182,3 +182,39 @@ div .slot {
 .dex {
 	text-align: left;
 }
+
+.chp, .cmana {
+	margin: 5px;
+	height: 40px;
+}
+
+.chpbox, .cmanabox {
+	float: left;
+	height: 35px;
+	width:  35px;
+	background:  #CD0505; 	/* TODO */
+	color: #FFF;
+	font-size:  10pt;
+	text-align: center;
+	line-height: 35px;
+}
+.cmanabox {
+	background: #3388DF;
+}
+
+.chpDex, .cmanaDex {
+	margin-left: 10px;
+	font-size: 10pt;
+	text-align: center;
+	line-height: 35px;
+	float: left;
+	width: 100px;
+	height:  35px;
+	background: #E9E9E9;
+}
+
+.cstats {
+	height: 400px;
+	width: 50%;
+	background: #E9E9E9;
+}

@@ -264,18 +264,18 @@ function itemDialog(playerID, itemID){
 		$('#doEquipItem div h4').html("");
 		$('#doEquipItem div h4').html(eq.name);
 
-		var changes = getChangesHTML();
-		$('#doEquipItem div p').html(changes);
+		var changes = getChangesHTML(playerID, itemID);
+		$('#doEquipItem div .changes').html(changes);
 
 
 		// Show Slot choices
 		if (eq.slot == slotName.ring) {
-			$('#doEquipItem div p').append('<br><input name="ring" type="radio" id="ringLeft" /> <label for="ringLeft">Anello di Sinistra</label>');
-			$('#doEquipItem div p').append('<br><input name="ring" type="radio" id="ringRight" /> <label for="ringRight">Anello di Destra</label>');
+			$('#doEquipItem div .changes').append('<br><input name="ring" type="radio" id="ringLeft" /> <label for="ringLeft">Anello di Sinistra</label>');
+			$('#doEquipItem div .changes').append('<br><input name="ring" type="radio" id="ringRight" /> <label for="ringRight">Anello di Destra</label>');
 			customSlot = true;
 		} else if (eq.slot == slotName.weapon) {
-			$('#doEquipItem div p').append('<br><input name="weapon" type="radio" id="weaponRight" /> <label for="weaponRight">Arma di Sinistra</label>');
-			$('#doEquipItem div p').append('<br><input name="weapon" type="radio" id="weaponLeft" /> <label for="weaponLeft">Arma di Destra</label>');
+			$('#doEquipItem div .changes').append('<br><input name="weapon" type="radio" id="weaponRight" /> <label for="weaponRight">Arma di Sinistra</label>');
+			$('#doEquipItem div .changes').append('<br><input name="weapon" type="radio" id="weaponLeft" /> <label for="weaponLeft">Arma di Destra</label>');
 			customSlot = true;
 		}
 

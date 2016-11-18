@@ -612,8 +612,19 @@ function getEquip(itemID){
 	return null;
 }
 
-function getChangesHTML(){
-	return "test";	// TODO
+function getChangesHTML(playerID, itemID){
+	var item = getItem(itemID);
+	var p = "";
+	if (item.type == itemType.equip){
+		p += '<div class="chp"><div class="chpbox"> HP </div><div class="chpDex"> 135  ->  155 </div></div>';
+		p += '<div class="cmana"><div class="cmanabox"> Ma </div><div class="cmanaDex"> 135  ->  155 </div></div>';
+		p += '<div class="cstats"></div></p>';
+		for (var i = 0; i < players[playerID].stats.length; i++) {
+			$('.cstats').append('<div class="cstatsDex"> VIT ->' + players[playerID].stats[i] + '</div>');
+		}
+	}
+
+	return p ;
 }
 
 
