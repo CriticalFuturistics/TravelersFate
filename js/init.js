@@ -52,7 +52,7 @@ function getBaseStats(playerID, stat) {
 	}
 }
 
-// Return the total number of a Stat at the time
+// Return the total number of a Stat
 function getTotalStats(playerID, stat){
 	return parseInt(players[playerID].stats[stat]) + getBonusStats(playerID, stat);
 }
@@ -182,11 +182,28 @@ function getAbilityLevel(playerID, ability){
 function getStatsFromEquip(playerID, stat) {
 	var equips = players[playerID].equip;
 
+	//getStatFromItem(12, statName.vit);
 	
 	var total = 0;
 	// TODO
 
 	return parseInt(total);
+}
+
+function getStatFromItem(itemID, stat){
+	var i = getItem(itemID);
+	if (i.type == "Equip"){
+		i = getEquip(itemID);
+		if (i.hasOwnProperty('fx')) {
+			if (typeof i.fx === 'string') {
+				i.fx = JSON.parse(i.fx);
+			}			
+			if (i.fx.hasOwnProperty(stat)) {
+				return i.fx[stat];
+			}
+		}
+	}	
+  	return 0;
 }
 
 // Returns the Race the player as a String
@@ -614,21 +631,52 @@ function getEquip(itemID){
 
 function getChangesHTML(playerID, itemID){
 	var item = getItem(itemID);
+	var player = players[playerID];
 	var p = "";
 	if (item.type == itemType.equip){
-		p += '<div class="chp"><div class="chpbox"> HP </div><div class="chpDex"> 135  ->  155 </div></div>';
-		p += '<div class="cmana"><div class="cmanabox"> Ma </div><div class="cmanaDex"> 135  ->  155 </div></div>';
-		p += '<div class="cstats"></div></p>';
-		for (var i = 0; i < players[playerID].stats.length; i++) {
-			$('.cstats').append('<div class="cstatsDex"> VIT ->' + players[playerID].stats[i] + '</div>');
+		p += '<div class="chp"><div class="chpbox"> HP </div><div class="chpDex"> ' + player.HP + '  ->  ' + getNewHP(playerID, itemID) + ' </div></div>';
+		p += '<div class="cmana"><div class="cmanabox"> Ma </div><div class="cmanaDex"> ' + player.Mana + '  ->  ' + getNewMana(playerID, itemID) + ' </div></div>';
+		p += '<div class="cstats">';
+
+		// THESE IFS ARE WRONG
+  		if (getStatFromItem(itemID, statName.vit) != 0) {
+			p += '<div class="cstatsDex"> ' + statName.vit + ' &#09; ' + getTotalStats(playerID, statName.vit) + ' → ' + parseInt(getStatFromItem(itemID, statName.vit) + parseInt(getTotalStats(playerID, statName.vit))) + '</div>';
 		}
+		if (getStatFromItem(itemID, statName.forz) != 0) {
+			p += '<div class="cstatsDex"> ' + statName.forz + ' &#09; ' + getTotalStats(playerID, statName.forz) + ' → ' + parseInt(getStatFromItem(itemID, statName.forz) + parseInt(getTotalStats(playerID, statName.forz))) + '</div>';
+		}
+		if (getStatFromItem(itemID, statName.agi) != 0) {
+			p += '<div class="cstatsDex"> ' + statName.agi + ' &#09; ' + getTotalStats(playerID, statName.agi) + ' → ' + parseInt(getStatFromItem(itemID, statName.agi) + parseInt(getTotalStats(playerID, statName.agi))) + '</div>';
+		}
+		if (getStatFromItem(itemID, statName.inte) != 0) {
+			p += '<div class="cstatsDex"> ' + statName.inte + ' &#09; ' + getTotalStats(playerID, statName.inte) + ' → ' + parseInt(getStatFromItem(itemID, statName.inte) + parseInt(getTotalStats(playerID, statName.inte))) + '</div>';
+		}
+		if (getStatFromItem(itemID, statName.vol) != 0) {
+			p += '<div class="cstatsDex"> ' + statName.vol + ' &#09; ' + getTotalStats(playerID, statName.vol) + ' → ' + parseInt(getStatFromItem(itemID, statName.vol) + parseInt(getTotalStats(playerID, statName.vol))) + '</div>';
+		}
+		if (getStatFromItem(itemID, statName.tem) != 0) {
+			p += '<div class="cstatsDex"> ' + statName.tem + ' &#09; ' + getTotalStats(playerID, statName.tem) + ' → ' + parseInt(getStatFromItem(itemID, statName.tem) + parseInt(getTotalStats(playerID, statName.tem))) + '</div>';
+		}
+		if (getStatFromItem(itemID, statName.sag) != 0) {
+			p += '<div class="cstatsDex"> ' + statName.sag + ' &#09; ' + getTotalStats(playerID, statName.sag) + ' → ' + parseInt(getStatFromItem(itemID, statName.sag) + parseInt(getTotalStats(playerID, statName.sag))) + '</div>';
+		}
+		p += '</div></p>';
 	}
 
-	return p ;
+	return p;
 }
 
+function getNewHP(playerID, itemID){
+	var p = players[playerID];	
+	var newHP = (getStatFromItem(itemID, statName.vit) + getTotalStats(playerID, statName.vit)) * 20 + (getStatFromItem(itemID, statName.forz) + getTotalStats(playerID, statName.forz)) * 4 + (getStatFromItem(itemID, statName.agi) + getTotalStats(playerID, statName.agi)) * 2;
+	return newHP;
+}
 
-
+function getNewMana(playerID, itemID){
+	var p = players[playerID];	
+	var newMana = (getStatFromItem(itemID, statName.inte) + getTotalStats(playerID, statName.inte)) * 20 + (getStatFromItem(itemID, statName.sag) + getTotalStats(playerID, statName.sag)) * 5;
+	return newMana;
+}
 
 
 function getRarity(itemID){

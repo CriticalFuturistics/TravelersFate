@@ -214,7 +214,6 @@ div .slot {
 }
 
 .cstats {
-	height: 400px;
+	/*height: 400px;*/
 	width: 50%;
-	background: #E9E9E9;
 }
