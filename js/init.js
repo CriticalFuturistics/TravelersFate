@@ -449,6 +449,26 @@ function getXPasPercent(playerID){
 	return (p.XP / p.maxXP) * 100 ;
 }
 
+// --- Elemental Defences and Resistances --- //
+function getDF(playerID){
+	return players[playerID].DF;
+}
+function getDE(playerID){
+	return players[playerID].DE;
+}
+function getRB(playerID){
+	return players[playerID].RB;
+}
+function getRC(playerID){
+	return players[playerID].RC;
+}
+function getRI(playerID){
+	return players[playerID].RI;
+}
+function getTOX(playerID){
+	return players[playerID].TOX;
+}
+
 // --- Items and Inventory Management --- //
 
 function getInventoryAsHTML(playerID){

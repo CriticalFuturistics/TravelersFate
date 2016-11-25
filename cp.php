@@ -42,6 +42,12 @@
 										"VOL" => $row["VOL"], "TEM" => $row["TEM"],
 										"SAG" => $row["SAG"]
 									],
+				"DF" => $row["DF"],
+				"DE" => $row["DE"],
+				"RB" => $row["RB"],
+				"RC" => $row["RC"],
+				"RI" => $row["RI"],
+				"TOX" => $row["TOX"],
 				"equip" => json_decode($row["equip"]),
 				"inventory" => $row["inventory"], 
 				"buffs" => $row["buffs"],

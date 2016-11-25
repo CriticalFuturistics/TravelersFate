@@ -147,11 +147,12 @@ function placePlayers(){
 		
 		$('.players .playerData' + j).append(div);
 
-		var adiv = '<div class="card armorCard" style><div class="card-content armor"> <span class=" grey-text text-darken-4 center-block center"> Armor </span> <p class="text-darken-4 center-block center">' + getBaseArmor(i) + '<span class="bonus"> + ' + getBonusArmor(i) + '</span> (' + getDamageReduction(getTotalArmor(i)) + '%)</p> </div></div>';
-
+		var adiv = '<div class="card armorCard"><div class="card-content armor"> <span class=" grey-text text-darken-4 center-block center"> Armor </span> <p class="text-darken-4 center-block center">' + getBaseArmor(i) + '<span class="bonus"> + ' + getBonusArmor(i) + '</span> (' + getDamageReduction(getTotalArmor(i)) + '%)</p> ';
+		adiv += '<span class="smalltext">DF ' + getDF(i) + '	-	DE ' + getDE(i) + '	<br>	RB ' + getRB(i) + '	-	RC ' + getRC(i) + '	-	RI ' + getRI(i) + '	<br>	Tossicità ' + getTOX(i) + '</span>'
+		adiv += '</div></div>';
 		$('.players .playerArmor' + j).append(adiv);
 		
-		var idiv = '<div class="card itemsCard" style><div class="card-content items"> <span class=" grey-text text-darken-4 center-block center"> Inventory </span> <p class="text-darken-4 center-block center">' + getInventoryAsHTML(i) + '</p> </div></div>';
+		var idiv = '<div class="card itemsCard"><div class="card-content items"> <span class=" grey-text text-darken-4 center-block center"> Inventory </span> <p class="text-darken-4 center-block center">' + getInventoryAsHTML(i) + '</p> </div></div>';
 
 		$('.players .playerInventory' + j).append(idiv);
 		
@@ -196,7 +197,9 @@ function placePlayers(){
 function updateArmor(playerID){
 	for (var i = 0; i < players.length; i++) {
 		var j = i + 1;
-		var adiv = '<div class="card armorCard" style><div class="card-content armor"> <span class=" grey-text text-darken-4 center-block center"> Armor </span> <p class="text-darken-4 center-block center">' + getBaseArmor(i) + '<span class="bonus"> + ' + getBonusArmor(i) + '</span> (' + getDamageReduction(getTotalArmor(i)) + '%)</p> </div></div>';
+		var adiv = '<div class="card armorCard"><div class="card-content armor"> <span class=" grey-text text-darken-4 center-block center"> Armor </span> <p class="text-darken-4 center-block center">' + getBaseArmor(i) + '<span class="bonus"> + ' + getBonusArmor(i) + '</span> (' + getDamageReduction(getTotalArmor(i)) + '%)</p>';
+		adiv += '<span class="smalltext">DF ' + getDF(i) + '	-	DE ' + getDE(i) + '	<br>	RB ' + getRB(i) + '	-	RC ' + getRC(i) + '	-	RI ' + getRI(i) + '	<br>	Tossicità ' + getTOX(i) + '</span>'
+		adiv += '</div></div>';
 		$('.players .playerArmor' + j).html(adiv);
 	}
 }

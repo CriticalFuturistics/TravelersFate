@@ -5,6 +5,9 @@
  *
  * Made By MaterializeCSS.com
  */
+.smalltext {
+	font-size: 8pt;
+}
 
 .icon-block {
 	padding: 0 15px;
@@ -102,7 +105,8 @@ body {
 }
 
 .armorCard {
-	height:80px;
+	text-align: center;
+	height:140px;
 	margin-top:25px;
 }
 .nopadding .card-content {
