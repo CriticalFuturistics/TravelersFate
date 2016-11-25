@@ -18,7 +18,6 @@ function finish(){
 
 
 
-
 	// Adjust the slots divs
 	var w = $('.slot').width();
     $('.slot').css('height', w);
@@ -195,11 +194,13 @@ function getStatFromItem(itemID, stat){
 	if (i.type == "Equip"){
 		i = getEquip(itemID);
 		if (i.hasOwnProperty('fx')) {
-			if (typeof i.fx === 'string') {
-				i.fx = JSON.parse(i.fx);
-			}			
-			if (i.fx.hasOwnProperty(stat)) {
-				return i.fx[stat];
+			if (i.fx != "") {
+				if (typeof i.fx === 'string') {
+					i.fx = JSON.parse(i.fx);
+				}			
+				if (i.fx.hasOwnProperty(stat)) {
+					return i.fx[stat];
+				}
 			}
 		}
 	}	
@@ -278,13 +279,23 @@ function getTotalArmor(playerID){
 }
 
 function getBaseArmor(playerID){
+	var baseA = 0;
+	if (typeof players[playerID].equip === "string") {
+		players[playerID].equip = JSON.parse(players[playerID].equip);
+	}
+	for (var k in players[playerID].equip){
+		if (getEquip(players[playerID].equip[k]) != null || getEquip(players[playerID].equip[k]) != undefined) {
+			baseA += parseInt(getEquip(players[playerID].equip[k]).armor);
+		}
+	}
+
+	players[playerID].armor = baseA;
 	return players[playerID].armor;
 }
 
 function getBonusArmor(playerID){
 	return getArmorFromBuffs(playerID);
 }
-
 
 
 // --- HP, Mana and XP --- //
@@ -497,12 +508,14 @@ function removeItem(playerID, itemID){
 function equipItem(playerID, itemID, slot){
 	if (getItem(itemID).type == "Equip" || getItem(itemID).type == "Arma") {
 		var p = players[playerID];
-		if (p.equip[slot] != "") {
+		if (p.equip[slot] != null && p.equip[slot] != "") {
+		
 			addItem(playerID, p.equip[slot]);
-		} 
+		}
 		p.equip[slot] = itemID;
 		removeItem(playerID, itemID);
 		updateEquip(playerID, itemID, slot);
+		updateArmor(playerID);
 		DBUpdatePlayer();
 	} else {
 		log("You can't equip something other than a weapon or a piece of armor");
@@ -519,7 +532,7 @@ function unequipItem(playerID, slot){
 		DBUpdatePlayer();
 	}
 	$('#doUnequipItem').closeModal();
-	
+	updateArmor(playerID);
 	removeTooltip(playerID, slot);
 	updateFields();
 }
@@ -556,42 +569,44 @@ function getItemTooltipHTML(itemID){
 			p += 'Armatura: +' + equipObj.armor + ' <br>';
 		}
 		if (equipObj.hasOwnProperty('fx')) {
-			// Check if it has been parsed before or not
-			if (typeof equipObj.fx === 'string') {	
-				equipObj.fx = JSON.parse(equipObj.fx);
-			}
-			var s = "+";
-			if (equipObj.fx.hasOwnProperty("VIT")) {
-				if (equipObj.fx.VIT < 0) { s = "-"; }
-				p += 'VIT: ' + s + ' ' + equipObj.fx.VIT + ' <br>'
-			}
-			if (equipObj.fx.hasOwnProperty(statName.forz)) {
-				if (equipObj.fx.FOR < 0) { s = "-"; }
-				p += 'FOR: ' + s + ' ' + equipObj.fx.FOR + ' <br>'	// Non deve essere FORZ
-			}
-			if (equipObj.fx.hasOwnProperty(statName.agi)) {
-				if (equipObj.fx.AGI < 0) { s = "-"; }
-				p += 'AGI: ' + s + ' ' + equipObj.fx.AGI + ' <br>'
-			}
-			if (equipObj.fx.hasOwnProperty(statName.inte)) {
-				if (equipObj.fx.INT < 0) { s = "-"; }
-				p += 'INT: ' + s + ' ' + equipObj.fx.INT + ' <br>'	// Non deve essere INTE
-			}
-			if (equipObj.fx.hasOwnProperty(statName.tem)) {
-				if (equipObj.fx.TEM < 0) { s = "-"; }
-				p += 'TEM: ' + s + ' ' + equipObj.fx.TEM + ' <br>'
-			}
-			if (equipObj.fx.hasOwnProperty(statName.vol)) {
-				if (equipObj.fx.VOL < 0) { s = "-"; }
-				p += 'VOL: ' + s + ' ' + equipObj.fx.VOL + ' <br>'
-			}
-			if (equipObj.fx.hasOwnProperty(statName.sag)) {
-				if (equipObj.fx.SAG < 0) { s = "-"; }
-				p += 'SAG: ' + s + ' ' + equipObj.fx.SAG + ' <br>'
-			}
-			if (equipObj.fx.hasOwnProperty('PT')) {
-				if (equipObj.fx.PT < 0) { s = "-"; }
-				p += 'PT: ' + s + ' ' + equipObj.fx.PT + ' <br>'
+			if (equipObj.fx != "") {
+				// Check if it has been parsed before or not
+				if (typeof equipObj.fx === 'string') {	
+					equipObj.fx = JSON.parse(equipObj.fx);
+				}
+				var s = "+";
+				if (equipObj.fx.hasOwnProperty("VIT")) {
+					if (equipObj.fx.VIT < 0) { s = "-"; }
+					p += 'VIT: ' + s + ' ' + equipObj.fx.VIT + ' <br>'
+				}
+				if (equipObj.fx.hasOwnProperty(statName.forz)) {
+					if (equipObj.fx.FOR < 0) { s = "-"; }
+					p += 'FOR: ' + s + ' ' + equipObj.fx.FOR + ' <br>'	// Non deve essere FORZ
+				}
+				if (equipObj.fx.hasOwnProperty(statName.agi)) {
+					if (equipObj.fx.AGI < 0) { s = "-"; }
+					p += 'AGI: ' + s + ' ' + equipObj.fx.AGI + ' <br>'
+				}
+				if (equipObj.fx.hasOwnProperty(statName.inte)) {
+					if (equipObj.fx.INT < 0) { s = "-"; }
+					p += 'INT: ' + s + ' ' + equipObj.fx.INT + ' <br>'	// Non deve essere INTE
+				}
+				if (equipObj.fx.hasOwnProperty(statName.tem)) {
+					if (equipObj.fx.TEM < 0) { s = "-"; }
+					p += 'TEM: ' + s + ' ' + equipObj.fx.TEM + ' <br>'
+				}
+				if (equipObj.fx.hasOwnProperty(statName.vol)) {
+					if (equipObj.fx.VOL < 0) { s = "-"; }
+					p += 'VOL: ' + s + ' ' + equipObj.fx.VOL + ' <br>'
+				}
+				if (equipObj.fx.hasOwnProperty(statName.sag)) {
+					if (equipObj.fx.SAG < 0) { s = "-"; }
+					p += 'SAG: ' + s + ' ' + equipObj.fx.SAG + ' <br>'
+				}
+				if (equipObj.fx.hasOwnProperty('PT')) {
+					if (equipObj.fx.PT < 0) { s = "-"; }
+					p += 'PT: ' + s + ' ' + equipObj.fx.PT + ' <br>'
+				}
 			}
 		}
 		p += '</p>';
@@ -621,11 +636,14 @@ function getArma(itemID){
 }
 
 function getEquip(itemID){
-	for (var i = 0; i < equip.length; i++) {
-		if(equip[i].ID == itemID){
-			return equip[i];
+	if (itemID != "" || itemID != null) {
+		for (var i = 0; i < equip.length; i++) {
+			if(equip[i].ID == itemID){
+				return equip[i];
+			}
 		}
 	}
+	
 	return null;
 }
 
@@ -750,7 +768,7 @@ const abilityName = {
 	maledizioni : "Maledizioni"
 }
 
-const slot = {
+const slotN = {
 	"head":"head",
 	"neck":"neck", 
 	"ringLeft":"ringLeft", 

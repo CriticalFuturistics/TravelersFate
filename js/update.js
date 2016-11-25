@@ -190,8 +190,14 @@ function placePlayers(){
 		// $('#piedi' + j).css("background-image", "url(img/slots/helm.png)");
 		// $('#piedi' + j).css("background-repeat", "no-repeat");
 		// $('#piedi' + j).css("background-position", "center");
+	}
+}
 
-
+function updateArmor(playerID){
+	for (var i = 0; i < players.length; i++) {
+		var j = i + 1;
+		var adiv = '<div class="card armorCard" style><div class="card-content armor"> <span class=" grey-text text-darken-4 center-block center"> Armor </span> <p class="text-darken-4 center-block center">' + getBaseArmor(i) + '<span class="bonus"> + ' + getBonusArmor(i) + '</span> (' + getDamageReduction(getTotalArmor(i)) + '%)</p> </div></div>';
+		$('.players .playerArmor' + j).html(adiv);
 	}
 }
 
@@ -294,7 +300,7 @@ function itemDialogEquipped(playerID, itemID, slotx){
 		var eq = getEquip(itemID);
 		
 		var customSlot = false;
-		if (slotx == slot.ringLeft || slotx == slot.ringRight || slotx == slot.weaponLeft || slotx == slot.weaponRight) {
+		if (slotx == slotN.ringLeft || slotx == slotN.ringRight || slotx == slotN.weaponLeft || slotx == slotN.weaponRight) {
 			customSlot = true;
 		}
 
@@ -313,7 +319,12 @@ function itemDialogEquipped(playerID, itemID, slotx){
 
 function checkSlotSelected(playerID, itemID, slot, customSlot){
 	if (!customSlot) {
-		equipItem(playerID, itemID, slot);
+		for(k in slotName){
+			if (slotName[k] == slot) {
+				equipItem(playerID, itemID, slotN[k]);
+			}
+		}
+		//equipItem(playerID, itemID, slot);
 		$('#doEquipItem').closeModal();
 	} else if (customSlot) {
 		if (slot == slotName.ring){
