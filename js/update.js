@@ -156,7 +156,7 @@ function placePlayers(){
 
 		$('.players .playerInventory' + j).append(idiv);
 		
-		var ediv = '<div class="row q"> <div class="col s4 offset-s4 slot head' + j + '"> </div></div><div class="row q"> <div class="col s4 slot ringLeft' + j + '"> <span></span></div><div class="col s4 slot" id="collana' + j + '"> <span></span></div><div class="col s4 slot ringRight' + j + '"> <span></span></div></div><div class="row q"> <div class="col s4 slot arm' + j + '"> <span></span></div><div class="col s4 slot" id="chest' + j + '"> <span></span></div><div class="col s4 slot arm' + j + '"> <span></span></div></div><div class="row q"> <div class="col s4 slot" id="guanti' + j + '"> <span></span></div><div class="col s4 slot" id="gambe' + j + '"> <span></span></div></div><div class="row q"> <div class="col s4 offset-s4 slot" id="piedi' + j + '"> <span></span></div></div>';
+		var ediv = '<div class="row q"> <div class="col s4 offset-s4 slot head' + j + '"> </div></div><div class="row q"> <div class="col s4 slot ringLeft' + j + '"> <span></span></div><div class="col s4 slot" id="collana' + j + '"> <span></span></div><div class="col s4 slot ringRight' + j + '"> <span></span></div></div><div class="row q"> <div class="col s4 slot weaponLeft' + j + '"> <span></span></div><div class="col s4 slot" id="chest' + j + '"> <span></span></div><div class="col s4 slot weaponRight' + j + '"> <span></span></div></div><div class="row q"> <div class="col s4 slot" id="guanti' + j + '"> <span></span></div><div class="col s4 slot" id="gambe' + j + '"> <span></span></div></div><div class="row q"> <div class="col s4 offset-s4 slot" id="piedi' + j + '"> <span></span></div></div>';
 		
 		$('.players .playerEquip' + j).append(ediv);
 		$('.head' + j).css("background-image", "url(img/slots/helm.png)");
@@ -171,10 +171,13 @@ function placePlayers(){
 		$('.ringRight' + j).css("background-repeat", "no-repeat");
 		$('.ringRight' + j).css("background-position", "center");
 
+		$('.weaponLeft' + j).css("background-image", "url(img/slots/weapon.png)");
+		$('.weaponLeft' + j).css("background-repeat", "no-repeat");
+		$('.weaponLeft' + j).css("background-position", "center");
 
-		$('.arm' + j).css("background-image", "url(img/slots/weapon.png)");
-		$('.arm' + j).css("background-repeat", "no-repeat");
-		$('.arm' + j).css("background-position", "center");
+		$('.weaponRight' + j).css("background-image", "url(img/slots/weapon.png)");
+		$('.weaponRight' + j).css("background-repeat", "no-repeat");
+		$('.weaponRight' + j).css("background-position", "center");
 
 		$('#chest' + j).css("background-image", "url(img/slots/armor.png)");
 		$('#chest' + j).css("background-repeat", "no-repeat");
@@ -282,14 +285,33 @@ function itemDialog(playerID, itemID){
 			$('#doEquipItem div .changes').append('<br><input name="ring" type="radio" id="ringLeft" /> <label for="ringLeft">Anello di Sinistra</label>');
 			$('#doEquipItem div .changes').append('<br><input name="ring" type="radio" id="ringRight" /> <label for="ringRight">Anello di Destra</label>');
 			customSlot = true;
-		} else if (eq.slot == slotName.weapon) {
-			$('#doEquipItem div .changes').append('<br><input name="weapon" type="radio" id="weaponRight" /> <label for="weaponRight">Arma di Sinistra</label>');
-			$('#doEquipItem div .changes').append('<br><input name="weapon" type="radio" id="weaponLeft" /> <label for="weaponLeft">Arma di Destra</label>');
-			customSlot = true;
 		}
 
 		// Add click functionality
 		$('#doEquip').attr("onClick", "checkSlotSelected(" + playerID + ", " + itemID + ", '" + eq.slot + "', " + customSlot + ")");
+
+		// Show the dialog modal
+		$('#doEquipItem').openModal();
+	} 
+	else if (item.type == itemType.arma) {
+		var ar = getArma(itemID);
+
+		// Show data changes
+		$('#doEquipItem div h4').html("");
+		$('#doEquipItem div h4').html(ar.name);
+
+		var changes = getChangesHTML(playerID, itemID);
+		$('#doEquipItem div .changes').html(changes);
+
+		// Show Slot choices
+		
+		$('#doEquipItem div .changes').append('<br><input name="weapon" type="radio" id="weaponRight" /> <label for="weaponRight">Arma di Sinistra</label>');
+		$('#doEquipItem div .changes').append('<br><input name="weapon" type="radio" id="weaponLeft" /> <label for="weaponLeft">Arma di Destra</label>');
+		customSlot = true;
+	
+
+		// Add click functionality
+		$('#doEquip').attr("onClick", "checkSlotSelected(" + playerID + ", " + itemID + ", '" + slotName.weapon + "', " + customSlot + ")");
 
 		// Show the dialog modal
 		$('#doEquipItem').openModal();
@@ -350,4 +372,5 @@ function checkSlotSelected(playerID, itemID, slot, customSlot){
 	}
 	initialiseTooltips();
 	updateFields();
+	log(players[playerID].equip)
 }

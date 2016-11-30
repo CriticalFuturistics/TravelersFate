@@ -676,8 +676,7 @@ function getChangesHTML(playerID, itemID){
 		p += '<div class="cmana"><div class="cmanabox"> Ma </div><div class="cmanaDex"> ' + player.Mana + '  ->  ' + getNewMana(playerID, itemID) + ' </div></div>';
 		p += '<div class="cstats">';
 
-		// THESE IFS ARE WRONG
-  		if (getStatFromItem(itemID, statName.vit) != 0) {
+		if (getStatFromItem(itemID, statName.vit) != 0) {
 			p += '<div class="cstatsDex"> ' + statName.vit + ' &#09; ' + getTotalStats(playerID, statName.vit) + ' → ' + parseInt(getStatFromItem(itemID, statName.vit) + parseInt(getTotalStats(playerID, statName.vit))) + '</div>';
 		}
 		if (getStatFromItem(itemID, statName.forz) != 0) {
@@ -700,7 +699,13 @@ function getChangesHTML(playerID, itemID){
 		}
 		p += '</div></p>';
 	}
-
+	// For the weapons we add the Damage
+	else if (item.type == itemType.arma){
+		p += '<div class="chp"><div class="chpbox"> HP </div><div class="chpDex"> ' + player.HP + '  ->  ' + getNewHP(playerID, itemID) + ' </div></div>';
+		p += '<div class="cmana"><div class="cmanabox"> Ma </div><div class="cmanaDex"> ' + player.Mana + '  ->  ' + getNewMana(playerID, itemID) + ' </div></div>';
+		p += '<div class="cstats">';
+		p += '<div class="cstatsDex"> +' + getArma(itemID).dmg+ ' Danni ' + dmgTypeName[getArma(itemID).dmgType] + '</div>';
+	}
 	return p;
 }
 
@@ -830,6 +835,8 @@ const itemType = {
 	equip: 'Equip',
 	oggetto: 'Oggetto',
 }
+
+const dmgTypeName = ['Fisici', 'Fuoco', 'Elettrici', 'Puri'];
 
 const emptyEquip = {"head":"","neck":"","ringLeft":"","ringRight":"","chest":"","gloves":"","weaponLeft":"","weaponRight":"","legs":"","boots":""}
 
