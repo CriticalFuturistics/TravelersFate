@@ -1,0 +1,479 @@
+/* CSS declarations go here */
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari*/
+     -khtml-user-select: none; /* Konqueror */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.icon-block {
+	padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+main {
+	flex: 1 0 auto;
+}
+
+body {
+	background: #fff;
+}
+
+.container {
+	width: 90%;
+}
+
+.input-field input[type=date]:focus + label,
+.input-field input[type=text]:focus + label,
+.input-field input[type=email]:focus + label,
+.input-field input[type=number]:focus + label,
+.input-field input[type=password]:focus + label {
+	color: #03A9F4;
+	text-align: left;
+	text-align: -webkit-left;
+}
+
+.input-field input[type=date]:focus,
+.input-field input[type=text]:focus,
+.input-field input[type=email]:focus,
+.input-field input[type=number]:focus,
+.input-field input[type=password]:focus {
+	border-bottom: 2px solid #03A9F4;
+	box-shadow: none;
+}
+ 
+.special-left {
+	text-align: left;
+}
+
+.divider-color         { border-color: #BDBDBD; }
+.dark-primary-color    { background: #0288D1; }
+.default-primary-color { background: #03A9F4; }
+.light-primary-color   { background: #B3E5FC; }
+.text-primary-color    { color: #FFFFFF; }	/* White text */
+.accent-color          { background: #FF9800; }
+.primary-text-color    { color: #212121; }	/* Dark text */
+.secondary-text-color  { color: #757575; }	/* Dark text */
+.accent-text-color     { color: #03A9F4; }
+.accent-text-color:hover { color: #0288D1; }
+
+.scaled6 {
+	transform: scaleY(0.6) scaleX(0.6);
+}
+
+.dropdown-menu {
+	border-radius: 0px;
+}
+
+.dropdown-menu input {
+	border: 1px solid #EEE;
+	border-radius: 0px;
+}
+#login-dropdown-list input:first-of-type, #login-dropdown-list input:last-of-type {
+	border-radius: 0px;
+}
+
+#login-other-options a {
+	width: 100%;
+	text-align: center;
+	color: #FFF;
+	background: #337ab7;
+	border-radius: 4px;
+	height: 40px;
+	line-height: 40px;
+}
+#login-other-options a:hover {
+	background: rgb(3, 169, 244);
+	text-decoration: none;
+}
+
+
+.btn {
+	border: 0px;
+}
+
+button {
+
+}
+
+.btn:hover, .btn-large:hover, .btn:focus, .btn-large:focus { background: #03A9F4;}
+
+.btn-turn { margin-left: 20px; margin-right:235px; background:#13A9e8;}
+
+.boldcol tr > td:first-child + td + td + td { font-weight: bold; }
+
+.center tr > td { text-align: center; }
+
+.card .card-content {  }
+
+.left { text-align: left; }
+
+.lvl1, .lvl2, .lvl3, .lvl4, .lvl5 {
+	text-align:center;
+}
+
+
+
+.row .col.m2 {
+	width: 20.0%;
+}
+.row .col {
+    padding: 0 0.25rem;
+}
+
+.buff {
+	display:inline-block;
+	float: left;
+	margin-right: 2px;
+	margin-left: 2px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #EEE;
+}
+
+.bonus {
+	color: #4CAF50;
+}
+
+.malus {
+	color: #C80000;
+}
+
+.armorCard {
+	height:185px;
+	margin-top:25px;
+}
+.nopadding .card-content {
+	padding: 0px;
+}
+
+.hpmargin {
+	margin-bottom: 24px;
+}
+
+
+.hpbar, .manabar, .xpbar, .pabar {
+	width: 100%;
+	background: #FFF;
+	-webkit-transition: width .75s; 
+    transition: width .75s;
+}
+
+.hpn, .manan, .xpn, .pan {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	z-index: 9;
+	/* width: 9.50vw; */
+	/* left: calc(-6vw + 50%); */
+}
+.hpbar { position: absolute; background-color: #EF5350; width: 100%; height:25px; z-index: 1}
+.manabar { position: absolute; background-color: #42A5F5; width: 100%; height:25px; z-index: 1}
+.xpbar { position: absolute; background-color: #FFC107; width: 100%; height:25px; z-index: 1}
+.pabar { position: absolute; background-color: #4CAF50; width: 100%; height:25px; z-index: 1}
+
+.hp {
+	z-index: 10;
+	width: 100%;
+	height: 25px;
+	text-align: center;
+	color: #FFF;
+	text-shadow: 0px 0px 8px rgba(0, 0, 0, 1);
+	font-size: 14px;
+	border-top-right-radius: 2px;
+	border-top-left-radius: 2px;
+	line-height: 25px;
+}
+
+.mana {
+	z-index: 10;
+	height: 25px;
+	text-align: center;
+	color: #FFF;
+	text-shadow: 0px 0px 8px rgba(0, 0, 0, 1);
+	font-size: 14px;
+	line-height: 25px;
+}
+
+.xp {
+	z-index: 10;
+	height: 18px;
+	text-align: center;
+	color: #444;
+	font-size: 10px;
+	border-bottom-right-radius: 2px;
+	border-bottom-left-radius: 2px;
+	line-height: 18px;
+	/*margin-top: 2px;*/
+}
+
+.pa {
+	z-index: 10;
+	height: 25px;
+	text-align: center;
+	color: #FFF;
+	text-shadow: 0px 0px 8px rgba(0, 0, 0, 1);
+	font-size: 14px;
+	line-height: 25px;
+}
+
+
+.inv tbody td {
+	font-size: 9pt;
+	text-align: center;
+}
+
+.inv td:nth-child(2) {
+	text-align: left;
+}
+
+.inv td {
+	padding-top: 2px;
+	padding-bottom: 2px ;
+}
+
+div .slot {
+	padding-top: 8px;
+	padding-left: 8px;
+	margin-bottom: 5px;
+
+    background-color: #FFF;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+.dex {
+	text-align: left;
+}
+
+.chp, .cmana {
+	margin: 5px;
+	height: 40px;
+}
+
+.chpbox, .cmanabox {
+	float: left;
+	height: 35px;
+	width:  35px;
+	background:  #CD0505; 	/* TODO */
+	color: #FFF;
+	font-size:  10pt;
+	text-align: center;
+	line-height: 35px;
+}
+.cmanabox {
+	background: #3388DF;
+}
+
+.chpDex, .cmanaDex {
+	margin-left: 10px;
+	font-size: 10pt;
+	text-align: center;
+	line-height: 35px;
+	float: left;
+	width: 100px;
+	height:  35px;
+	background: #E9E9E9;
+}
+
+.cstats {
+	/*height: 400px;*/
+	width: 50%;
+}
+
+
+.tooltip {
+	z-index: 1001;
+    position: fixed;
+}
+
+
+.menu li {
+	display: inline;
+	padding-left: 20px;
+	list-style-type: none;
+}
+
+.menu .global {
+	padding-right: 100px;
+	float: right;
+}
+
+
+
+.head {	background-image: url("img/slots/head.png"); }
+
+.ringLeft, .ringRight {	background-image: url("img/slots/ring.png"); }
+
+.weaponLeft, .weaponLeft {	background-image: url("img/slots/weapon.png"); }
+
+.chest { background-image: url("img/slots/chest.png"); }
+
+.neck {	background-image: url("img/slots/neck.png"); }
+
+.gloves {	background-image: url("img/slots/gloves.png"); }
+
+.legs {	background-image: url("img/slots/legs.png"); }
+
+.boots {	background-image: url("img/slots/boots.png"); }
+
+.head, .ringLeft, .neck, .ringRight, .weaponLeft, .chest, .weaponLeft, .gloves, .legs, .boots {
+	height: 70px;
+	background-repeat: no-repeat;
+    background-position: center;
+}
+
+div .q {
+	margin-bottom: 1px;
+}
+
+
+.buff {
+	position: relative;
+}
+
+.buff .buff-remove {
+	text-align: center;
+	font-size: 8pt;
+	line-height: 11pt;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 16px;
+	height: 16px;
+	opacity: 0.7;
+	background: #DADADA;
+}
+
+.buff-turns {
+	padding-right: 2px;
+	text-align: right;
+    color: #FFF;
+    text-shadow: 0px 0px 8px rgba(0, 0, 0, 1)
+	font-size: 8pt;
+	line-height: 11pt;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 16px;
+	height: 16px;
+}
+
+.modal {
+	/*max-height: 80%;*/
+}
+.modal-body {
+	height: 275px;
+}
+
+.lvlUp {
+	margin-bottom: 20px;
+	align-self: center;
+	height: 110px;
+	font-size: 15pt;
+}
+
+.lvlStats {
+	display: block;
+	float: left;
+	width: 36%;
+}
+
+.lvlStatsAdd {
+	display: block;
+	float: left;
+	width: 18%;
+}
+
+.lvlStatsAdd a {
+	width:35px;
+}
+
+.lvlStatsResult {
+	display: block;
+	float: right;
+	width: 45%;
+	border-left: 1px solid #DDD;
+	font-size: 12pt;
+}
+
+.lvlStats .lvlStatName {
+	padding-left: 40%;
+}
+
+.lvlStatName {
+	float: left;
+	display: block;
+	width: 70%;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+
+
+.lvlStatValue {
+	float: left;
+	display: block;
+	width: 25%;
+	padding-top: 1px;
+	padding-bottom: 1px;
+}
+
+
+.lvlHP {
+	width: 90%;
+	height: 25px;
+	background-color: #EF5350;
+	text-align: center;
+	color: #FFF;
+	text-shadow: 0px 0px 8px rgba(0, 0, 0, 1);
+	font-size: 14px;
+	border-top-right-radius: 2px;
+	border-top-left-radius: 2px;
+	line-height: 25px;
+	margin-bottom: 2px;
+}
+
+.lvlMana {
+	width: 90%;
+	height: 25px;
+	background-color: #42A5F5;
+	text-align: center;
+	color: #FFF;
+	text-shadow: 0px 0px 8px rgba(0, 0, 0, 1);
+	font-size: 14px;
+	line-height: 25px;
+	margin-bottom: 2px;
+}
+
+.lvlPA {
+	width: 90%;
+	height: 25px;
+	background-color: #4CAF50;
+	text-align: center;
+	color: #FFF;
+	text-shadow: 0px 0px 8px rgba(0, 0, 0, 1);
+	font-size: 14px;
+	line-height: 25px;
+	margin-bottom: 2px;
+}
+
+.spells td {
+	font-size: 7pt;
+}

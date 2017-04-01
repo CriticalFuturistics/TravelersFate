@@ -1,0 +1,469 @@
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Traverlers' Fate</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+  <!-- <a href="https://icons8.com">WEB_APP.SINGLE_ICON.LINK_TEXT</a> -->
+</head>
+
+<body>
+  <nav class="light-blue menu" role="navigation">
+      {{> loginButtons}}
+      <li class="global">
+        <span style="text-align:center"> 
+          Turno: 
+          <strong>{{turn}}</strong> 
+          | Continente: <strong>{{continent}}</strong> | {{#if isDaytime}} <strong>Giorno</strong> {{else}} <strong>Notte</strong> {{/if}}  
+       {{#if isAdmin currentUser.username}}
+        <a class="waves-effect waves-light btn btn-turn">Next Turn</a>
+        {{/if}}
+        </span>
+
+      </li>
+  </nav>
+
+
+  {{> main}}
+
+
+
+  </body>
+
+
+<template name="main">
+  <main>
+      <center>
+      <div class="section"></div>
+
+      <div class="container">
+        {{#if isAdmin currentUser.username}}
+
+
+           {{> controlPanel }}
+
+          {{else}}
+
+          {{> temSinglePlayer }}
+
+
+        {{/if}}       
+      </div>
+      
+    </center>
+  </main>
+</template>
+
+
+<template name="controlPanel">
+  <div class="section">
+        <!--   Icon Section   -->
+        <div class="row players">
+
+        {{#each players}}
+        <div class="col s12 m2 x1">
+          {{> playerData}}
+          
+        </div>
+        {{/each}}
+        </div>
+
+      </div>
+
+</template>
+
+<template name="playerData">
+  
+    <div class="icon-block">
+      <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+      <span class="playerData">   
+      <a class="btn lvlup" targetID="{{id}}"> Reset Player </a>
+
+      <!-- Levelup Modal Structure -->
+
+      <!-- bottom-sheet? -->
+      <div id="modalLevelUp" class="modal animated bounceIn"  tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+
+          
+            
+            
+            {{> temLvlUp}}
+
+          
+        </div>
+      </div>
+
+
+      <!--      PLAYER DATA      -->
+        <h5 class="center">{{name}} </h5> 
+        <div class="center">
+          <span class="class"> {{class}}</span> | <span class="race"> {{race}} </span>
+        </div>
+        <br>
+        <div class="card nopadding hpmargin" playerID="{{id}}">
+          <div class="card-content">
+            <div class="hpbar">{{hpbar}}</div>
+            <div class="hp">
+              <div class="hpn"> {{ HP }} / {{ maxHP }} </div> 
+            </div> 
+            <div class="manabar">{{manabar}}</div>
+            <div class="mana">
+              <div class="manan"> {{ mana }} / {{ maxMana }} </div>
+            </div> 
+            <div class="xpbar">{{xpbar}}</div>
+            <div class="xp">
+              <div class="xpn"> {{ XP }} / {{ maxXP }} </div>
+            </div>
+            <div class="pabar">{{pabar}}</div>
+            <div class="pa">
+              <div class="pan"> {{ PA }} / {{ maxPA }} </div>
+            </div>
+          </div>
+        </div>
+
+      <!--         STATS         -->
+        <div class="card"> 
+          <div class="card-content">
+            <span class="card-title grey-text text-darken-4 center valign center-block">LVL {{ level }}</span>
+            <p> 
+              <table class="highlight">
+              <thead> <tr> <th data-field="stat" style="text-align:center">Stat</th> <th data-field="statbase">Base</th> <th data-field="stattotal">Total</th> </tr></thead> 
+              <tbody class="boldcol center"> 
+                <tr> 
+                  <td  style="width: 50%;">VIT</td>
+                  <td>{{stat.vit}}</td>
+                  <td>{{totalStat.vit}}</td>
+                  <!-- <td class="vitBonus">1</td> -->
+                  <!-- <td class="vitTotal">1</td> -->
+                </tr>
+                <tr> 
+                  <td>FOR</td>
+                  <td>{{stat.for}}</td>
+                  <td>{{totalStat.for}}</td>
+                  <!-- <td class="forBonus">1</td> -->
+                  <!-- <td class="forTotal">1</td> -->
+                </tr>
+                  <tr> 
+                  <td>AGI</td>
+                  <td>{{stat.agi}}</td>
+                  <td>{{totalStat.agi}}</td>
+                  <!-- <td class="agiBonus">1</td> -->
+                  <!-- <td class="agiTotal">1</td> -->
+                </tr>
+                <tr> 
+                  <td>INT</td>
+                  <td>{{stat.int}}</td>
+                  <td>{{totalStat.int}}</td>
+                  <!-- <td class="intBonus">1</td> -->
+                  <!-- <td class="intTotal">1</td> -->
+                </tr>
+                <tr> 
+                  <td>VOL</td>
+                  <td>{{stat.vol}}</td>
+                  <td>{{totalStat.vol}}</td>
+                  <!-- <td class="volBonus">1</td> -->
+                  <!-- <td class="volTotal">1</td> -->
+                  </tr>
+                <tr> 
+                  <td>TEM</td>
+                  <td>{{stat.tem}}</td>
+                  <td>{{totalStat.tem}}</td>
+                  <!-- <td class="temBonus">1</td> -->
+                  <!-- <td class="temTotal">1</td> -->
+                </tr>
+                <tr> 
+                  <td>SAG</td>
+                  <td>{{stat.sag}}</td>
+                  <td>{{totalStat.sag}}</td>
+                  <!-- <td class="sagBonus">1</td> -->
+                  <!-- <td class="sagTotal">1</td> -->
+                </tr>
+
+                </tbody> 
+
+              </table> 
+            </p>
+          </div>
+        </div>
+      </span>
+
+      <!--         ARMOR         -->
+      <span class="playerArmor"> 
+        <div class="card armorCard" style>
+          <div class="card-content armor">
+            <p class="text-darken-4 center-block center">
+              <img src="https://maxcdn.icons8.com/windows8/PNG/26/Security/shield-26.png" title="Armor" width="26" style="opacity:0.4"> {{ defences.armor }} 
+              {{#if isPositive getDamageReduction}}
+                (<span class="bonus">{{ getDamageReduction }}%</span>)
+              {{else}}
+                (<span class="malus">{{ getDamageReduction }}%</span>)
+              {{/if}}
+              
+              <p>
+              <img src="https://maxcdn.icons8.com/Android_L/PNG/24/Industry/gas-24.png" title="Difesa Fuoco" width="20" style="opacity:0.4"> {{ defences.DF }}
+              <img src="https://maxcdn.icons8.com/Android_L/PNG/24/Weather/lightning_bolt-24.png" title="Difesa Elettrica" width="20" style="opacity:0.4"> {{ defences.DE }}
+              </p>
+             
+             <img src="https://maxcdn.icons8.com/Android_L/PNG/24/Astrology/fire_element-24.png" title="Resistenza Fuoco" width="20" style="opacity:0.4"> {{ defences.RB }}
+              <img src="https://maxcdn.icons8.com/windows8/PNG/26/Astrology/winter-26.png" title="Resistenza Congelamento" width="20" style="opacity:0.4"> {{ defences.RC }}
+              <br>
+              <img src="https://maxcdn.icons8.com/Android_L/PNG/24/Industry/water-24.png" title="Resistenza Sanguinamento" width="20" style="opacity:0.4"> {{ defences.RS }}
+              <img class="icon icons8-Visible" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAC30lEQVRoQ+2YjXEUMQyF31WQUEFCBYEKCBUAFRAqCHQQKoBUEKggUAFQAUkFIRUAFcB8wWYcn3/k9e7d3Iw1szObnCzrSU+SvSvtuKx23H8NANvO4MjAyEBnBAaFOgPYvXxkIAjhoaRnkh5J4v04Cu9XST8kXUn67N63noF9SS8lvXZOtzgEmPeSPkr61bIw1J1KIRw/dY7z3iM4D5DzKUCmAMDxM0m9jsegAYJdgJilBQC8vkhwO94MSsB3uM6DUBc81AWUKwlrX1lrxArguXO+FHUKk1qA2yUhEFCGgs8J2QDEp1oqLADeOcdKttjsQ22z6PcTF5TSMoC+KSnUAEAZNprbeW/PAoLAEKCk5ABAlS+OtyXnoQ306hFoUqITtqmLF6kulQJgdR7DDzOcBxTdyg8zHHjrHInBUhM3hgjQEJ7GIFIALLRhP7pNil6l9YCgVcYCTWrdiTVrdIoBWJ3HWKpwifxlJZpEkYyEYqkFr38PRAigxQjGHgd93hvHsScVAN8Ss4QZ8d1AI6/yP3ghgJ+N0zVFvz9GJ3rWsgVz4gEvoSH+uWd0IF7rl20KwG8f7G1QKNV6Z6GQr3JLN0CXvhyP+k0U8b3ul+KitaXl2ijjnxmQkt42urZnbpDRTY4M9ZAbZAww+r3vSHQe/o7bJ1tYB9l16mRQOkpAj1pLRAcq9Qhzo3YcIQDorN3caoc5C52mnEQ9YMvsyVH1zkYNADolTq8NloZUWJzndsYdIysWACwmfWSjNCegE2d3y4WGO0aJNvR5AM5yofHoKTZA1OoCHYqVoguvlDQFirt2v4Dv6NQCYaZQnD5SSkdpmdoWZhF17EJZs1gpFBvkzgAQnl4gOI7TPM3fh6YC8IAAQroBcmAO2z/FW+c0lGt23O/VCyD0mRqhMP2nxbhW4Lb/tEhxmjheC8qcAGp7LfL7ALBIWBuMjgw0BGsR1ZGBRcLaYHRkoCFYi6jufAb+App/jzHG6/EyAAAAAElFTkSuQmCC" title="Resistenza Ipnosi" width="20" height="20" style="opacity:0.4"> {{ defences.RI }}
+
+              <br>
+              <img src="https://maxcdn.icons8.com/Android_L/PNG/24/Industry/poison-24.png" title="Tossicità Massima" width="20" style="opacity:0.4"> {{ defences.TOX }}
+            </p>
+            <br>
+            <p>
+              <img src="https://maxcdn.icons8.com/iOS7/PNG/25/Business/goal_filled-25.png" title="Precision" width="20" style="opacity:0.4"> {{defences.precision}}%
+               <img src="https://maxcdn.icons8.com/iOS7/PNG/25/Sports/exercise_filled-25.png" title="Evasion" width="20" style="opacity:0.4"> {{defences.evasion}}%
+            </p>
+          </div>
+        </div>
+      </span>
+
+      <!--         BUFFS         -->
+      <br>
+      {{#if isAdmin currentUser.username}}
+      <select class="select-buff browser-default" targetID="{{id}}">
+        <option value="0" disabled selected>Seleziona Buff</option>
+        {{#each allBuffs}}
+          <option value="{{id}}">{{name}}</option>
+        {{/each}}
+      </select>
+
+      <a class="btn btn-buff waves-effect waves-light" casterID="{{id}}">Aggiungi Buff</a>
+      {{/if}}
+      <div class="card" style='overflow-x:scroll;overflow-y:hidden;width:100%;height:100px;padding-left:8px;margin-top:25px'>
+        <div class="card-content buffs" style='width:300%;height:60px;'>
+          {{#each buffs}}
+            {{>temBuff}}
+          {{/each}}
+        </div>
+      </div>
+
+      <!--         EQUIP         -->
+      <span class="playerEquip"> 
+        {{> temEquip }}
+      </span>
+
+      <!--       INVENTORY       -->
+      <span class="playerInventory">  
+        {{> temInventory}}
+      </span>
+
+      <!--       SPELLS         -->
+      <span class="playerSpells">  
+        {{> temSpells}}
+      </span>
+
+    </div>
+    {{ > tooltips }}
+</template>
+
+<template name="temSinglePlayer">
+  <div class="section">
+    <div class="row players">
+      {{#each players}}
+
+        {{#if isEqual username currentUser.username}}
+       
+        <div class="col s12 m12 x1">
+          {{> playerData }}
+        </div>
+        {{/if}}
+
+      {{/each}}
+
+    </div>
+  </div>
+</template>
+
+
+<template name="temBuff">
+  <div class="buff noselect">
+    <img src="{{getBuff.img}}" class="tooltipped fa fa-square" data-toggle="tooltip" data-html="true" data-placement="top" title="{{getDex}}">
+    <div class="buff-remove noselect">x</div>
+    <div class="buff-turns noselect">{{getTurnsLeft}}</div>
+  </div>
+</template>
+
+<template name="temEquip">
+  <div class="row q">
+    <div class="col s4 offset-s4 slot head"> </div>
+  </div>
+
+  <div class="row q">
+    <div class="col s4 slot ringLeft">    </div>
+    <div class="col s4 slot neck">        </div>
+    <div class="col s4 slot ringRight">   </div>
+  </div>
+
+  <div class="row q">
+    <div class="col s4 slot weaponLeft">  </div>
+    <div class="col s4 slot chest">       </div>
+    <div class="col s4 slot weaponLeft">  </div>
+  </div>
+
+  <div class="row q"> 
+    <div class="col s4 slot gloves">      </div>
+    <div class="col s4 slot legs">        </div>
+  </div>
+
+  <div class="row q"> 
+    <div class="col s4 offset-s4 slot boots">  </div>
+  </div>
+</template>
+
+<template name="temInventory">
+  <div class="card itemsCard" style>
+    <div class="card-content items" style="padding-left: 13px; padding-right:13px;"> 
+      <p class="text-darken-4 center-block center"> 
+        <table  class="highlight inv" data-delay="40"> 
+          <thead> 
+            <tr> 
+              <th data-field="type">
+                <i class="material-icons">layers</i>
+              </th>
+              <th data-field="name">Oggetto</th>
+              <th data-field="weight">Peso</th>
+            </tr>
+          </thead>
+          <tbody>
+          {{#each inventory.items}}
+            {{> temInventoryItem }} 
+          {{/each}}
+          </tbody>
+        </table>
+      </p>       
+    </div>
+  </div>
+</template>
+<template name="temInventoryItem">
+  <tr> 
+    <td><img src="{{ getItemIcon}}"></td>
+    <td>{{ quantity }} {{name}}</td>
+    <td>{{ totalWeight }}</td> 
+  </tr>
+</template>
+
+<template name="temLvlUp"> 
+  <div class="modal-header">
+    <h4 class="modal-title">Level Up!</h4>
+  </div>
+
+  <div class="modal-body">
+
+    <p class="lvlPoints"> Hai {{pts}} punti da assengare </p>
+    <div class="lvlUp">
+      <div class="lvlStats">
+        {{#each lvlStats}}
+        <div class="lvlStatName"> {{name}}</div> <div class="lvlStatValue"> {{value}} </div><br>
+        {{/each}}
+      </div>
+        <div class="lvlStatsAdd">
+
+            <a href="#" class="waves-effect lVit"><i class="material-icons">chevron_left</i></a>
+            {{lvlVit}}
+            <a  href="#" class="waves-effect mVit"><i class="material-icons">chevron_right</i></a>
+            <br>
+
+            <a href="#" class="waves-effect lFor"><i class="material-icons">chevron_left</i></a>
+            {{lvlFor}}
+            <a  href="#" class="waves-effect mFor"><i class="material-icons">chevron_right</i></a>
+            <br>
+
+            <a href="#" class="waves-effect lAgi"><i class="material-icons">chevron_left</i></a>
+            {{lvlAgi}}
+            <a href="#" class="waves-effect mAgi"><i class="material-icons">chevron_right</i></a>
+            <br>
+
+            <a href="#" class="waves-effect lInt"><i class="material-icons">chevron_left</i></a>
+            {{lvlInt}}
+            <a  href="#" class="waves-effect mInt"><i class="material-icons">chevron_right</i></a>
+            <br>
+
+            <a href="#" class="waves-effect lVol"><i class="material-icons">chevron_left</i></a>
+            {{lvlVol}}
+            <a  href="#" class="waves-effect mVol"><i class="material-icons">chevron_right</i></a>
+            <br>
+
+            <a href="#" class="waves-effect lTem"><i class="material-icons">chevron_left</i></a>
+            {{lvlTem}}
+            <a  href="#" class="waves-effect mTem"><i class="material-icons">chevron_right</i></a>
+            <br>
+
+            <a href="#" class="waves-effect lSag"><i class="material-icons">chevron_left</i></a>
+            {{lvlSag}}
+            <a  href="#" class="waves-effect mSag"><i class="material-icons">chevron_right</i></a>
+            <br>
+
+      </div>
+      <div class="lvlStatsResult">
+        <div class="lvlHP"> {{ lvlMaxHP }} → {{ lvlMaxHPNew }}</div>
+        <div class="lvlMana"> {{ lvlMaxMana }} → {{ lvlMaxManaNew }} </div>
+
+        <div class="lvlPA"> {{ lvlMaxPA }} PA → {{ lvlMaxPANew }} </div>
+        <div class="lvlPT"> {{ lvlMaxPT }} PT → {{ lvlMaxPTNew }} </div>
+
+
+
+        <p class="text-darken-4 center-block center">
+          
+          <img src="https://maxcdn.icons8.com/Android_L/PNG/24/Industry/gas-24.png" title="Difesa Fuoco" width="20" style="opacity:0.4"> {{ lvlDefences.DF }} → {{ lvlDefencesNew.DF }}
+          <img src="https://maxcdn.icons8.com/Android_L/PNG/24/Weather/lightning_bolt-24.png" title="Difesa Elettrica" width="20" style="opacity:0.4"> {{ lvlDefences.DE }} → {{ lvlDefencesNew.DE }}
+          <br>
+         <img src="https://maxcdn.icons8.com/Android_L/PNG/24/Astrology/fire_element-24.png" title="Resistenza Fuoco" width="20" style="opacity:0.4"> {{ lvlDefences.RB }} → {{ lvlDefencesNew.RB }}
+          <img src="https://maxcdn.icons8.com/windows8/PNG/26/Astrology/winter-26.png" title="Resistenza Congelamento" width="20" style="opacity:0.4">{{ lvlDefences.RC }} → {{ lvlDefencesNew.RC }}
+          <br>
+          <img src="https://maxcdn.icons8.com/Android_L/PNG/24/Industry/water-24.png" title="Resistenza Sanguinamento" width="20" style="opacity:0.4"> {{ lvlDefences.RS }} → {{ lvlDefencesNew.RS }}
+          <img class="icon icons8-Visible" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAC30lEQVRoQ+2YjXEUMQyF31WQUEFCBYEKCBUAFRAqCHQQKoBUEKggUAFQAUkFIRUAFcB8wWYcn3/k9e7d3Iw1szObnCzrSU+SvSvtuKx23H8NANvO4MjAyEBnBAaFOgPYvXxkIAjhoaRnkh5J4v04Cu9XST8kXUn67N63noF9SS8lvXZOtzgEmPeSPkr61bIw1J1KIRw/dY7z3iM4D5DzKUCmAMDxM0m9jsegAYJdgJilBQC8vkhwO94MSsB3uM6DUBc81AWUKwlrX1lrxArguXO+FHUKk1qA2yUhEFCGgs8J2QDEp1oqLADeOcdKttjsQ22z6PcTF5TSMoC+KSnUAEAZNprbeW/PAoLAEKCk5ABAlS+OtyXnoQ306hFoUqITtqmLF6kulQJgdR7DDzOcBxTdyg8zHHjrHInBUhM3hgjQEJ7GIFIALLRhP7pNil6l9YCgVcYCTWrdiTVrdIoBWJ3HWKpwifxlJZpEkYyEYqkFr38PRAigxQjGHgd93hvHsScVAN8Ss4QZ8d1AI6/yP3ghgJ+N0zVFvz9GJ3rWsgVz4gEvoSH+uWd0IF7rl20KwG8f7G1QKNV6Z6GQr3JLN0CXvhyP+k0U8b3ul+KitaXl2ijjnxmQkt42urZnbpDRTY4M9ZAbZAww+r3vSHQe/o7bJ1tYB9l16mRQOkpAj1pLRAcq9Qhzo3YcIQDorN3caoc5C52mnEQ9YMvsyVH1zkYNADolTq8NloZUWJzndsYdIysWACwmfWSjNCegE2d3y4WGO0aJNvR5AM5yofHoKTZA1OoCHYqVoguvlDQFirt2v4Dv6NQCYaZQnD5SSkdpmdoWZhF17EJZs1gpFBvkzgAQnl4gOI7TPM3fh6YC8IAAQroBcmAO2z/FW+c0lGt23O/VCyD0mRqhMP2nxbhW4Lb/tEhxmjheC8qcAGp7LfL7ALBIWBuMjgw0BGsR1ZGBRcLaYHRkoCFYi6jufAb+App/jzHG6/EyAAAAAElFTkSuQmCC" title="Resistenza Ipnosi" width="20" height="20" style="opacity:0.4"> {{ lvlDefences.RI }} → {{ lvlDefencesNew.RI }}
+          <br>
+          <img src="https://maxcdn.icons8.com/Android_L/PNG/24/Industry/poison-24.png" title="Tossicità Massima" width="20" style="opacity:0.4"> {{ lvlDefences.TOX }} → {{ lvlDefencesNew.TOX }}
+        </p>
+        <br>
+      </div>
+    </div>
+    </div>
+          
+    <div class="modal-footer">
+      <a class="confirm waves-effect waves-green btn-flat">Conferma</a>
+    </div>
+</template>
+
+
+<template name="temSpellsItem">
+  <tr class="spells"> 
+    <td><img src="{{ getSpellIcon}}"></td>
+    <td>{{name}}</td>
+    <td>{{mana}}</td> 
+    <td>{{pa}}</td>
+  </tr>
+</template>
+
+<template name="temSpells">
+  <div class="card spellsCard">
+    <div class="card-content items" style="padding-left: 5px; padding-right:10px;"> 
+      <p class="text-darken-4 center-block center"> 
+        <table  class="highlight inv" data-delay="20"> 
+          <thead> 
+            <tr> 
+              <th data-field="type">
+                <i class="material-icons">layers</i>
+              </th>
+              <th data-field="name">Spell</th>
+              <th data-field="mana">Mana</th>
+              <th data-field="pa">PA</th>
+            </tr>
+          </thead>
+          <tbody>
+          {{#each spellbook.spells}}
+            {{> temSpellsItem }} 
+          {{/each}}
+          </tbody>
+        </table>
+      </p>       
+    </div>
+  </div>
+</template>
