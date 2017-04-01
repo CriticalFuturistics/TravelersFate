@@ -306,6 +306,14 @@ Template.temSpells.helpers({
 	}
 })
 
+Template.temSpellsItem.events({
+	'click tr': function () {
+		let pID = Template.parentData(1).id
+		let sID = Template.parentData(0).id
+		displaySpellDialog(pID, sID)
+	}
+});
+
 
 
 
@@ -523,6 +531,23 @@ function removeBuff(buffID, playerID){
 }
 
 
+
+function displaySpellDialog(pID, sID){
+	let spell = Template.parentData(0)
+
+	$('#modalSpell').on('show.bs.modal', function(event) {
+		$("#modalSpell .modal-title").html(spell.name)
+
+		$("#modalSpell .spellName").html(spell.name)
+		$("#modalSpell .spellDex").html(spell.dex)
+		$("#modalSpell .spellIcon").html("<img class='scaleimg'src='" + spell.getSpellIcon + "'>")
+		$("#modalSpell .spellMana").html(spell.mana)
+		$("#modalSpell .spellPA").html(spell.pa)
+	})
+
+	$('#modalSpell').modal('show');
+
+}
 
 
 

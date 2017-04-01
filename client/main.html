@@ -281,6 +281,8 @@
 </template>
 
 
+
+
 <template name="temBuff">
   <div class="buff noselect">
     <img src="{{getBuff.img}}" class="tooltipped fa fa-square" data-toggle="tooltip" data-html="true" data-placement="top" title="{{getDex}}">
@@ -433,6 +435,11 @@
 </template>
 
 
+
+
+
+
+
 <template name="temSpellsItem">
   <tr class="spells"> 
     <td><img src="{{ getSpellIcon}}"></td>
@@ -440,6 +447,12 @@
     <td>{{mana}}</td> 
     <td>{{pa}}</td>
   </tr>
+
+  <div id="modalSpell" class="modal animated bounceIn"  tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      {{> temSpellDex }}
+    </div>
+  </div>
 </template>
 
 <template name="temSpells">
@@ -466,4 +479,28 @@
       </p>       
     </div>
   </div>
+</template>
+
+<template name="temSpellDex">
+  <div class="modal-header">
+    <h4 class="modal-title"></h4>
+  </div>
+
+  <div class="modal-body">
+    <div class="spellContainer">
+      <div class="spellIcon"></div>
+    
+      <div class="spellInfo">
+        <div class="spellName"></div>
+        <div class="spellPA"></div>
+        <div class="spellMana"></div>
+        <div class="spellDex"></div>
+      </div>
+    </div>
+  </div>     
+  <!-- 
+  <div class="modal-footer">
+      
+  </div> 
+  -->
 </template>
